@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-24 14:43:28 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-50
+
+    Summary:
+      Fixed a spelling mistake.
+    Revision:
+      gnostic--mainline--0.1--patch-50
+
+
+    modified files:
+     ChangeLog scanner.l
+
+
 2004-07-24 14:38:15 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-49
 
     Summary:
