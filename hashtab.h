@@ -47,7 +47,7 @@ typedef int (*hashtab_cmp)(const void *, const void *);
  *
  * @see delete_hashtab
  */
-extern struct hashtab *new_hashtab(size_t len, hashtab_cmp cmp);
+extern hashtab_t new_hashtab(size_t len, hashtab_cmp cmp);
 
 /** hashtab destructor.
  * Frees all the resources associated to the hashtab.
@@ -57,7 +57,7 @@ extern struct hashtab *new_hashtab(size_t len, hashtab_cmp cmp);
  *
  * @see new_hashtab
  */
-extern void delete_hashtab(struct hashtab *self);
+extern void delete_hashtab(hashtab_t self);
 
 /** hashtab lookup/creation.
  * Searches an item by key or creates a new key-value pair.
@@ -73,15 +73,15 @@ extern void delete_hashtab(struct hashtab *self);
  *
  * @see hashtab_strlookup
  */
-extern void *hashtab_lookup(struct hashtab *self, const void *key, size_t len,
-						int create, const void *value);
+extern void *hashtab_lookup(hashtab_t self, const void *key, size_t len,
+			    int create, const void *value);
 
 /** hashtab string lookup/creation.
  * Same as the previous function, but for strings. The caller doesn't need to
  * provide the function with the key's length.
  */
-static inline void *hashtab_strlookup(struct hashtab *self, const char *key,
-						int create, const void *value)
+static inline void *hashtab_strlookup(hashtab_t self, const char *key,
+				      int create, const void *value)
 {
 	return hashtab_lookup(self, (void *) key, strlen(key), create, value);
 }

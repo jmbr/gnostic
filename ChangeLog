@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-28 16:35:06 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-86
+
+    Summary:
+      Improved hashtab module readability.
+    Revision:
+      gnostic--mainline--0.1--patch-86
+
+
+    modified files:
+     ChangeLog hashtab.c hashtab.h
+
+
 2004-07-28 07:58:23 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-85
 
     Summary:

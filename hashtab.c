@@ -78,7 +78,7 @@ new_hashnode(const void *key, const void *value)
 }
 
 
-struct hashtab *
+hashtab_t
 new_hashtab(size_t len, hashtab_cmp cmp)
 {
 	struct hashtab *ht;
@@ -102,7 +102,7 @@ new_hashtab(size_t len, hashtab_cmp cmp)
 }
 
 void
-delete_hashtab(struct hashtab *self)
+delete_hashtab(hashtab_t self)
 {
 	int i;
 
@@ -122,8 +122,8 @@ delete_hashtab(struct hashtab *self)
 
 
 void *
-hashtab_lookup(struct hashtab *self, const void *key, size_t len,
-	int create, const void *value)
+hashtab_lookup(hashtab_t self, const void *key, size_t len,
+		int create, const void *value)
 {
 	int h;
 	struct hashnode *n;
@@ -135,8 +135,10 @@ hashtab_lookup(struct hashtab *self, const void *key, size_t len,
 	if (create) {
 		n = new_hashnode(key, value);
 		assert(n);
+
 		n->next = self->tab[h];
 		self->tab[h] = n;
+
 		return (void *) n->value;
 	}
 
