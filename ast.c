@@ -71,8 +71,7 @@ delete_ast(ast_t self, ast_item_dtor dtor)
 enum ast_type
 ast_get_type(const ast_t self)
 {
-	if (!self)
-		return (enum ast_type) 0;
+	assert(self);
 
 	return self->type;
 }
