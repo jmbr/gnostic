@@ -1,8 +1,10 @@
 #ifndef TASKSET_PRIV_H
 #define TASKSET_PRIV_H		1
-/*!
- * \file taskset-priv.h
- * \brief Private declarations for task collections.
+/**
+ * @file taskset-priv.h
+ * @brief Private declaration of tasksets.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 #include "taskset.h"

@@ -1,5 +1,8 @@
-/*
- * task-exec.c -- Implements task execution.
+/**
+ * @file task-exec.c
+ * @brief Task execution module.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 /*
  * "Within the armor is the butterfly and within the butterfly is the signal
@@ -173,7 +176,7 @@ task_exec_script(const struct task *self)
  * @param n The AST node we want to use as root for the evaluation.
  * @returns true on success, false on failure.
  *
- * @see task_exec
+ * @see task_exec, task_exec_script
  */
 bool
 eval_expr(const astnode_t n)

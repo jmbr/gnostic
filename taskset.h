@@ -1,8 +1,10 @@
 #ifndef TASKSET_H
 #define TASKSET_H    1
-/*!
- * \file taskset.h
- * \brief This module manages aggregates of tasks.
+/**
+ * @file taskset.h
+ * @brief This module manages aggregates of tasks.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 

@@ -1,5 +1,8 @@
-/*
- * gnostic.c -- Generic Network Scanning Tool.
+/**
+ * @file gnostic.c
+ * @brief Generic Network Scanning Tool.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 /*
  * gnostic: adjective 1 of knowledge. 2 having special mystic knowledge.

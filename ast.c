@@ -1,5 +1,8 @@
-/*
- * ast.c -- Abstract syntax tree for dependency expressions.
+/**
+ * @file ast.c
+ * @brief Abstract syntax tree for dependency expressions.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 
@@ -29,6 +32,9 @@
 
 
 /** Node of an abstract syntax tree.
+ *
+ * These nodes conform the structure that will be traversed during evaluation
+ * of dependency expressions.
  */
 struct astnode {
 	enum astnode_types type;	/**< Node type */

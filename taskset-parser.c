@@ -1,5 +1,8 @@
-/*
- * parser.c -- Dependency expression parser.
+/**
+ * @file taskset-parser.c
+ * @brief Read a configuration file and transform it into a taskset.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 

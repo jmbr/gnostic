@@ -1,6 +1,9 @@
 %{
-/*
- * grammar.y -- Grammar for gnostic's configuration files.
+/**
+ * @file grammar.y
+ * @brief Grammar for gnostic's configuration files.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 
@@ -39,6 +42,7 @@ extern void yyerror(const char *s);
 struct task *tasks = NULL;
 struct env_var *env_vars = NULL;
 
+static char *strconcat(char *s1, char *s2);
 
 static astnode_t do_identifier(char *s);
 static astnode_t do_not(astnode_t rhs);
@@ -108,12 +112,7 @@ task            : IDENTIFIER ':' dependencies actions {
 
 actions		: action
 	 	| actions action {
-			size_t len1 = strlen($1), len2 = strlen($2);
-
-			$1 = xrealloc($1, len1 + len2 + 1);
-			memcpy($1 + len1, $2, len2 + 1);
-			free($2);
-			$$ = $1;
+			$$ = strconcat($1, $2);
 		}
 		;
 
@@ -148,6 +147,20 @@ expr		: '(' expr ')' {
 		;
 
 %%
+
+
+char *
+strconcat(char *s1, char *s2)
+{
+	size_t len1 = strlen(s1), len2 = strlen(s2);
+
+	s1 = xrealloc(s1, len1 + len2 + 1);
+	memcpy(s1 + len1, s2, len2 + 1);
+	free(s2);
+
+	return s1;
+}
+
 
 astnode_t
 do_identifier(char *s)

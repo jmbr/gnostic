@@ -1,5 +1,8 @@
-/*
- * hashtab.c -- A simple hash table implementation.
+/**
+ * @file hashtab.c
+ * @brief A simple hash table implementation.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 

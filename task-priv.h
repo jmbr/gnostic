@@ -1,8 +1,10 @@
 #ifndef TASK_PRIV_H
 #define TASK_PRIV_H		1
-/*!
- * \file task-priv.h
- * \brief Private-side of task structures.
+/**
+ * @file task-priv.h
+ * @brief Private-side of task structures.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 

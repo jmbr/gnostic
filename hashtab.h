@@ -1,8 +1,10 @@
 #ifndef HASHTAB_H
 #define HASHTAB_H		1
-/*!
- * \file hashtab.h
- * \brief Hash table data structure.
+/**
+ * @file hashtab.h
+ * @brief A simple hash table data structure.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 
@@ -17,6 +19,9 @@
 #endif /* !HAVE_STRING_H */
 
 
+/**
+ * Default hash table length.
+ */
 #define HASHTAB_DEFAULT_LEN		797
 //#define HASHTAB_DEFAULT_LEN		6421
 

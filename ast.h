@@ -1,8 +1,10 @@
 #ifndef AST_H
 #define AST_H    1
-/*!
- * \file ast.h
- * \brief Abstract syntax tree for dependency expressions.
+/**
+ * @file ast.h
+ * @brief Abstract syntax tree for dependency expressions.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 
@@ -15,8 +17,6 @@ enum astnode_types {
 	N_NOT,		/**< Boolean not */
 };
 
-/** Node of an abstract syntax tree.
- */
 typedef struct astnode *astnode_t;
 
 

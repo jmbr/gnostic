@@ -1,8 +1,10 @@
-#ifndef DEBUG_H
-#define DEBUG_H			1
-/*!
- * \file debug.h
- * \brief Miscellaneous debugging functions.
+#ifndef ERR_H
+#define ERR_H			1
+/**
+ * @file err.h
+ * @brief Miscellaneous error reporting functions.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 
@@ -22,4 +24,4 @@ extern void eprintf(const char *format, ...);
 extern void fatal_error(const char *format, ...) __attribute__ ((noreturn));
 
 
-#endif /* DEBUG_H */
+#endif /* !ERR_H */

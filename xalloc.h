@@ -1,7 +1,10 @@
 #ifndef XALLOC_H
 #define XALLOC_H		1
-/*
- * xalloc.h -- Error-checking *alloc wrappers.
+/**
+ * @file xalloc.h
+ * @brief Error-checking *alloc wrappers.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 

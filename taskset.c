@@ -1,5 +1,8 @@
-/*
- * taskset.c -- Manages aggregates of tasks.
+/**
+ * @file taskset.c
+ * @brief Management of task aggregates.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 

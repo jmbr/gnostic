@@ -1,8 +1,10 @@
 #ifndef TASK_H
 #define TASK_H    1
-/*!
- * \file task.h
- * \brief Task management module.
+/**
+ * @file task.h
+ * @brief Task management module.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 #include "ast.h"
@@ -42,7 +44,8 @@ extern int delete_task(struct task *self);
  */
 extern int task_exec(const struct task *self);
 
-/*
+/*@{*/
+/**
  * The following accessors are convenient for several reasons but if they ever
  * turn out to become a bottleneck then compile the program with the
  * -finline-functions option.
@@ -55,5 +58,6 @@ extern const astnode_t task_get_expr(const struct task *self);
 extern struct task *task_get_next(const struct task *self);
 extern int task_set_next(struct task *self, struct task *t);
 
+/*@}*/
 
 #endif /* !TASK_H */

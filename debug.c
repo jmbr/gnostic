@@ -1,5 +1,8 @@
-/*
- * debug.c -- Miscellaneous debugging features.
+/**
+ * @file err.c
+ * @brief Miscellaneous error reporting functions.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 

@@ -1,6 +1,9 @@
 %{
-/*
- * scanner.l -- Scanner for gnostic's configuration files.
+/**
+ * @file scanner.l
+ * @brief Scanner for gnostic's configuration files.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 

@@ -2,6 +2,21 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-27 14:01:19 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-77
+
+    Summary:
+      Improved program documentation.
+    Revision:
+      gnostic--mainline--0.1--patch-77
+
+
+    modified files:
+     ChangeLog ast.c ast.h debug.c debug.h gnostic.c grammar.y
+     hashtab.c hashtab.h scanner.l task-exec.c task-priv.h task.c
+     task.h taskset-parser.c taskset-priv.h taskset.c taskset.h
+     xalloc.c xalloc.h
+
+
 2004-07-27 11:44:06 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-76
 
     Summary:

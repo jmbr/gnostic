@@ -1,5 +1,8 @@
-/*
- * xalloc.c -- Error-checking *alloc wrappers.
+/**
+ * @file xalloc.c
+ * @brief Error-checking *alloc wrappers.
+ *
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 
