@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-22 14:12:11 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-26
+
+    Summary:
+      Improved the efficiency and correctness of the actions rule.
+    Revision:
+      gnostic--mainline--0.1--patch-26
+
+
+    modified files:
+     ChangeLog grammar.y
+
+
 2004-07-22 13:57:28 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-25
 
     Summary:

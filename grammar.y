@@ -78,13 +78,10 @@ task            : IDENTIFIER ':' dependencies actions {
 
 actions		: action
 	 	| actions action {
-			/*
-			 * This could be improved by storing the strings' lengths
-			 * instead of computing them each time, but so far this
-			 * approach seems to be good enough.
-			 */
-			$1 = xrealloc($1, strlen($1) + strlen($2) + 1);
-			strcat($1, $2);
+			size_t len1 = strlen($1), len2 = strlen($2);
+
+			$1 = xrealloc($1, len1 + len2 + 1);
+			memcpy($1 + len1, $2, len2 + 1);
 			free($2);
 			$$ = $1;
 		}
