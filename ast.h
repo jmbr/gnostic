@@ -10,7 +10,7 @@
 
 /** Node types.
  */
-enum ast_types {
+enum ast_type {
 	AST_ID,		/**< Identifier */
 	AST_AND,	/**< Boolean and */
 	AST_OR,		/**< Boolean or */
@@ -19,7 +19,7 @@ enum ast_types {
 
 typedef struct ast *ast_t;
 
-/** ast item destructor callback */
+/** AST item destructor callback */
 typedef int (*ast_item_dtor)(void *);
 
 
@@ -30,7 +30,7 @@ typedef int (*ast_item_dtor)(void *);
  *
  * @see delete_ast
  */
-extern ast_t new_ast(enum ast_types type, ast_t lhs, ast_t rhs);
+extern ast_t new_ast(enum ast_type type, ast_t lhs, ast_t rhs);
 
 /** ast destructor.
  * Frees all the resources associated to the AST.
@@ -50,7 +50,7 @@ extern int delete_ast(ast_t self, ast_item_dtor dtor);
  * 
  * @see new_ast
  */
-extern enum ast_types ast_get_type(const ast_t self);
+extern enum ast_type ast_get_type(const ast_t self);
 
 /** Item mutator.
  * Attaches an item to a given node.

@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-15 05:46:25 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-135
+
+    Summary:
+      Some more refactorings in the AST module.
+    Revision:
+      gnostic--mainline--0.1--patch-135
+
+
+    modified files:
+     ChangeLog ast.c ast.h
+
+
 2004-08-15 04:31:41 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-134
 
     Summary:

@@ -14,12 +14,6 @@
 # include <stdlib.h>
 #endif /* STDC_HEADERS */
 
-#ifdef HAVE_STRING_H
-# include <string.h>
-#elif HAVE_STRINGS_H
-# include <strings.h>
-#endif /* !HAVE_STRING_H */
-
 #ifdef HAVE_SYS_TYPES_H
 # include <sys/types.h>
 #endif /* HAVE_SYS_TYPES_H */
@@ -36,18 +30,17 @@
 
 /** Node of an abstract syntax tree.
  *
- * These nodes conform the structure that will be traversed during evaluation
- * of dependency expressions.
+ * These are the nodes composing dependency expressions.
  */
 struct ast {
 	void *item;				/**< Payload */
-	enum ast_types type;			/**< Node type */
+	enum ast_type type;			/**< Node type */
 	struct ast *children[AST_MAXCHILDREN];	/**< Children */
 };
 
 
 ast_t
-new_ast(enum ast_types type, ast_t lhs, ast_t rhs)
+new_ast(enum ast_type type, ast_t lhs, ast_t rhs)
 {
 	struct ast *n;
 
@@ -60,59 +53,6 @@ new_ast(enum ast_types type, ast_t lhs, ast_t rhs)
 
 	return n;
 }
-
-
-
-enum ast_types
-ast_get_type(const ast_t self)
-{
-	if (!self)
-		return (enum ast_types) 0;
-
-	return self->type;
-}
-
-
-ast_t
-ast_get_lhs(const ast_t self)
-{
-	if (!self)
-		return NULL;
-
-	return self->children[0];
-}
-
-ast_t
-ast_get_rhs(const ast_t self)
-{
-	if (!self)
-		return NULL;
-
-	return self->children[1];
-}
-
-
-int
-ast_set_item(ast_t self, void *item)
-{
-	if (!self)
-		return -1;
-
-	self->item = item;
-
-	return 0;
-}
-
-void *
-ast_get_item(const ast_t self)
-{
-	if (!self)
-		return NULL;
-
-	return self->item;
-}
-
-
 
 int
 delete_ast(ast_t self, ast_item_dtor dtor)
@@ -137,4 +77,55 @@ delete_ast(ast_t self, ast_item_dtor dtor)
 	xfree(self);
 
 	return 0;
+}
+
+
+
+enum ast_type
+ast_get_type(const ast_t self)
+{
+	if (!self)
+		return (enum ast_type) 0;
+
+	return self->type;
+}
+
+
+int
+ast_set_item(ast_t self, void *item)
+{
+	if (!self)
+		return -1;
+
+	self->item = item;
+
+	return 0;
+}
+
+void *
+ast_get_item(const ast_t self)
+{
+	if (!self)
+		return NULL;
+
+	return self->item;
+}
+
+
+ast_t
+ast_get_lhs(const ast_t self)
+{
+	if (!self)
+		return NULL;
+
+	return self->children[0];
+}
+
+ast_t
+ast_get_rhs(const ast_t self)
+{
+	if (!self)
+		return NULL;
+
+	return self->children[1];
 }
