@@ -58,7 +58,7 @@ AC_CHECK_HEADERS([limits.h memory.h stddef.h stdlib.h string.h strings.h unistd.
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
-dnl AC_C_INLINE
+AC_C_INLINE
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 

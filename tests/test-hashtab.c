@@ -1,6 +1,5 @@
 /*
- * test-htab.c -- Unit test for hash tables.
- * $Id$
+ * test-hashtab.c -- Unit test for hash tables.
  */
 
 
@@ -11,79 +10,87 @@
 #ifdef STDC_HEADERS
 # include <stdio.h>
 # include <stdlib.h>
-# ifndef __USE_GNU
-#  define __USE_GNU
-# endif /* !__USE_GNU */
-# include <string.h>
 #endif /* STDC_HEADERS */
+
+#ifdef HAVE_SYS_TYPES_H
+# include <sys/types.h>
+#endif /* HAVE_SYS_TYPES_H */
+
+#ifndef __USE_GNU
+# define __USE_GNU
+#endif /* !__USE_GNU */
+
+#ifdef HAVE_STRING_H
+# include <string.h>
+#elif HAVE_STRINGS_H
+# include <strings.h>
+#endif /* !HAVE_STRING_H */
 
 #include <assert.h>
 
-#include "htab.h"
+#include "hashtab.h"
 
 
-extern void htab_dump(const struct htab *self);
-
-static void test_htab_ctor_dtor(void);
-static void test_htab_basic(void);
-static void test_htab_heavy(void);
+static void test_hashtab_ctor_dtor(void);
+static void test_hashtab_basic(void);
+static void test_hashtab_heavy(void);
 
 
 int
 main(int argc, char *argv[])
 {
-	test_htab_ctor_dtor();
-	test_htab_basic();
-	test_htab_heavy();
+	test_hashtab_ctor_dtor();
+	test_hashtab_basic();
+	test_hashtab_heavy();
 
 	exit(EXIT_SUCCESS);
 }
 
 
 void
-test_htab_ctor_dtor(void)
+test_hashtab_ctor_dtor(void)
 {
-	struct htab *tab;
+	struct hashtab *tab;
 
-	tab = new_htab((htab_cmp) strcmp);
+	tab = new_hashtab(0, (hashtab_cmp) strcmp);
 	assert(tab);
 
-	delete_htab(tab);
+	delete_hashtab(tab);
 }
 
 void
-test_htab_basic(void)
+test_hashtab_basic(void)
 {
 	int status;
-	struct htab *tab;
+	struct hashtab *tab;
 	const char *k = "tcp", *v = "root";
 	void *value;
 
-	tab = new_htab((htab_cmp) strcmp);
+	tab = new_hashtab(0, (hashtab_cmp) strcmp);
 	assert(tab);
 
-	value = htab_lookup(tab, k, strlen(k), 1, v);
+	value = hashtab_lookup(tab, k, strlen(k), 1, v);
 	assert(value);
 
 	status = strcmp((char *) value, v);
 	assert(status == 0);
 
-	delete_htab(tab);
+	delete_hashtab(tab);
 }
 
 void
-test_htab_heavy(void)
+test_hashtab_heavy(void)
 {
 	void *v;
 	FILE *fp;
 	int status, i;
 	char buf[256], *word = NULL, *frob;
-	struct htab *tab;
+	struct hashtab *tab;
 
 	fp = fopen("/usr/share/dict/words", "r");
 	assert(fp);
 
-	tab = new_htab((htab_cmp) strcmp);
+	tab = new_hashtab(6421, (hashtab_cmp) strcmp);
 	assert(tab);
 
 	for (i = 0; ; i++) {
@@ -102,7 +109,7 @@ test_htab_heavy(void)
 
 		memfrob(frob, strlen(frob));
 
-		v = htab_lookup(tab, word, strlen(word), 1, frob);
+		v = hashtab_lookup(tab, word, strlen(word), 1, frob);
 		assert(v);
 
 		status = strcmp((char *) v, frob);
@@ -110,8 +117,6 @@ test_htab_heavy(void)
 
 		//if (i % 1000 == 0) printf("%s --> %s\n", word, (char *) v);
 	}
-
-	//htab_dump(tab);
 
 	for (rewind(fp); i; i--) {
 		memset(buf, '\0', sizeof(buf));
@@ -127,7 +132,7 @@ test_htab_heavy(void)
 		assert(frob);
 		memfrob(frob, strlen(frob));
 
-		v = htab_lookup(tab, word, strlen(word), 0, NULL);
+		v = hashtab_lookup(tab, word, strlen(word), 0, NULL);
 		assert(v);
 
 		status = strcmp((char *) v, frob);
@@ -143,6 +148,6 @@ test_htab_heavy(void)
 	 * hnode's key so we cannot free it. It isn't important for this test
 	 * anyway.
 	 */
-	delete_htab(tab);
+	delete_hashtab(tab);
 	fclose(fp);
 }

@@ -62,7 +62,7 @@ fill_symtab(struct taskset *ts)
 	struct task *t;
 
 	for (t = ts->tasks; t; t = task_get_next(t))
-		htab_strlookup(ts->symtab, task_get_name(t), 1, t);
+		hashtab_strlookup(ts->symtab, task_get_name(t), 1, t);
 }
 
 int
@@ -102,7 +102,7 @@ ident_resolve(struct taskset *ts, struct task *t, astnode_t n)
 	void *p, *item;
 
 	item = astnode_get_item(n);
-	p = htab_strlookup(ts->symtab, item, 0, NULL);
+	p = hashtab_strlookup(ts->symtab, item, 0, NULL);
 	if (!p)
 		fatal_error("gnostic: Task `%s' needed by `%s' is not "
 				"defined.\n", (char *) item, task_get_name(t));

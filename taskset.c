@@ -29,7 +29,7 @@
 
 #include "task.h"
 #include "task-priv.h"
-#include "htab.h"
+#include "hashtab.h"
 #include "graph.h"
 
 #include "xalloc.h"
@@ -64,7 +64,7 @@ new_taskset(const char *filename)
 	n = xmalloc(sizeof(struct taskset));
 
 	n->tasks = NULL;
-	n->symtab = new_htab((htab_cmp) strcmp);
+	n->symtab = new_hashtab(0, (hashtab_cmp) strcmp);
 	n->depgraph = new_graph();
 
 	if (taskset_read(n, filename) == -1) {
@@ -83,7 +83,7 @@ delete_taskset(struct taskset *self)
 
 	delete_env_var_list(self->env_vars);
 	delete_tasklist(self->tasks);
-	delete_htab(self->symtab);
+	delete_hashtab(self->symtab);
 	delete_graph(self->depgraph);
 	xfree(self);
 
@@ -134,7 +134,7 @@ taskset_print(const struct taskset *self, FILE *fp)
 const struct task *
 taskset_get_task(const struct taskset *self, const char *name)
 {
-	return htab_strlookup(self->symtab, name, 0, NULL);
+	return hashtab_strlookup(self->symtab, name, 0, NULL);
 }
 
 

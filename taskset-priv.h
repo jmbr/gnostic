@@ -7,8 +7,8 @@
 
 #include "taskset.h"
 #include "task.h"
-#include "htab.h"
 #include "graph.h"
+#include "hashtab.h"
 
 
 /** An aggregate of tasks.
@@ -18,7 +18,7 @@ struct taskset {
 					  env vars */
 	struct task *tasks;		/**< Pointer to the head of a list of
 					  tasks. */
-	htab_t symtab;			/**< Symbol table mapping task names to
+	hashtab_t symtab;		/**< Symbol table mapping task names to
 					  task structure addresses */
 	graph_t depgraph;		/**< Describes the dependencies between
 					  task structures. */

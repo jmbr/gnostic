@@ -1,6 +1,5 @@
 /*
- * htab.c -- Hash tables for the masses.
- * $Id$
+ * hashtab.c -- A simple hash table implementation.
  */
 
 
@@ -18,30 +17,26 @@
 
 #include <assert.h>
 
-#include "htab.h"
+#include "hashtab.h"
 
 
-#define HTAB_DEFAULT_LEN		797
-//#define HTAB_DEFAULT_LEN		6421
-
-
-struct hnode {
+struct hashnode {
 	const void *key;
 	const void *value;
-	struct hnode *next;
+	struct hashnode *next;
 };
 
-struct htab {
-	unsigned int len;
-	struct hnode **tab;
-	htab_cmp cmp;
+struct hashtab {
+	size_t len;
+	struct hashnode **tab;
+	hashtab_cmp cmp;
 };
 
 
 static int hash(const void *key, size_t len);
 
-static struct hnode *new_hnode(const void *key, const void *value);
-#define delete_hnode(hn)		free(hn);
+static struct hashnode *new_hashnode(const void *key, const void *value);
+#define delete_hashnode(hn)		free(hn);
 
 
 /* DJBX33A hash function */
@@ -61,14 +56,14 @@ hash(const void *key, size_t len)
 }
 
 
-struct hnode *
-new_hnode(const void *key, const void *value)
+struct hashnode *
+new_hashnode(const void *key, const void *value)
 {
-	struct hnode *hn;
+	struct hashnode *hn;
 
 	assert(value);
 
-	hn = malloc(sizeof(struct hnode));
+	hn = malloc(sizeof(struct hashnode));
 	if (!hn)
 		return NULL;
 
@@ -80,20 +75,20 @@ new_hnode(const void *key, const void *value)
 }
 
 
-struct htab *
-new_htab(htab_cmp cmp)
+struct hashtab *
+new_hashtab(size_t len, hashtab_cmp cmp)
 {
-	struct htab *ht;
+	struct hashtab *ht;
 
 	if (!cmp)
 		return NULL;
 
-	ht = malloc(sizeof(struct htab));
+	ht = malloc(sizeof(struct hashtab));
 	if (!ht)
 		return NULL;
 
-	ht->len = HTAB_DEFAULT_LEN;
-	ht->tab = calloc(ht->len, sizeof(struct hnode));
+	ht->len = (len == 0) ? HASHTAB_DEFAULT_LEN : len;
+	ht->tab = calloc(ht->len, sizeof(struct hashnode));
 	if (!ht->tab) {
 		free(ht);
 		return NULL;
@@ -104,18 +99,18 @@ new_htab(htab_cmp cmp)
 }
 
 void
-delete_htab(struct htab *self)
+delete_hashtab(struct hashtab *self)
 {
 	int i;
 
 	assert(self);
 
 	for (i = 0; i < self->len; i++) {
-		struct hnode *n, *next;
+		struct hashnode *n, *next;
 
 		for (n = self->tab[i]; n; n = next) {
 			next = n->next;
-			delete_hnode(n);
+			delete_hashnode(n);
 		}
 	}
 	free(self->tab);
@@ -124,18 +119,18 @@ delete_htab(struct htab *self)
 
 
 void *
-htab_lookup(struct htab *self, const void *key, size_t len,
+hashtab_lookup(struct hashtab *self, const void *key, size_t len,
 	int create, const void *value)
 {
 	int h;
-	struct hnode *n;
+	struct hashnode *n;
 
 	assert(self && key);
 
 	h = hash(key, len) % self->len;
 
 	if (create) {
-		n = new_hnode(key, value);
+		n = new_hashnode(key, value);
 		assert(n);
 		n->next = self->tab[h];
 		self->tab[h] = n;

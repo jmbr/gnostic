@@ -2,6 +2,34 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-26 21:19:55 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-72
+
+    Summary:
+      Refactored hash table module.
+    Revision:
+      gnostic--mainline--0.1--patch-72
+
+
+    modified files:
+     ChangeLog GNUmakefile.in configure.ac deps.mk hashtab.c
+     hashtab.h taskset-parser.c taskset-priv.h taskset.c
+     tests/GNUmakefile.in tests/test-hashtab.c version.h
+
+    renamed files:
+     .arch-ids/htab.c.id
+       ==> .arch-ids/hashtab.c.id
+     .arch-ids/htab.h.id
+       ==> .arch-ids/hashtab.h.id
+     htab.c
+       ==> hashtab.c
+     htab.h
+       ==> hashtab.h
+     tests/.arch-ids/test-htab.c.id
+       ==> tests/.arch-ids/test-hashtab.c.id
+     tests/test-htab.c
+       ==> tests/test-hashtab.c
+
+
 2004-07-26 15:31:16 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-71
 
     Summary:

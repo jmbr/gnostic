@@ -60,8 +60,7 @@ TESTS := $(sort $(TEST_BINARIES) $(TEST_SCRIPTS))
 
 tests: $(TEST_BINARIES)
 
-test-htab: test-htab.o htab.o
-	$(LINK) $^ -o $@ $(LIBS)
+test-hashtab: test-hashtab.o hashtab.o
 
 test-graph: test-graph.o graph.o task.o ast.o xalloc.o debug.o
 
