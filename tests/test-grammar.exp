@@ -1,0 +1,56 @@
+a:
+    and
+        b
+        or
+            and
+                or
+                    c
+                    d
+                not
+                    e
+            and
+                or
+                    f
+                    g
+                or
+                    x
+                    not
+                        or
+                            y
+                            z
+
+b:
+    or
+        c
+        d
+
+c:
+    not
+        e
+
+d:
+    and
+        or
+            f
+            g
+        or
+            x
+            not
+                y
+
+e:
+    not
+        and
+            x
+            y
+
+f:
+
+g:
+
+x:
+
+y:
+
+z:
+

@@ -1,0 +1,29 @@
+a: (((((((((b))))))))) and (((c or d) and not e) or ((f or g) and (x or not (y or z))))
+	;
+
+b: c or d
+	;
+
+c: not e
+	;
+
+d: (f or g) and (x or not y)
+	;
+
+e: not (x and y)
+	;
+
+f:
+	;
+
+g:
+	;
+
+x:
+	;
+
+y:
+	;
+
+z:
+	;

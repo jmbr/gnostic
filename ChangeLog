@@ -2,6 +2,24 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-09 23:50:52 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-124
+
+    Summary:
+      Developed an unit test for the grammar.
+    Revision:
+      gnostic--mainline--0.1--patch-124
+
+
+    new files:
+     tests/.arch-ids/expressions.id
+     tests/.arch-ids/test-grammar.c.id
+     tests/.arch-ids/test-grammar.exp.id tests/expressions
+     tests/test-grammar.c tests/test-grammar.exp
+
+    modified files:
+     ChangeLog
+
+
 2004-08-09 23:21:32 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-123
 
     Summary:
