@@ -43,8 +43,9 @@ extern int delete_tasklist(struct tasklist *self);
  *
  * @param self A pointer to the structure.
  * @param t A pointer to the task to be appended.
+ * @return 0 on success, -1 on failure.
  */
-extern void tasklist_append(struct tasklist *self, struct task *t);
+extern int tasklist_append(struct tasklist *self, struct task *t);
 
 /** tasklist map function.
  * Applies the function specified by the last argument to each of the tasks

@@ -68,9 +68,12 @@ delete_tasklist(struct tasklist *self)
 }
 
 
-void
+int
 tasklist_append(struct tasklist *self, struct task *t)
 {
+	if (!self || !t)
+		return -1;
+
 	if (tasklist_is_empty(self)) {
 		self->head = self->tail = t;
 	} else {
@@ -79,6 +82,8 @@ tasklist_append(struct tasklist *self, struct task *t)
 		self->tail->next = t;
 		self->tail = t;
 	}
+
+	return 0;
 }
 
 
