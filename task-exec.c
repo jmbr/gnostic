@@ -112,7 +112,7 @@ child(int fds[2])
 
 	close(fds[1]);
 
-	sprintf(arg, "/dev/fd/%u", fds[0]);
+	snprintf(arg, sizeof(arg), "/dev/fd/%u", fds[0]);
 
 	if (execv("/bin/sh", argv) == -1)
 		die("execv");

@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-05 07:17:05 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-112
+
+    Summary:
+      Changed sprintf to snprintf just in case.
+    Revision:
+      gnostic--mainline--0.1--patch-112
+
+
+    modified files:
+     ChangeLog task-exec.c
+
+
 2004-08-04 01:47:42 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-111
 
     Summary:
