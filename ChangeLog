@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-16 22:44:22 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-145
+
+    Summary:
+      Cosmetic changes.
+    Revision:
+      gnostic--mainline--0.1--patch-145
+
+
+    modified files:
+     ChangeLog task-exec.c
+
+
 2004-08-16 22:43:47 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-144
 
     Summary:

@@ -4,10 +4,6 @@
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
-/*
- * "Within the armor is the butterfly and within the butterfly is the signal
- * from another star." --Philip K. Dick
- */
 
 
 #ifdef HAVE_CONFIG_H
