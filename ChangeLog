@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-23 18:25:01 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-39
+
+    Summary:
+      Added a check to detect attempts to free NULL pointers.
+    Revision:
+      gnostic--mainline--0.1--patch-39
+
+
+    modified files:
+     ChangeLog xalloc.h
+
+
 2004-07-23 18:04:57 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-38
 
     Summary:
