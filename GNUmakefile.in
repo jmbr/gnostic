@@ -156,9 +156,7 @@ check: all
 
 DOXYGEN := @DOXYGEN@
 
-doc: userdoc apidoc
-
-userdoc:
+doc: userdoc
 	$(MAKE) -C $(docdir)
 
 apidoc: doxy.cfg

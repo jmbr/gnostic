@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-02 17:56:24 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-105
+
+    Summary:
+      Updated version. Fixed maintainer email address.
+    Revision:
+      gnostic--mainline--0.1--patch-105
+
+
+    modified files:
+     ChangeLog GNUmakefile.in vars.c vars.h version.h
+
+
 2004-08-01 23:54:14 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-104
 
     Summary:
