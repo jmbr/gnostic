@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-06 23:05:58 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-114
+
+    Summary:
+      Removed unneeded if clause from makefile
+    Revision:
+      gnostic--mainline--0.1--patch-114
+
+
+    modified files:
+     ChangeLog tests/GNUmakefile.in
+
+
 2004-08-06 17:42:02 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-113
 
     Summary:

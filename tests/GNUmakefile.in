@@ -22,11 +22,6 @@ LDFLAGS := @LDFLAGS@
 LIBS := @LIBS@
 INCLUDES := @INCLUDES@ -I..
 
-LIBOBJS := @LIBOBJS@
-ifdef LIBOBJS
-INCLUDES += -I$(srcdir)/missing
-endif
-
 COMPILE = $(CC) $(CPPFLAGS) $(CFLAGS) $(DEFS) $(INCLUDES)
 LINK = $(CC)  $(CFLAGS) $(LDFLAGS)
 
@@ -59,6 +54,8 @@ TESTS := $(sort $(TEST_BINARIES) $(TEST_SCRIPTS))
 tests: $(TEST_BINARIES)
 
 test-hashtab: test-hashtab.o hashtab.o
+
+test-tasklist: test-tasklist.o tasklist.o task.o ast.o err.o xmemory.o
 
 check: tests
 	@echo "===================="
