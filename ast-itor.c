@@ -37,6 +37,9 @@ new_ast_itor(ast_t root)
 {
 	struct ast_itor_st *n;
 
+	if (!root)
+		return NULL;
+
 	n = xmalloc(sizeof(struct ast_itor_st));
 
 	n->root = n->next = root;
@@ -53,8 +56,6 @@ delete_ast_itor(ast_itor_t self)
 	if (!self)
 		return -1;
 
-	while ((n = stack_pop(self->stack)))
-		xfree(n);
 	if (delete_stack(self->stack) == -1)
 		return -1;
 	xfree(self);
@@ -64,7 +65,7 @@ delete_ast_itor(ast_itor_t self)
 
 
 
-static void
+static inline void
 push(ast_itor_t itor, ast_t node)
 {
 	assert(itor);
@@ -73,7 +74,7 @@ push(ast_itor_t itor, ast_t node)
 		stack_push(itor->stack, node);
 }
 
-static ast_t
+static inline ast_t
 pop(ast_itor_t itor)
 {
 	assert(itor);

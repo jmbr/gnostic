@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-16 22:40:49 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-142
+
+    Summary:
+      Fixed two bugs (one assertion and one memory problem).
+    Revision:
+      gnostic--mainline--0.1--patch-142
+
+
+    modified files:
+     ChangeLog ast-itor.c
+
+
 2004-08-16 15:38:05 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-141
 
     Summary:
