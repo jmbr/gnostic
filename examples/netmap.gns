@@ -11,21 +11,16 @@ scriptdir=.
 
 
 netmap: netmap-requisites and (netmap-cache or (ping and traceroute))
-	# Correlate ping and traceroute data to produce a network graph.
-	source $scriptdir/gnostic.sh
+	# TODO - Correlate ping and traceroute data to produce a network graph.
 
-	dir=$root/ipv4/`ip2dir $addr`
-
-	awk '
-	/* TODO */
-	' $dir/ping.out #> $dir/ping-results
+	# rm -rf $root
 
 netmap-requisites:
 	# Check for needed environment variables.
 	if [[ -z $root ]] || [[ -z $addr ]]; then
-	  echo "=================================================="
-	  echo "Usage: netmap <addr=IPv4 address> [root=Directory]"
-	  echo "=================================================="
+	  echo ""
+	  echo "Usage: netmap addr=ADDRESS [root=DIRECTORY]"
+	  echo ""
 	  exit 1
 	fi
 
