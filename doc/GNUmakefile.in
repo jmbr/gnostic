@@ -1,12 +1,14 @@
 ###############################################################################
 #
-# $Id$
+# GNUmakefile -- @configure_input@
 #
 ###############################################################################
 
-LATEX := @LATEX@
-DVIPS := @DVIPS@
-PS2PDF := @PS2PDF@
+@SET_MAKE@
+
+SHELL := @SHELL@
+MAKEINFO := @MAKEINFO@
+TEXI2PDF := @TEXI2PDF@
 
 
 ##############################################################################
@@ -15,17 +17,8 @@ PS2PDF := @PS2PDF@
 #
 ##############################################################################
 
-.SUFFIXES: .tex .dvi .pdf
-
-%.dvi: %.tex
-	$(LATEX) $<
-	$(LATEX) $<
-
-%.ps: %.dvi
-	$(DVIPS) -t a4 $< -o $@
-
-%.pdf: %.ps
-	$(PS2PDF) $<
+.SUFFIXES: .info
+	$(MAKEINFO) $< -o $@
 
 
 ###############################################################################
@@ -34,13 +27,17 @@ PS2PDF := @PS2PDF@
 #
 ###############################################################################
 
-.PHONY: all
+.PHONY: all html pdf
 
-all: programmers-guide.pdf
+all: gnostic.info
 
-programmers-guide.pdf: programmers-guide.dvi
+html: gnostic.texi
+	$(MAKEINFO) --html $< -o $(basename $<)
 
-programmers-guide.dvi: programmers-guide.tex
+pdf: gnostic.pdf ;
+
+gnostic.pdf: gnostic.texi
+	$(TEXI2PDF) --clean $< -o $@
 
 
 ###############################################################################
@@ -52,14 +49,13 @@ programmers-guide.dvi: programmers-guide.tex
 .PHONY: clean rmbak clobber
 
 clean:
-	$(RM) *.log *.aux *.dvi *.out *.toc
-	$(RM) *.pdf *.ps
+	$(RM) *.info
+	$(RM) -r gnostic
 
 rmbak:
 	$(RM) *~ *.bak
 
-mostlyclean: clean rmbak
-	$(RM) -r $(srcdir)/api
+clobber: clean rmbak ;
 
 
 ###############################################################################

@@ -60,8 +60,14 @@ main(int argc, char *argv[])
 void
 usage(void)
 {
-	printf("%s\n\n", version.v_gnu);
-	printf("Usage: gnostic <config file> [task] [name=value] ...\n");
+	printf("%s\n\n"
+	       "Usage: gnostic <task file> [task] [name=value] [...]\n\n"
+	       "Examples:\n"
+	       "  gnostic foo.gns\t\tshow the list of tasks defined in foo\n"
+	       "  gnostic foo.gns bar\t\texecute task `bar' without parameters\n"
+	       "  gnostic foo.gns bar baz=23\texecute `bar' with baz=23 as a parameter\n"
+	       "\n"
+	       "Email bug reports to %s\n", version.v_gnu, PACKAGE_BUGREPORT);
 
 	exit(EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 @copying
 This is the user's guide for Gnostic 0.2.x
 
-Copyright @copyright{} 2004 Juan M. Bello Rivas
+Copyright @copyright{} 2002, 2003, 2004 Juan M. Bello Rivas
 @end copying
 
 @titlepage
@@ -30,6 +30,8 @@ Copyright @copyright{} 2004 Juan M. Bello Rivas
 
 @menu
 * Introduction::	Introduction to Gnostic.
+* Tutorial::		Step by step guide to Gnostic.
+* Reference::		Reference manual.
 * Index::		Complete index.
 @end menu
 
@@ -39,6 +41,20 @@ Copyright @copyright{} 2004 Juan M. Bello Rivas
 @cindex introduction
 
 Gnostic is a versatile task launcher aimed at network and host security scanning.
+
+@node Tutorial
+@chapter Tutorial
+
+@cindex tutorial
+
+foo
+
+@node Reference
+@chapter Reference
+
+@cindex reference
+
+foo
 
 @node Index
 @unnumbered Index
