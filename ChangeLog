@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-23 08:49:38 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-30
+
+    Summary:
+      Fixed a possible problem with the memory allocation wrappers. Now they are thread-safe.
+    Revision:
+      gnostic--mainline--0.1--patch-30
+
+
+    modified files:
+     ChangeLog configure.ac xalloc.c
+
+
 2004-07-22 15:29:31 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-29
 
     Summary:

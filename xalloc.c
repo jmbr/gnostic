@@ -27,11 +27,12 @@
 # include <sys/types.h>
 #endif /* HAVE_SYS_TYPES_H */
 
-#include <errno.h>
-
 #include <assert.h>
 
-#include "debug.h"
+#include <errno.h>
+
+
+static void error(const char *f) __attribute__ ((noreturn));
 
 
 /*
@@ -45,8 +46,9 @@ xmalloc(size_t size)
 {
 	void *ptr;
 
-	if (!(ptr = malloc(size)))
-		fatal_error("malloc: %s", strerror(errno));
+	ptr = malloc(size);
+	if (!ptr)
+		error("malloc");
 
 	memset(ptr, 0, size);
 
@@ -59,8 +61,9 @@ xcalloc(size_t nmemb, size_t size)
 {
 	void *ptr;
 
-	if (!(ptr = calloc(nmemb, size)))
-		fatal_error("calloc: %s", strerror(errno));
+	ptr = calloc(nmemb, size);
+	if (!ptr)
+		error("calloc");
 
 	return ptr;
 }
@@ -71,8 +74,9 @@ xrealloc(void *ptr, size_t size)
 {
 	void *p;
 
-	if (!(p = realloc(ptr, size)))
-		fatal_error("realloc: %s", strerror(errno));
+	p = realloc(ptr, size);
+	if (!p)
+		error("realloc");
 
 	return p;
 }
@@ -83,8 +87,9 @@ xstrdup(const char *s)
 {
 	char *p;
 
-	if (!(p = strdup(s)))
-		fatal_error("strdup: %s", strerror(errno));
+	p = strdup(s);
+	if (!p)
+		error("strdup");
 
 	return p;
 }
@@ -97,4 +102,26 @@ xfree(void *ptr)
 		free(ptr);
 		ptr = NULL;
 	}
+}
+
+
+void
+error(const char *f)
+{
+	size_t errbuflen = 128;
+	char errbuf[errbuflen];
+
+	assert(f);
+
+#ifdef HAVE_STRERROR_R
+	/*
+	 * We use the incompatible strerror_r provided by glibc.
+	 * XXX In the future this should not require glibc to work.
+	 */
+	fprintf(stderr, "%s: %s\n", f, strerror_r(errno, errbuf, errbuflen));
+#else /* !HAVE_STRERROR_R */
+	fprintf(stderr, "%s failed (errno = %d)\n", f, errno);
+#endif /* HAVE_STRERROR_R */
+
+	exit(EXIT_FAILURE);
 }
