@@ -1,7 +1,8 @@
 /*
  * parser.c -- Dependency expression parser.
- * $Id$
  */
+
+/* XXX This module needs refactoring. */
 
 
 #ifdef HAVE_CONFIG_H

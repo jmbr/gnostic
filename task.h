@@ -1,6 +1,6 @@
 #ifndef TASK_H
 #define TASK_H    1
-/*
+/*!
  * \file task.h
  * \brief Task management module.
  */
@@ -42,6 +42,11 @@ extern int delete_task(struct task *self);
  */
 extern int task_exec(const struct task *self);
 
+/*
+ * The following accessors are convenient for several reasons but if they ever
+ * turn out to become a bottleneck then compile the program with the
+ * -finline-functions option.
+ */
 extern const char *task_get_name(const struct task *self);
 extern const char *task_get_actions(const struct task *self);
 

@@ -38,8 +38,7 @@ new_task(char *name, astnode_t expr, char *actions)
 
 	n = xmalloc(sizeof(struct task));
 
-	memset(n, 0, sizeof(struct task));
-
+	n->next = NULL;
 	n->name = name;
 	n->expr = expr;
 	n->actions = actions;
@@ -62,7 +61,7 @@ delete_task(struct task *self)
 }
 
 
-inline const char *
+const char *
 task_get_name(const struct task *self)
 {
 	if (!self)
@@ -72,6 +71,7 @@ task_get_name(const struct task *self)
 
 	return (const char *) self->name;
 }
+
 
 const char *
 task_get_actions(const struct task *self)
@@ -84,6 +84,7 @@ task_get_actions(const struct task *self)
 	return (const char *) self->actions;
 }
 
+
 const astnode_t
 task_get_expr(const struct task *self)
 {
@@ -92,6 +93,7 @@ task_get_expr(const struct task *self)
 
 	return (const astnode_t) self->expr;
 }
+
 
 int
 task_set_next(struct task *self, struct task *t)
@@ -105,7 +107,7 @@ task_set_next(struct task *self, struct task *t)
 	return 0;
 }
 
-inline struct task *
+struct task *
 task_get_next(const struct task *self)
 {
 	assert(self);
