@@ -52,6 +52,7 @@ INCLUDES="-I$srcdir"
 AC_SUBST(INCLUDES)
 AC_HEADER_STDC
 AC_HEADER_TIME
+AC_HEADER_STDBOOL
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS([limits.h memory.h stddef.h stdlib.h string.h strings.h unistd.h])
 

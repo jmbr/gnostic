@@ -16,6 +16,14 @@
 # include <stdlib.h>
 #endif /* STDC_HEADERS */
 
+#ifdef HAVE_STDBOOL_H
+# include <stdbool.h>
+#else /* !HAVE_STDBOOL_H */
+# define bool int
+# define true 1
+# define false (!true)
+#endif /* HAVE_STDBOOL_H */
+
 #ifdef HAVE_STRING_H
 # include <string.h>
 #elif HAVE_STRINGS_H
@@ -63,7 +71,7 @@
 static int task_exec_deps(const struct task *self);
 static int task_exec_script(const struct task *self);
 
-static int eval_expr(const astnode_t n);
+static bool eval_expr(const astnode_t n);
 
 
 
@@ -94,10 +102,11 @@ task_exec_deps(const struct task *self)
 
 	assert(self);
 
-	if (!(expr = task_get_expr(self)))
-		return 0;
+	expr = task_get_expr(self);
+	if (!expr)
+		return 0;	/* It's OK. There are no dependencies. */
 
-	return (eval_expr(expr)) ? 0 : -1;
+	return (eval_expr(expr) == true) ? 0 : -1;
 }
 
 
@@ -168,29 +177,29 @@ task_exec_script(const struct task *self)
  *
  * @param n The AST node we want to use as root for the evaluation.
  *
- * @returns 1 on success, 0 on failure.
+ * @returns true on success, false on failure.
  *
  * @see task_exec
  */
-int
+bool
 eval_expr(const astnode_t n)
 {
-	int status = 0;	
+	int status = false;	
 
 	assert(n);
 
 	switch (astnode_get_type(n)) {
 	case N_ID:
 		status = (task_exec(astnode_get_item(n)) == 0)
-			? 1 : 0;
+				? true : false;
 		break;
 	case N_AND:
 		status = (eval_expr(astnode_get_lhs(n))
-			&& eval_expr(astnode_get_rhs(n)));
+				&& eval_expr(astnode_get_rhs(n)));
 		break;
 	case N_OR:
 		status = (eval_expr(astnode_get_lhs(n))
-			|| eval_expr(astnode_get_rhs(n)));
+				|| eval_expr(astnode_get_rhs(n)));
 		break;
 	case N_NOT:
 		status = (!eval_expr(astnode_get_rhs(n)));
