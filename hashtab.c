@@ -106,7 +106,7 @@ new_hashtab(size_t len, hashtab_cmp cmp, hashtab_dtor dtor)
 int
 delete_hashtab(hashtab_t self)
 {
-	int i, status = 0;
+	int i;
 
 	if (!self)
 		return -1;
@@ -116,15 +116,15 @@ delete_hashtab(hashtab_t self)
 
 		for (n = self->tab[i]; n; n = next) {
 			next = n->next;
-			if (self->dtor)
-				status = self->dtor(n->value);
+			if (self->dtor && (self->dtor(n->value) == -1))
+				return -1;
 			delete_hashnode(n);
 		}
 	}
 	free(self->tab);
 	free(self);
 
-	return status;
+	return 0;
 }
 
 

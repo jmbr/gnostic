@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-10 18:15:14 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-128
+
+    Summary:
+      Improved readability of hash node deletion.
+    Revision:
+      gnostic--mainline--0.1--patch-128
+
+
+    modified files:
+     ChangeLog hashtab.c
+
+
 2004-08-10 18:14:43 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-127
 
     Summary:
