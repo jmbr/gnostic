@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-24 12:04:00 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-48
+
+    Summary:
+      Updated package configuration script.
+    Revision:
+      gnostic--mainline--0.1--patch-48
+
+
+    modified files:
+     ChangeLog configure.ac deps.mk
+
+
 2004-07-24 11:18:13 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-47
 
     Summary:

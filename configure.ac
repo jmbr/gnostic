@@ -2,8 +2,9 @@
 # Process this file with autoconf to produce a configure script.
 
 ###############################################################################
+#
 # configure.ac -- Automagick configuration script
-# $Id$
+#
 ###############################################################################
 
 AC_PREREQ(2.59)
@@ -56,6 +57,7 @@ AC_CHECK_HEADERS([limits.h memory.h stddef.h stdlib.h string.h strings.h unistd.
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
+AC_C_INLINE
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 
@@ -64,7 +66,7 @@ AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS([memset strdup strerror])
+AC_CHECK_FUNCS([memset strdup strerror putenv])
 
 AC_CONFIG_FILES([GNUmakefile tests/GNUmakefile doc/GNUmakefile doxy.cfg])
 AC_CONFIG_COMMANDS([stamp-h], [echo timestamp > stamp-h])
