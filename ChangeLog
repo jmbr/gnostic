@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-30 01:04:37 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-98
+
+    Summary:
+      Updated inventory tags.
+    Revision:
+      gnostic--mainline--0.1--patch-98
+
+
+    modified files:
+     ChangeLog {arch}/=tagging-method
+
+
 2004-07-30 00:55:41 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-97
 
     Summary:
