@@ -161,15 +161,15 @@ check_deps(const struct task *cur, const struct task *prev, astnode_t n)
 	       return 0;
 
 	switch (astnode_get_type(n)) {
-	case N_ID:
+	case AST_ID:
 		status = check_ident(cur, prev, n);
 		break;
-	case N_AND:
-	case N_OR:
+	case AST_AND:
+	case AST_OR:
 		status = check_deps(cur, NULL, astnode_get_lhs(n))
 			 + check_deps(cur, NULL, astnode_get_rhs(n));
 		break;
-	case N_NOT:
+	case AST_NOT:
 		status = check_deps(cur, NULL, astnode_get_rhs(n));
 		break;
 	default:

@@ -122,7 +122,7 @@ expr_resolve(hashtab_t symtab, struct task *t, astnode_t n)
 	if (!n)
 		return;
 
-	if (astnode_get_type(n) == N_ID)
+	if (astnode_get_type(n) == AST_ID)
 		ident_resolve(symtab, t, n);
 
 	expr_resolve(symtab, t, astnode_get_lhs(n));

@@ -194,18 +194,18 @@ eval_expr(const astnode_t n)
 	assert(n);
 
 	switch (astnode_get_type(n)) {
-	case N_ID:
+	case AST_ID:
 		status = (task_exec(astnode_get_item(n)) == 0) ? true : false;
 		break;
-	case N_AND:
+	case AST_AND:
 		status = (eval_expr(astnode_get_lhs(n))
 			  && eval_expr(astnode_get_rhs(n)));
 		break;
-	case N_OR:
+	case AST_OR:
 		status = (eval_expr(astnode_get_lhs(n))
 			  || eval_expr(astnode_get_rhs(n)));
 		break;
-	case N_NOT:
+	case AST_NOT:
 		status = (!eval_expr(astnode_get_rhs(n)));
 		break;
 	default:

@@ -47,11 +47,11 @@ test_ast(void)
 	int status;
 	astnode_t tree[3];
 
-	tree[2] = new_astnode(N_ID, NULL, NULL);
+	tree[2] = new_astnode(AST_ID, NULL, NULL);
 	assert(tree[2]);
-	tree[1] = new_astnode(N_ID, NULL, NULL);
+	tree[1] = new_astnode(AST_ID, NULL, NULL);
 	assert(tree[1]);
-	tree[0] = new_astnode(N_AND, tree[1], tree[2]);
+	tree[0] = new_astnode(AST_AND, tree[1], tree[2]);
 	assert(tree[0]);
 
 	status = delete_ast(tree[0], NULL);

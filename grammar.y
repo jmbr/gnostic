@@ -161,7 +161,7 @@ do_identifier(char *s)
 
 	assert(s);
 
-	n = new_astnode(N_ID, NULL, NULL);
+	n = new_astnode(AST_ID, NULL, NULL);
 	astnode_set_item(n, (void *) s);
 
 	return n;
@@ -170,17 +170,17 @@ do_identifier(char *s)
 astnode_t
 do_not(astnode_t rhs)
 {
-	return new_astnode(N_NOT, NULL, rhs);
+	return new_astnode(AST_NOT, NULL, rhs);
 }
 
 astnode_t
 do_and(astnode_t lhs, astnode_t rhs)
 {
-	return new_astnode(N_AND, lhs, rhs);
+	return new_astnode(AST_AND, lhs, rhs);
 }
 
 astnode_t
 do_or(astnode_t lhs, astnode_t rhs)
 {
-	return new_astnode(N_OR, lhs, rhs);
+	return new_astnode(AST_OR, lhs, rhs);
 }

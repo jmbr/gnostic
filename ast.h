@@ -11,10 +11,10 @@
 /** Node types.
  */
 enum astnode_types {
-	N_ID,		/**< Identifier */
-	N_AND,		/**< Boolean and */
-	N_OR,		/**< Boolean or */
-	N_NOT,		/**< Boolean not */
+	AST_ID,		/**< Identifier */
+	AST_AND,	/**< Boolean and */
+	AST_OR,		/**< Boolean or */
+	AST_NOT,	/**< Boolean not */
 };
 
 typedef struct astnode *astnode_t;

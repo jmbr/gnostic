@@ -31,16 +31,25 @@
 #include "xmemory.h"
 
 
+/** Node position.
+ */
+enum astnode_pos {
+	ASTNODE_LEFT,
+	ASTNODE_RIGHT
+};
+
 /** Node of an abstract syntax tree.
  *
  * These nodes conform the structure that will be traversed during evaluation
  * of dependency expressions.
  */
 struct astnode {
-	enum astnode_types type;	/**< Node type */
 	void *item;			/**< Payload */
-	astnode_t lhs;			/**< Left hand side */
-	astnode_t rhs;			/**< Right hand side */
+	//enum astnode_pos pos: 2;	/**< Position */
+	enum astnode_types type: 3;	/**< Node type */
+	struct astnode *lhs;		/**< Left hand side */
+	struct astnode *rhs;		/**< Right hand side */
+	//struct astnode *a, *b;		/**< Children */
 };
 
 

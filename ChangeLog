@@ -2,6 +2,20 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-15 03:47:55 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-132
+
+    Summary:
+      Made some namespace changes in the AST interface and introduced a position field in struct astnode.
+    Revision:
+      gnostic--mainline--0.1--patch-132
+
+
+    modified files:
+     ChangeLog ast.c ast.h grammar.y task-exec.c task.c
+     taskset-parser.c tests/test-ast.c tests/test-grammar.c
+     version.h
+
+
 2004-08-13 10:56:52 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-131
 
     Summary:
