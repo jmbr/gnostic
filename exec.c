@@ -178,11 +178,11 @@ eval_expression(struct exec_ctx *ctx, astnode_t n)
 		break;
 	case N_AND:
 		status = (eval_expression(ctx, astnode_get_lhs(n))
-				&& eval_expression(ctx, astnode_get_rhs(n)));
+			&& eval_expression(ctx, astnode_get_rhs(n)));
 		break;
 	case N_OR:
 		status = (eval_expression(ctx, astnode_get_lhs(n))
-				|| eval_expression(ctx, astnode_get_rhs(n)));
+			|| eval_expression(ctx, astnode_get_rhs(n)));
 		break;
 	case N_NOT:
 		status = (!eval_expression(ctx, astnode_get_rhs(n)));
