@@ -1,6 +1,6 @@
 %{
 /*
- * grammar.y -- Grammar for gnostic's dependency expressions.
+ * grammar.y -- Grammar for gnostic's configuration files.
  */
 
 
@@ -76,6 +76,7 @@ variables	: variable
 variable	: VAR_DECL {
 			if (putenv($1) == -1)
 				fatal_error("gnostic: Unable to declare %s", $1);
+			free($1);
 		}
 		;
 
