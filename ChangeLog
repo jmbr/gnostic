@@ -2,6 +2,21 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-13 10:56:52 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-131
+
+    Summary:
+      Added an unit test for the abstract syntax tree module.
+    Revision:
+      gnostic--mainline--0.1--patch-131
+
+
+    new files:
+     tests/.arch-ids/test-ast.c.id tests/test-ast.c
+
+    modified files:
+     ChangeLog
+
+
 2004-08-13 10:55:52 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-130
 
     Summary:
