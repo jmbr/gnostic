@@ -39,7 +39,7 @@ PROG_OBJECTS := $(filter-out $(top_builddir)/gnostic.o, \
 
 .SUFFIXES: .c
 
-%: %.c
+%: %.c $(PROG_OBJECTS)
 	@echo "Building $@"
 	@$(COMPILE) -c $<
 	@$(LINK) $(patsubst %.c, %.o, $<) $(PROG_OBJECTS) -o $@

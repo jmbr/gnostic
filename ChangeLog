@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-10 18:15:38 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-129
+
+    Summary:
+      Fixed a bug which would prevent the tests from being rebuilt when a dependency had changed.
+    Revision:
+      gnostic--mainline--0.1--patch-129
+
+
+    modified files:
+     ChangeLog tests/GNUmakefile.in
+
+
 2004-08-10 18:15:14 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-128
 
     Summary:
