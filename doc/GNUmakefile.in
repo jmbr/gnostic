@@ -58,7 +58,8 @@ clean:
 rmbak:
 	$(RM) *~ *.bak
 
-clobber: clean rmbak ;
+mostlyclean: clean rmbak
+	$(RM) -r $(srcdir)/api
 
 
 ###############################################################################

@@ -112,7 +112,9 @@ clean:
 rmbak:
 	$(RM) *~ *.bak
 
-clobber: rmbak clean
+mostlyclean: rmbak clean ;
+
+clobber: mostlyclean
 	$(RM) config.log
 	$(RM) *.core core.*
 

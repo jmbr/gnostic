@@ -2,6 +2,19 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-19 16:09:00 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-21
+
+    Summary:
+      Fixed some problems with the 'distclean' makefile target.
+    Revision:
+      gnostic--mainline--0.1--patch-21
+
+
+    modified files:
+     ChangeLog GNUmakefile.in doc/GNUmakefile.in
+     tests/GNUmakefile.in version.h
+
+
 2004-07-18 15:06:40 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-20
 
     Summary:

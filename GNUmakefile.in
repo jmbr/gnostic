@@ -128,18 +128,18 @@ rmbak:
 
 mostlyclean: clean rmbak
 	$(RM) *.core core.*
-	$(MAKE) -C $(testsdir) clobber
+	$(MAKE) -C $(docdir) mostlyclean
+	$(MAKE) -C $(testsdir) mostlyclean
 
 clobber: rmbak clean mostlyclean
-	$(RM) -r $(docdir)/api
 	$(RM) grammar.[ch] scanner.c
 
 distclean: mostlyclean
 	$(RM) tags
 	$(RM) config.log config.cache config.status
 	$(RM) config.h stamp-h
-	$(RM) GNUmakefile $(testsdir)/GNUmakefile
 	$(RM) -r $(srcdir)/autom4te.cache
+	$(RM) GNUmakefile $(docdir)/GNUmakefile $(testsdir)/GNUmakefile
 
 TAGS: tags;
 tags: $(wildcard *.[ch])
