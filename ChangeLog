@@ -2,6 +2,31 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-28 16:36:27 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-87
+
+    Summary:
+      Started writing the package's documentation.
+    Revision:
+      gnostic--mainline--0.1--patch-87
+
+
+    new files:
+     .arch-ids/README.id README
+
+    removed files:
+     doc/.arch-ids/programmers-guide.tex.id
+     doc/programmers-guide.tex
+
+    modified files:
+     ChangeLog
+
+    renamed files:
+     doc/.arch-ids/users-guide.texi.id
+       ==> doc/.arch-ids/gnostic.texi.id
+     doc/users-guide.texi
+       ==> doc/gnostic.texi
+
+
 2004-07-28 16:35:06 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-86
 
     Summary:

@@ -1,0 +1,112 @@
+gnostic
+=======
+
+    gnostic: adjective 1 of knowledge. 2 having special mystic knowledge.
+    noun (Gnostic) early Christian heretic claiming mystical knowledge.
+    -- Merriam-Webster on-line dictionary.
+
+Overview
+--------
+
+gnostic is a program which executes shell scripts according to certain
+criteria. It is aimed at applications where there is a need to codify some
+types of "recipes" for doing things.
+
+Installation
+------------
+
+Read the INSTALL file for detailed instructions. The most straight-forward way
+to install gnostic is by executing:
+
+	./configure
+	make
+	make install
+
+gnostic doesn't depend on any third-party libraries and it's supposed to
+compile and run cleanly on any UNIX-like operating system.
+
+Documentation
+-------------
+
+Full API documentation can be generated with doxygen. There's a doxy.cfg file
+with some defaults that the users/developers can change to suit their needs.
+
+An user's guide is present (currently as a work-in-progress) in the doc/
+subdirectory.
+
+To generate all the documentation type:
+
+	make doc
+
+Getting started
+---------------
+
+The best way to get a feeling of how gnostic works is to try some of the sample
+taskfiles present in the examples/ subdirectory. It is very easy to start
+writing your own taskfiles specially if you're already familiar with make(1).
+
+One could start trying with:
+
+	$ gnostic examples/environ.gns 
+	environ
+
+When gnostic is invoked this way it lists all the tasks present in the given
+task file. By convention, the main one will appear at the beginning. In this
+example we have only one task: environ. Let's ask gnostic to execute it:
+
+	$ gnostic examples/environ.gns environ
+	gnostic: Executing `environ'.
+	BASH=/bin/sh
+	BASH_VERSINFO=([0]="2" [1]="05b" [2]="0" [3]="1" [4]="release" [5]="i586-mandrake-linux-gnu")
+	BASH_VERSION='2.05b.0(1)-release'
+	BROWSER=/usr/bin/mozilla
+	.
+	.
+	.
+	USER=rwx
+	WINDOW=1
+	WINDOWID=12582914
+	XAUTHORITY=/home/rwx/.Xauthority
+	XMODIFIERS=@im=none
+	_=/bin/sh
+	gnostic: Task `environ' exited with status 0.
+	$
+
+As you can see this is a fairly trivial task. It invokes bash's builtin command
+set(1) to print out the task's environment. But we can use it demonstrate at
+least one feature of gnostic: passing parameters:
+
+	$ gnostic examples/environ.gns environ fnord=23 foo=bar
+	gnostic: Executing `environ'.
+	.
+	.
+	.
+	_=/bin/sh
+	fnord=23
+	foo=bar
+	gnostic: Task `environ' exited with status 0.
+	$
+
+The parameters passed become part the environment of the executed task. The
+following is a more useful example of tasks and parameters at work:
+
+	$ gnostic examples/netmap.gns ping addr=127.0.0.1 scriptdir=examples 
+	gnostic: Executing `ping'.
+	gnostic: Executing `ping-requisites'.
+	gnostic: Task `ping-requisites' exited with status 0.
+	PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data.
+	64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.295 ms
+	64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.060 ms
+	64 bytes from 127.0.0.1: icmp_seq=3 ttl=64 time=0.057 ms
+	64 bytes from 127.0.0.1: icmp_seq=4 ttl=64 time=0.056 ms
+	64 bytes from 127.0.0.1: icmp_seq=5 ttl=64 time=0.057 ms
+
+	--- 127.0.0.1 ping statistics ---
+	5 packets transmitted, 5 received, 0% packet loss, time 4000ms
+	rtt min/avg/max/mdev = 0.056/0.105/0.295/0.095 ms
+	gnostic: Task `ping' exited with status 0.
+	$
+
+After this step it is advisable to delete the left-over data (perhaps after
+taking a look at it) located in /tmp/gnostic and start reading the User's
+guide.
