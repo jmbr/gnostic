@@ -59,6 +59,7 @@ main(int argc, char *argv[])
 	g = new_gnostic();
 
 	if (gnostic_conf_parse(g, argv[1]) == -1) {
+		eprintf("gnostic: Unable to parse %s\n", argv[1]);
 		delete_gnostic(g);
 		exit(EXIT_FAILURE);
 	}

@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-18 15:06:40 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-20
+
+    Summary:
+      An error message is printed when the configuration file cannot be opened.
+    Revision:
+      gnostic--mainline--0.1--patch-20
+
+
+    modified files:
+     ChangeLog gnostic.c
+
+
 2004-07-18 15:06:03 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-19
 
     Summary:
