@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-07 02:11:08 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-118
+
+    Summary:
+      Fixed a small mistake in API documentation.
+    Revision:
+      gnostic--mainline--0.1--patch-118
+
+
+    modified files:
+     ChangeLog ast.h
+
+
 2004-08-07 00:05:56 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-117
 
     Summary:

@@ -70,7 +70,7 @@ extern astnode_t astnode_get_rhs(const astnode_t self);
  */
 extern enum astnode_types astnode_get_type(const astnode_t self);
 
-/** Item accessor.
+/** Item mutator.
  * Attaches an item to a given node.
  * Note that delete_astnode won't free the memory associated to the item
  * pointer. It is the caller's responsibility to do that.
