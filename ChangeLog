@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-08 23:42:37 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-122
+
+    Summary:
+      Fixed a typo in the makefile.
+    Revision:
+      gnostic--mainline--0.1--patch-122
+
+
+    modified files:
+     ChangeLog GNUmakefile.in
+
+
 2004-08-08 23:30:15 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-121
 
     Summary:

@@ -91,8 +91,8 @@ scanner.c: scanner.l grammar.c
 
 grammar.c: grammar.y
 	$(YACC) -d $<
-	@mv y.tab.c $@
-	@if test -f y.tab.h; then \
+	mv y.tab.c $@
+	if test -f y.tab.h; then \
 	  if cmp -s y.tab.h $*.h; then \
 	    rm -f y.tab.h; \
 	  else \
@@ -249,7 +249,7 @@ depend:
 	@echo =====================
 	@echo Tracking dependencies
 	@echo =====================
-	$(CC) -MM -I. $(CPPFLAGS) $(CFLAGS) $(DEFS) $(INCLUDES) *.c > deps.mk;
+	$(CC) -MM -I. $(CPPFLAGS) $(CFLAGS) $(DEFS) $(INCLUDES) *.c > deps.mk
 
 
 ###############################################################################
