@@ -75,7 +75,7 @@ static void
 xputenv(char *string)
 {
 	if (putenv(string) == -1)
-		fatal_error("gnostic: Unable to declare %s", string);
+		fatal_error("gnostic: Unable to declare %s\n", string);
 }
 
 static void

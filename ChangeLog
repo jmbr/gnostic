@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-28 21:14:29 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-89
+
+    Summary:
+      Fixed a small glitch in xputenv.
+    Revision:
+      gnostic--mainline--0.1--patch-89
+
+
+    modified files:
+     ChangeLog gnostic.c
+
+
 2004-07-28 16:37:19 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-88
 
     Summary:
