@@ -47,9 +47,15 @@ main(int argc, char *argv[])
 static ast_t
 make_tree(void)
 {
-	ast_t tree[3];
+	ast_t tree[6];
 
-	tree[2] = new_ast(AST_ID, NULL, NULL);
+	tree[5] = new_ast(AST_ID, NULL, NULL);
+	assert(tree[5]);
+	tree[4] = new_ast(AST_ID, NULL, NULL);
+	assert(tree[4]);
+	tree[3] = new_ast(AST_OR, tree[4], tree[5]);
+	assert(tree[3]);
+	tree[2] = new_ast(AST_NOT, NULL, tree[3]);
 	assert(tree[2]);
 	tree[1] = new_ast(AST_ID, NULL, NULL);
 	assert(tree[1]);
@@ -71,6 +77,32 @@ test_ast(void)
 	assert(status == 0);
 }
 
+
+static void
+ast_print(const ast_t self)
+{
+	char *item;
+
+	if (!self)
+		return;
+
+	switch (ast_get_type(self)) {
+	case AST_ID:
+		item = (char *) ast_get_item(self);
+		printf("identifier(\"%s\")\n", item ? item : "(null)");
+		break;
+	case AST_AND:
+		printf("and\n");
+		break;
+	case AST_OR:
+		printf("or\n");
+		break;
+	case AST_NOT:
+		printf("not\n");
+		break;
+	}
+}
+
 void
 test_ast_itor(void)
 {
@@ -83,14 +115,8 @@ test_ast_itor(void)
 	itor = new_ast_itor(root);
 	assert(itor);
 
-	n = ast_itor_first(itor);
-	assert(n == root);
-
-	n = ast_itor_next(itor);
-	assert(n == ast_get_lhs(root));
-
-	n = ast_itor_next(itor);
-	assert(n == ast_get_rhs(root));
+	for (n = ast_itor_first(itor); n; n = ast_itor_next(itor))
+		ast_print(n);
 
 	status = delete_ast_itor(itor);
 	assert(status == 0);

@@ -18,6 +18,7 @@ enum ast_type {
 };
 
 typedef struct ast_st *ast_t;
+
 typedef struct ast_itor_st *ast_itor_t;
 
 /** AST item destructor callback */
@@ -97,10 +98,45 @@ extern ast_t ast_get_lhs(const ast_t self);
 extern ast_t ast_get_rhs(const ast_t self);
 
 
-extern ast_itor_t new_ast_itor(ast_t ast);
+/** AST preorder iterator constructor.
+ * Creates an instance of a preorder iterator for ASTs.
+ *
+ * @param root The root of the abstract syntax tree to be traversed.
+ * @return A pointer to an iterator.
+ *
+ * @see delete_ast_itor
+ */
+extern ast_itor_t new_ast_itor(ast_t root);
+
+/** AST preorder iterator destructor.
+ * Frees the resources associated to an iterator.
+ *
+ * @param self A pointer to the structure.
+ * @return 0 on success, -1 on failure.
+ *
+ * @see new_ast_itor
+ */
 extern int delete_ast_itor(ast_itor_t self);
 
+/** AST iterator initializer.
+ * Returns the first node of the AST. This is suitable for the initialization
+ * part of a for loop.
+ *
+ * @param self A pointer to the structure.
+ * @return A pointer to the root of the AST.
+ *
+ * @see ast_itor_next
+ */
 extern ast_t ast_itor_first(ast_itor_t self);
+
+/** AST iterator update function.
+ * Returns the next node in a preorder traversal of the AST.
+ *
+ * @param self A pointer to the structure.
+ * @return A pointer to the current node of the AST.
+ *
+ * @see ast_itor_first
+ */
 extern ast_t ast_itor_next(ast_itor_t self);
 
 

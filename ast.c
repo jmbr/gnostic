@@ -11,6 +11,7 @@
 #endif /* HAVE_CONFIG_H */
 
 #ifdef STDC_HEADERS
+# include <stdio.h>
 # include <stdlib.h>
 #endif /* STDC_HEADERS */
 
@@ -20,23 +21,9 @@
 
 #include <assert.h>
 
-#include "ast.h"
+#include "ast-priv.h"
 
 #include "xmemory.h"
-
-
-#define AST_MAXCHILDREN		2
-
-
-/** Node of an abstract syntax tree.
- *
- * These nodes compose dependency expressions.
- */
-struct ast_st {
-	void *item;				/**< Payload */
-	enum ast_type type;			/**< Node type */
-	ast_t children[AST_MAXCHILDREN];	/**< Children */
-};
 
 
 ast_t
@@ -69,7 +56,7 @@ delete_ast(ast_t self, ast_item_dtor dtor)
 		assert(status == 0);
 	}
 
-	for (i = 0; i < AST_MAXCHILDREN; i++)
+	for (i = 0; i < AST_MAX_CHILDREN; i++)
 		if (self->children[i])
 			if (delete_ast(self->children[i], dtor) == -1)
 				return -1;

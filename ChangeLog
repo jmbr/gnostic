@@ -2,6 +2,23 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-16 14:48:29 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-139
+
+    Summary:
+      Implemented a preorder AST iterator + its unit test.
+    Revision:
+      gnostic--mainline--0.1--patch-139
+
+
+    new files:
+     .arch-ids/ast-itor.c.id .arch-ids/ast-itor.h.id
+     .arch-ids/ast-priv.h.id ast-itor.c ast-itor.h ast-priv.h
+     tests/.arch-ids/test-ast.exp.id tests/test-ast.exp
+
+    modified files:
+     ChangeLog TODO ast.c ast.h tests/test-ast.c
+
+
 2004-08-15 10:54:08 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-138
 
     Summary:
