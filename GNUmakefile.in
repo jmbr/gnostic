@@ -121,7 +121,6 @@ rmbak:
 
 mostlyclean: clean rmbak
 	$(RM) *.core core.*
-	$(MAKE) -C $(docdir) $@
 	$(MAKE) -C $(testsdir) $@
 
 clobber: rmbak clean mostlyclean

@@ -1,10 +1,12 @@
 \input texinfo
 
+@c %**start of header
 @setfilename gnostic.info
-@settitle Gnostic user's guide
+@settitle Gnostic. User's guide
+@c %**end of header
 
 @copying
-This is the user's guide for Gnostic 0.2.x
+This is the user's guide for Gnostic 0.2
 
 Copyright @copyright{} 2002, 2003, 2004 Juan M. Bello Rivas
 @end copying
@@ -12,6 +14,7 @@ Copyright @copyright{} 2002, 2003, 2004 Juan M. Bello Rivas
 @titlepage
 @title Gnostic 0.2
 @subtitle User's guide
+@subtitle Tutorial and reference manual.
 @author Juan M. Bello Rivas
 
 @page
@@ -23,7 +26,7 @@ Copyright @copyright{} 2002, 2003, 2004 Juan M. Bello Rivas
 
 @ifnottex
 @node Top
-@top Gnostic user's guide
+@top Gnostic. User's guide
 
 @insertcopying
 @end ifnottex
@@ -31,7 +34,6 @@ Copyright @copyright{} 2002, 2003, 2004 Juan M. Bello Rivas
 @menu
 * Introduction::	Introduction to Gnostic.
 * Tutorial::		Step by step guide to Gnostic.
-* Reference::		Reference manual.
 * Index::		Complete index.
 @end menu
 
@@ -46,13 +48,6 @@ Gnostic is a versatile task launcher aimed at network and host security scanning
 @chapter Tutorial
 
 @cindex tutorial
-
-foo
-
-@node Reference
-@chapter Reference
-
-@cindex reference
 
 foo
 

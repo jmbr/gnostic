@@ -50,6 +50,7 @@ gnostic.pdf: gnostic.texi
 
 clean:
 	$(RM) *.info
+	$(RM) *.log *.pdf
 	$(RM) -r gnostic
 
 rmbak:
