@@ -2,6 +2,21 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-20 15:48:38 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-22
+
+    Summary:
+      Removed an unneeded test file.
+    Revision:
+      gnostic--mainline--0.1--patch-22
+
+
+    removed files:
+     tests/.arch-ids/test-cleanup.c.id tests/test-cleanup.c
+
+    modified files:
+     ChangeLog deps.mk version.h
+
+
 2004-07-19 16:09:00 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-21
 
     Summary:
