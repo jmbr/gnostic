@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-23 16:14:50 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-34
+
+    Summary:
+      Removed un-needed include
+    Revision:
+      gnostic--mainline--0.1--patch-34
+
+
+    modified files:
+     ChangeLog exec.c
+
+
 2004-07-23 16:03:04 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-33
 
     Summary:

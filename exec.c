@@ -52,7 +52,6 @@
 #include "ast.h"
 #include "task.h"
 
-#include "xalloc.h"
 #include "debug.h"
 
 
