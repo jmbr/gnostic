@@ -46,6 +46,8 @@ new_task(char *name, astnode_t expr, char *actions)
 {
 	struct task *n;
 
+	assert(name && actions);
+
 	n = xmalloc(sizeof(struct task));
 
 	n->next = NULL;

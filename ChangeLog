@@ -2,6 +2,19 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-03 08:55:31 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-106
+
+    Summary:
+      Simplified the grammar.
+    Revision:
+      gnostic--mainline--0.1--patch-106
+
+
+    modified files:
+     ChangeLog GNUmakefile.in examples/bool.gns grammar.y scanner.l
+     task.c version.h
+
+
 2004-08-02 17:56:24 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-105
 
     Summary:

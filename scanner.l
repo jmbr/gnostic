@@ -1,7 +1,7 @@
 %{
 /**
  * @file scanner.l
- * @brief Scanner for gnostic's configuration files.
+ * @brief Scanner for Gnostic's task files.
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */

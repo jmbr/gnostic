@@ -5,23 +5,28 @@
 ##############################################################################
 
 
+# Confusing but...
+TRUE=0
+FALSE=1
+
+
 a: (b and c) or not f
 	echo "a: I'm satisfied."
 
 b: d or e
-	exit 1
+	exit $FALSE
 
 c: not e
-	exit 0
+	exit $TRUE
 
 d:
-	exit 0
+	exit $TRUE
 
 e:
-	exit 1
+	exit $FALSE
 
 f:
-	exit 1
+	exit $FALSE
 
 
 # vim: ft=sh

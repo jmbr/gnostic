@@ -1,7 +1,7 @@
 %{
 /**
  * @file grammar.y
- * @brief Grammar for gnostic's configuration files.
+ * @brief Grammar for Gnostic's task files.
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
@@ -55,8 +55,8 @@ static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 
 %union {
 	char *s;
-	struct task *t;
 	struct var *v;
+	struct task *t;
 	struct astnode *n;
 }
 
@@ -65,10 +65,10 @@ static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 
 %start conf
 
+%type <n> expr 
 %type <t> tasks task
-%type <n> dependencies expr 
-%type <s> IDENTIFIER ACTION action actions VAR_DECL
 %type <v> variable variables
+%type <s> IDENTIFIER ACTION action actions VAR_DECL
 
 %%
 
@@ -99,8 +99,11 @@ tasks           : task {
 		}
                 ;
 
-task            : IDENTIFIER ':' dependencies actions {
+task            : IDENTIFIER ':' expr actions {
 			$$ = new_task($1, $3, $4);
+		}
+		| IDENTIFIER ':' actions {
+			$$ = new_task($1, NULL, $3);
 		}
                 ;
 
@@ -114,13 +117,6 @@ action		: ACTION {
 			$$ = $1;
 		}
 		;
-
-dependencies	: expr {
-      			$$ = $1;
-		}
-		| /* Empty */ {
-			$$ = NULL;
-		}
 		;
 
 expr		: '(' expr ')' {
