@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-27 23:46:28 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-83
+
+    Summary:
+      Clarified the examples.
+    Revision:
+      gnostic--mainline--0.1--patch-83
+
+
+    modified files:
+     ChangeLog examples/netmap.gns examples/scan.gns
+
+
 2004-07-27 23:31:29 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-82
 
     Summary:

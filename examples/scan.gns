@@ -17,7 +17,9 @@ scan-requisites:
 	# Check for needed environment variables.
 	if [[ -z $root ]] || [[ -z $addr ]]; then
 	  echo "================================================"
-	  echo "Usage: scan <addr=IPv4 ADDRESS> [root=DIRECTORY]"
+	  echo ""
+	  echo "Usage: scan <addr=IPv4 address> [root=Directory]"
+	  echo ""
 	  echo "================================================"
 	  exit 1
 	fi
