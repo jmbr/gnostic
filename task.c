@@ -1,6 +1,5 @@
 /*
  * task.c -- Task management module.
- * $Id$
  */
 
 
@@ -26,17 +25,10 @@
 #include <assert.h>
 
 #include "task.h"
+#include "task-priv.h"
 #include "ast.h"
 
 #include "xalloc.h"
-
-
-struct task {
-	char *name;
-	char *actions;
-	astnode_t expr;
-	struct task *next;
-};
 
 
 struct task *

@@ -28,6 +28,7 @@
 #include "task-collection-priv.h"
 
 #include "task.h"
+#include "task-priv.h"
 #include "htab.h"
 #include "graph.h"
 

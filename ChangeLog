@@ -2,6 +2,21 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-25 16:47:08 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-63
+
+    Summary:
+      Enhanced documentation and refactored the task module.
+    Revision:
+      gnostic--mainline--0.1--patch-63
+
+
+    new files:
+     .arch-ids/task-priv.h.id task-priv.h
+
+    modified files:
+     ChangeLog deps.mk task-collection.c task.c task.h
+
+
 2004-07-25 15:37:45 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-62
 
     Summary:
