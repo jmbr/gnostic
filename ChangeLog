@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-16 22:44:44 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-146
+
+    Summary:
+      Updated house-keeping files.
+    Revision:
+      gnostic--mainline--0.1--patch-146
+
+
+    modified files:
+     ChangeLog deps.mk version.h
+
+
 2004-08-16 22:44:22 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-145
 
     Summary:
