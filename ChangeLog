@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-29 22:33:15 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-92
+
+    Summary:
+      Report tasks killed by a signal.
+    Revision:
+      gnostic--mainline--0.1--patch-92
+
+
+    modified files:
+     ChangeLog task-exec.c
+
+
 2004-07-29 03:20:41 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-91
 
     Summary:

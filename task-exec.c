@@ -86,7 +86,7 @@ task_exec(const struct task *self)
 	if (task_exec_deps(self) == 0)
 		status = task_exec_script(self);
 
-	info("gnostic: Task `%s' exited with status %d.\n", self->name, status);
+	info("gnostic: Task `%s' exited with status %d\n", self->name, status);
 
 	return status;
 }
@@ -119,7 +119,7 @@ child(int fds[2])
 }
 
 static int
-parent(int fds[2], pid_t pid, const char *src)
+parent(const char *name, int fds[2], pid_t pid, const char *src)
 {
 	int status;
 	size_t srclen = strlen(src);
@@ -132,8 +132,14 @@ parent(int fds[2], pid_t pid, const char *src)
 	if (waitpid(pid, &status, 0) == -1)
 		die("waitpid");
 
-	if (!WIFEXITED(status))
+	if (WIFSIGNALED(status)) {
+		error("gnostic: Task `%s' received signal number %d\n",
+			name, WTERMSIG(status));
 		return -1;
+	} else if (!WIFEXITED(status)) {
+		error("gnostic: Task `%s' terminated abnormally.\n", name);
+		return -1;
+	}
 	
 	return WEXITSTATUS(status);
 }
@@ -155,7 +161,7 @@ task_exec_script(const struct task *self)
 	case 0:
 		child(fds);
 	default:
-		status = parent(fds, pid, self->actions);
+		status = parent(self->name, fds, pid, self->actions);
 	}
 
 	return status;
