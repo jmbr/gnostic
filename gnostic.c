@@ -27,7 +27,6 @@
 
 #include "version.h"
 #include "debug.h"
-#include "xalloc.h"
 
 
 #define PROG_NAME		"gnostic"
@@ -62,6 +61,7 @@ main(int argc, char *argv[])
 		update_environ(argc - 3, &argv[3]);
 		exec(tasks, argv[2]);
 	}
+
 	delete_task_collection(tasks);
 	exit((status == 0) ? EXIT_SUCCESS : EXIT_FAILURE);
 }

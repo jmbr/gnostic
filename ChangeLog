@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-24 17:41:13 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-53
+
+    Summary:
+      Fixed a bug which prevented multiple variables from being declared.
+    Revision:
+      gnostic--mainline--0.1--patch-53
+
+
+    modified files:
+     ChangeLog gnostic.c grammar.y
+
+
 2004-07-24 16:18:43 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-52
 
     Summary:

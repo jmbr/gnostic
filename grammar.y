@@ -69,7 +69,11 @@ conf		: tasks {
       		}
 		;
 
-variables	: VAR_DECL {
+variables	: variable
+	  	| variables variable
+		;
+
+variable	: VAR_DECL {
 			if (putenv($1) == -1)
 				fatal_error("gnostic: Unable to declare %s", $1);
 		}
