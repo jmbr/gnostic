@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-26 23:07:29 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-73
+
+    Summary:
+      Removed a redundant statement.
+    Revision:
+      gnostic--mainline--0.1--patch-73
+
+
+    modified files:
+     ChangeLog examples/scan.gns
+
+
 2004-07-26 21:19:55 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-72
 
     Summary:

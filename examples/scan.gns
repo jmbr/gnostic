@@ -20,7 +20,6 @@ scan-requisites:
 	  echo "Usage: scan <addr=IPv4 ADDRESS> [root=DIRECTORY]"
 	  echo "================================================"
 	  exit 1
-	  exit 1
 	fi
 
 scan-cache:
