@@ -256,3 +256,16 @@ depend:
 	@echo Tracking dependencies
 	@echo =====================
 	$(CC) -MM -I. $(CPPFLAGS) $(CFLAGS) $(DEFS) $(INCLUDES) *.c > deps.mk;
+
+
+###############################################################################
+#
+# Misc.
+#
+###############################################################################
+
+.PHONY: loc
+
+loc: clobber $(wildcard *.[chly])
+	@echo -n "Total lines of code: "; \
+	echo $$[`c_count *.[ch] | tail -1` + `lex_count *.[ly] | tail -1`]

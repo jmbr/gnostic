@@ -66,39 +66,16 @@ delete_task(struct task *self)
 	return 0;
 }
 
-
-
-const char *
-task_get_name(const struct task *self)
+int
+task_print(const struct task *self)
 {
 	if (!self)
-		return NULL;
+		return -1;
 
-	assert(self->name);
+	if (fprintf(stdout, "%s\n", self->name) < 0)
+		return -1;
 
-	return (const char *) self->name;
-}
-
-
-const char *
-task_get_actions(const struct task *self)
-{
-	if (!self)
-		return NULL;
-
-	assert(self->actions);
-
-	return (const char *) self->actions;
-}
-
-
-const astnode_t
-task_get_expr(const struct task *self)
-{
-	if (!self)
-		return NULL;
-
-	return (const astnode_t) self->expr;
+	return 0;
 }
 
 
@@ -111,7 +88,7 @@ static int
 check_deps(const struct task *cur, const struct task *prev, astnode_t n)
 {
 	int status = 0;
-	struct task *u;
+	const struct task *u;
 
 	assert(cur);
 
@@ -123,12 +100,11 @@ check_deps(const struct task *cur, const struct task *prev, astnode_t n)
 		u = astnode_get_item(n);
 
 		if (cur != u)
-			status = check_deps(cur, u, task_get_expr(u));
+			status = check_deps(cur, u, u->expr);
 		else
 			fatal_error("gnostic: There are circular dependencies "
-				    "between " "`%s' and `%s'.\n",
-				    task_get_name(cur),
-				    task_get_name((prev) ? prev : cur));
+				    "between " "`%s' and `%s'.\n", cur->name,
+				    (prev) ? prev->name : cur->name);
 		break;
 	case N_AND:
 	case N_OR:
@@ -148,24 +124,5 @@ check_deps(const struct task *cur, const struct task *prev, astnode_t n)
 int
 task_check_deps(const struct task *self)
 {
-	astnode_t n;
-
-	n = task_get_expr(self);
-	if (!n)
-		return 0;
-
-	return (check_deps(self, NULL, n) == 0) ? 0 : -1;
-}
-
-
-int
-task_print(const struct task *self)
-{
-	if (!self)
-		return -1;
-
-	if (fprintf(stdout, "%s\n", self->name) < 0)
-		return -1;
-
-	return 0;
+	return (check_deps(self, NULL, self->expr) == 0) ? 0 : -1;
 }

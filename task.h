@@ -45,17 +45,29 @@ extern struct task *new_task(char *name, astnode_t expr, char *actions);
  */
 extern int delete_task(struct task *self);
 
+/** task printer.
+ * Prints the name of the specified task in stdout.
+ *
+ * @param self A pointer to the structure.
+ * @return 0 on success, -1 on failure.
+ */
+extern int task_print(const struct task *self);
+
 /** task launcher.
  * Executes the given task (but only if its depending tasks are successful).
  *
- * @param self A pointer to a task.
+ * @param self A pointer to the structure.
  * @return 0 on success, -1 on failure.
  */
 extern int task_exec(const struct task *self);
 
+/** task dependency checker.
+ * Verifies the given task doesn't have any cyclic dependencies.
+ *
+ * @param self A pointer to the structure
+ * @return 0 on success, -1 on failure.
+ */
 extern int task_check_deps(const struct task *self);
-
-extern int task_print(const struct task *self);
 
 
 #endif /* !TASK_H */

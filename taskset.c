@@ -59,7 +59,6 @@ new_taskset(const char *filename)
 
 	n->tasks = NULL;
 	n->symtab = new_hashtab(0, (hashtab_cmp) strcmp);
-	//n->depgraph = new_graph();
 
 	if (taskset_read(n, filename) == -1) {
 		delete_taskset(n);
@@ -78,7 +77,6 @@ delete_taskset(struct taskset *self)
 	delete_env_var_list(self->env_vars);
 	delete_tasklist(self->tasks);
 	delete_hashtab(self->symtab);
-	//delete_graph(self->depgraph);
 	xfree(self);
 
 	return 0;

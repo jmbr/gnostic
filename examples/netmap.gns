@@ -17,14 +17,7 @@ netmap: netmap-requisites and (netmap-cache or (ping and traceroute))
 	dir=$root/ipv4/`ip2dir $addr`
 
 	awk '
-	BEGIN {
-	}
-
-	{
-	}
-
-	END {
-	}
+	/* TODO */
 	' $dir/ping.out #> $dir/ping-results
 
 netmap-requisites:

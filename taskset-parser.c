@@ -28,8 +28,8 @@
 #include <assert.h>
 
 #include "taskset-priv.h"
-#include "ast.h"
 #include "grammar.h"
+#include "ast.h"
 
 #include "err.h"
 #include "xmemory.h"

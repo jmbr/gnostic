@@ -14,7 +14,7 @@
 #include "hashtab.h"
 
 
-/** An aggregate of tasks.
+/** An aggregate of tasks plus their environment.
  */
 struct taskset {
 	struct env_var *env_vars;	/**< Pointer to the head of a list of

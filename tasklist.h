@@ -39,10 +39,27 @@ extern struct tasklist *new_tasklist(void);
  */
 extern int delete_tasklist(struct tasklist *self);
 
+/** tasklist append.
+ * Adds a new task at the tail of the list.
+ *
+ * @param self A pointer to the structure.
+ * @param t A pointer to the task to be appended.
+ */
 extern void tasklist_append(struct tasklist *self, struct task *t);
 
+/*@{*/
+/** tasklist map function.
+ * Applies the function specified by the last argument to each of the tasks
+ * contained in the list. If a function returns -1 when it is applied to a
+ * given task the whole loop will be canceled.
+ *
+ * @param self A pointer to the structure.
+ * @param fn A ponter to the function to be applied.
+ * @return 0 on success, -1 on failure.
+ */
 extern int tasklist_map(struct tasklist *self, tasklist_fn fn);
 extern int tasklist_map2(struct tasklist *self, void *arg, tasklist_fn2 fn);
+/*}@*/
 
 
 #endif /* !TASKLIST_H */

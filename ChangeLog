@@ -2,6 +2,20 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-27 22:59:50 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-81
+
+    Summary:
+      Refactored and improved API documentation. Added a new loc target to the make file to count the number of lines of code.
+    Revision:
+      gnostic--mainline--0.1--patch-81
+
+
+    modified files:
+     ChangeLog GNUmakefile.in examples/netmap.gns task.c task.h
+     tasklist.c tasklist.h taskset-parser.c taskset-priv.h
+     taskset.c version.h
+
+
 2004-07-27 21:20:39 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-80
 
     Summary:
