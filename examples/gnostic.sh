@@ -1,0 +1,48 @@
+##############################################################################
+#
+# gnostic.sh -- Miscellaneous utility functions for gnostic tasks.
+#
+##############################################################################
+
+
+# ============================================================================
+# Converts an IPv4 address to a directory name.
+# ============================================================================
+
+ip2dir()
+{
+	if [ $# -ne 1 ]; then
+		exit 1
+	fi
+
+	echo $1 | sed -e 's,\.,/,g'
+}
+
+
+# ============================================================================
+# Variable accessors. Abstract the way task-defined variables are accessed.
+# ============================================================================
+
+getvar()
+{
+	if [ $# -ne 1 ]; then
+		exit 1
+	fi
+
+	[[ -f $root/vars/$1 ]] || exit 1
+
+	cat $root/vars/$1
+}
+
+setvar()
+{
+	if [ $# -ne 2 ]; then
+		exit 1
+	fi
+
+	mkdirhier $root/vars/
+	echo $2 > $root/vars/$1
+}
+
+
+# vim: ts=4 sw=4 noet filetype=sh

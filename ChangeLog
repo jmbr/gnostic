@@ -2,6 +2,25 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-25 15:34:01 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-61
+
+    Summary:
+      Improved some of the examples.
+    Revision:
+      gnostic--mainline--0.1--patch-61
+
+
+    modified files:
+     ChangeLog examples/gnostic.sh examples/netmap.gns
+     examples/scan.gns
+
+    renamed files:
+     examples/.arch-ids/libgnst.sh.id
+       ==> examples/.arch-ids/gnostic.sh.id
+     examples/libgnst.sh
+       ==> examples/gnostic.sh
+
+
 2004-07-25 15:33:22 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-60
 
     Summary:

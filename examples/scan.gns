@@ -7,24 +7,30 @@
 
 root=/tmp/gnostic
 
+scriptdir=.
 
-scan: scan-requisites or nmap-scan
+
+scan: scan-requisites and (scan-cache or nmap-scan)
 	# XXX Do something.
 
 scan-requisites:
 	# Check for needed environment variables.
 	if [[ -z $root ]] || [[ -z $addr ]]; then
-	  echo "*** The variables 'root' or 'addr' weren't set"
+	  echo "================================================"
+	  echo "Usage: scan <addr=IPv4 ADDRESS> [root=DIRECTORY]"
+	  echo "================================================"
+	  exit 1
 	  exit 1
 	fi
 
-	source libgnst.sh
+scan-cache:
+	# Check if the work has already been done.
+	source $scriptdir/gnostic.sh
 	[[ -f $root/ipv4/`ip2dir $addr`/nmap-scan.xml ]] || exit 1
 
 nmap-scan: nmap-scan-requisites
 	# Nmap-scan a target with all the relevant options.
-
-	source libgnst.sh
+	source $scriptdir/gnostic.sh
 
 	dir=$root/ipv4/`ip2dir $addr`
 	mkdirhier $dir
