@@ -86,7 +86,8 @@ setup_environ(int nvars, char *vars[], const struct task_collection *tasks)
 	const struct env_var *var;
 
 	for (var = task_collection_get_vars(tasks); var; var = var->next)
-		putenv(var->v);
+		if (putenv(var->v) == -1)
+			fatal_error("gnostic: Unable to declare %s", var->v);
 
 	for (i = 0; i < nvars; i++)
 		if (putenv(vars[i]) == -1)

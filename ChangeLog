@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-25 10:23:51 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-59
+
+    Summary:
+      Fixed a small bug wrt environment variable set-up
+    Revision:
+      gnostic--mainline--0.1--patch-59
+
+
+    modified files:
+     ChangeLog gnostic.c
+
+
 2004-07-25 00:43:11 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-58
 
     Summary:
