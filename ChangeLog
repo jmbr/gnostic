@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-26 01:00:15 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-68
+
+    Summary:
+      Changed the behaviour of xfree wrt NULL pointers.
+    Revision:
+      gnostic--mainline--0.1--patch-68
+
+
+    modified files:
+     ChangeLog gnostic.c xalloc.h
+
+
 2004-07-26 00:59:18 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-67
 
     Summary:

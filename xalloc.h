@@ -28,8 +28,13 @@ extern void *xrealloc(void *ptr, size_t size);
 
 extern char *xstrdup(const char *s);
 
-/* Be careful with the possible side-effects. */
-#define xfree(ptr)	 do { assert(ptr); free(ptr); ptr = NULL; } while (0)
+/* Be careful with the possible side-effects! */
+#define xfree(ptr)	 do { \
+	if (ptr) { \
+		free(ptr); \
+		ptr = NULL; \
+	} \
+} while (0)
 
 
 #endif /* !XALLOC_H */
