@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-30 12:05:09 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-101
+
+    Summary:
+      Removed useless RANLIB definition from the main makefile.
+    Revision:
+      gnostic--mainline--0.1--patch-101
+
+
+    modified files:
+     ChangeLog GNUmakefile.in
+
+
 2004-07-30 11:56:20 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-100
 
     Summary:
