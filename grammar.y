@@ -63,7 +63,7 @@ static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 }
 
 %left AND OR
-%left NOT
+%nonassoc NOT
 
 %start conf
 
@@ -130,7 +130,7 @@ expr		: '(' expr ')' {
       		| expr OR expr {
 			$$ = do_or($1, $3);
 		}
-		| NOT expr %prec NOT {
+		| NOT expr {
 			$$ = do_not($2);
 		}
 		| IDENTIFIER {
