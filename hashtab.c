@@ -4,6 +4,10 @@
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
+/* TODO This chained hash table should be replaced by one with open (linear)
+ * addressing. That would reduce the overhead due to allocating hashnodes and
+ * would make iteration *much* simpler.
+ */
 
 
 #ifdef HAVE_CONFIG_H
@@ -22,6 +26,8 @@
 
 #include "hashtab.h"
 
+#include "xmemory.h"
+
 
 struct hashnode {
 	const void *key;
@@ -29,8 +35,9 @@ struct hashnode {
 	struct hashnode *next;
 };
 
-struct hashtab {
+struct hashtab_st {
 	size_t len;
+	size_t nitems;
 	struct hashnode **tab;
 	hashtab_cmp cmp;
 	hashtab_dtor dtor;
@@ -67,9 +74,7 @@ new_hashnode(const void *key, void *value)
 
 	assert(value);
 
-	hn = malloc(sizeof(struct hashnode));
-	if (!hn)
-		return NULL;
+	hn = xmalloc(sizeof(struct hashnode));
 
 	hn->key = key;
 	hn->value = value;
@@ -82,21 +87,16 @@ new_hashnode(const void *key, void *value)
 hashtab_t
 new_hashtab(size_t len, hashtab_cmp cmp, hashtab_dtor dtor)
 {
-	struct hashtab *ht;
+	struct hashtab_st *ht;
 
 	if (!cmp)
 		return NULL;
 
-	ht = malloc(sizeof(struct hashtab));
-	if (!ht)
-		return NULL;
+	ht = xmalloc(sizeof(struct hashtab_st));
 
+	ht->nitems = 0;
 	ht->len = (len == 0) ? HASHTAB_DEFAULT_LEN : len;
-	ht->tab = calloc(ht->len, sizeof(struct hashnode));
-	if (!ht->tab) {
-		free(ht);
-		return NULL;
-	}
+	ht->tab = xcalloc(ht->len, sizeof(struct hashnode));
 	ht->cmp = cmp;
 	ht->dtor = dtor;
 
@@ -146,6 +146,8 @@ hashtab_lookup(hashtab_t self, const void *key, size_t len,
 		n->next = self->tab[h];
 		self->tab[h] = n;
 
+		++self->nitems;
+
 		return (void *) n->value;
 	}
 
@@ -154,4 +156,13 @@ hashtab_lookup(hashtab_t self, const void *key, size_t len,
 			return (void *) n->value;
 
 	return NULL;
+}
+
+ssize_t
+hashtab_get_len(const hashtab_t self)
+{
+	if (!self)
+		return -1;
+
+	return self->nitems;
 }

@@ -22,16 +22,16 @@
 /**
  * Default hash table length.
  */
-#define HASHTAB_DEFAULT_LEN		223	/* Tuned for gnostic */
-/*
 #define HASHTAB_DEFAULT_LEN		797
+/*
 #define HASHTAB_DEFAULT_LEN		6421
 */
 
 
 /** Chained hash table.
  */
-typedef struct hashtab *hashtab_t;
+typedef struct hashtab_st *hashtab_t;
+
 
 /** Comparison function.
  * @returns 0 if the items pointed to by the parameters are equal.
