@@ -66,12 +66,9 @@ main(int argc, char *argv[])
 
 	gnostic_check_deps(g);
 
-	switch (argc) {
-	case 2:
-		for (t = g->tasks; t; t = task_get_next(t))
-			printf("%s\n", task_get_name(t));
-		break;
-	default:
+	if (argc == 2)
+		tasklist_print(g->tasks, stdout);
+	else {
 		t = htab_lookup_s(g->symtab, argv[2], 0, NULL);
 		if (!t)
 			fatal_error("gnostic: Unknown task `%s'.\n", argv[2]);

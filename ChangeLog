@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-24 09:52:55 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-45
+
+    Summary:
+      Implemented the tasklist_print function.
+    Revision:
+      gnostic--mainline--0.1--patch-45
+
+
+    modified files:
+     ChangeLog gnostic.c task.c task.h
+
+
 2004-07-23 23:27:45 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-44
 
     Summary:

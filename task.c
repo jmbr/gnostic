@@ -89,7 +89,7 @@ delete_tasklist(struct task *self)
 }
 
 
-const char *
+inline const char *
 task_get_name(const struct task *self)
 {
 	if (!self)
@@ -132,10 +132,26 @@ task_set_next(struct task *self, struct task *t)
 	return 0;
 }
 
-struct task *
+inline struct task *
 task_get_next(const struct task *self)
 {
 	assert(self);
 
 	return self->next;
+}
+
+
+int
+tasklist_print(const struct task *head, FILE *fp)
+{
+	const struct task *t;
+
+	if (!head || !fp)
+		return -1;
+
+	for (t = head; t; t = task_get_next(t))
+		if (fprintf(fp, "%s\n", task_get_name(t)) < 0)
+			return -1;
+
+	return 0;
 }

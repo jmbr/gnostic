@@ -29,6 +29,7 @@ extern const astnode_t task_get_expr(const struct task *self);
 extern int task_set_next(struct task *self, struct task *t);
 extern struct task *task_get_next(const struct task *self);
 
+extern int tasklist_print(const struct task *head, FILE *fp);
 extern int delete_tasklist(struct task *self);
 
 
