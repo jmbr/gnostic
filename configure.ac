@@ -69,7 +69,7 @@ AC_FUNC_REALLOC
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([memset strdup strerror putenv])
 
-AC_CONFIG_FILES([GNUmakefile tests/GNUmakefile doc/GNUmakefile doxy.cfg])
+AC_CONFIG_FILES([GNUmakefile doc/GNUmakefile doxy.cfg])
 AC_CONFIG_COMMANDS([stamp-h], [echo timestamp > stamp-h])
 AC_OUTPUT
 

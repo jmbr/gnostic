@@ -2,6 +2,25 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-17 14:04:29 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-154
+
+    Summary:
+      Updated build processes.
+    Revision:
+      gnostic--mainline--0.1--patch-154
+
+
+    removed files:
+     tests/.arch-ids/=id
+
+    modified files:
+     ChangeLog GNUmakefile.in configure.ac deps.mk memcheck.awk
+     version.h
+
+    removed directories:
+     tests tests/.arch-ids
+
+
 2004-08-17 13:36:35 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-153
 
     Summary:

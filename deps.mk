@@ -15,5 +15,12 @@ taskset.o: taskset.c config.h taskset-priv.h task.h ast.h vars.h \
   taskset.h tasklist.h hashtab.h err.h xmemory.h
 taskset-parser.o: taskset-parser.c config.h taskset-priv.h task.h ast.h \
   vars.h taskset.h tasklist.h hashtab.h grammar.h err.h xmemory.h
+test-ast.o: test-ast.c config.h ast.h
+test-grammar.o: test-grammar.c config.h grammar.h tasklist.h task.h ast.h
+test-hashtab.o: test-hashtab.c config.h hashtab.h xmemory.h
+testskeleton.o: testskeleton.c config.h
+test-stack.o: test-stack.c config.h stack.h
+test-tasklist.o: test-tasklist.c config.h tasklist.h task.h ast.h \
+  xmemory.h
 vars.o: vars.c config.h vars.h xmemory.h
 xmemory.o: xmemory.c config.h

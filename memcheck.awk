@@ -1,5 +1,3 @@
-#!/bin/awk -f
-
 /malloc\/free:\ [0-9]+/ {
 	leaked = $3 - $5;
 

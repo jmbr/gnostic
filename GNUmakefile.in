@@ -75,10 +75,22 @@ VERSION := @VERSION@
 #
 ###############################################################################
 
-SOURCES := gnostic.c \
-	xmemory.c err.c \
-	task.c task-exec.c stack.c ast.c ast-itor.c vars.c \
-	tasklist.c hashtab.c taskset.c scanner.c grammar.c taskset-parser.c
+SOURCES := \
+	ast.c \
+	ast-itor.c \
+	err.c \
+	gnostic.c \
+	grammar.c \
+	hashtab.c \
+	scanner.c \
+	stack.c \
+	task.c \
+	task-exec.c \
+	tasklist.c \
+	taskset.c \
+	taskset-parser.c \
+	vars.c \
+	xmemory.c
 
 OBJECTS := $(SOURCES:%.c=%.o) $(LIBOBJS)
 
@@ -185,6 +197,29 @@ check: gnostic tests
 
 ###############################################################################
 #
+# Documentation.
+#
+###############################################################################
+
+.PHONY: doc userdoc apidoc
+
+DOXYGEN := @DOXYGEN@
+
+doc: userdoc
+	$(MAKE) -C $(docdir)
+
+apidoc: doxy.cfg
+	$(DOXYGEN) $(srcdir)/doxy.cfg
+	@echo =======================================
+	@echo API documentation for $(PACKAGE) is ready
+	@echo =======================================
+
+doxy.cfg: doxy.cfg.in
+	$(SHELL) ./config.status doxy.cfg
+
+
+###############################################################################
+#
 # Cleanup.
 #
 ###############################################################################
@@ -210,29 +245,6 @@ distclean: clobber
 	$(RM) config.h stamp-h
 	$(RM) -r $(srcdir)/autom4te.cache
 	$(RM) GNUmakefile $(docdir)/GNUmakefile
-
-
-###############################################################################
-#
-# Documentation.
-#
-###############################################################################
-
-.PHONY: doc userdoc apidoc
-
-DOXYGEN := @DOXYGEN@
-
-doc: userdoc
-	$(MAKE) -C $(docdir)
-
-apidoc: doxy.cfg
-	$(DOXYGEN) $(srcdir)/doxy.cfg
-	@echo =======================================
-	@echo API documentation for $(PACKAGE) is ready
-	@echo =======================================
-
-doxy.cfg: doxy.cfg.in
-	$(SHELL) ./config.status doxy.cfg
 
 
 ###############################################################################
@@ -326,7 +338,7 @@ depend:
 
 .PHONY: loc-count
 
-ALL_SOURCES := $(filter-out grammar.c grammar.h scanner.c, $(wildcard *.[chly]))
+ALL_SOURCES := $(filter-out test-% grammar.c grammar.h scanner.c, $(wildcard *.[chly]))
 
 TAGS: tags;
 tags: $(ALL_SOURCES)
