@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-23 23:27:45 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-44
+
+    Summary:
+      Imported a newer version of the default installation file.
+    Revision:
+      gnostic--mainline--0.1--patch-44
+
+
+    modified files:
+     ChangeLog INSTALL
+
+
 2004-07-23 22:48:25 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-43
 
     Summary:
