@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-GNOSTIC=../gnostic-bin
+GNOSTIC=../gnostic
 
 $GNOSTIC ./circular.gns
 RETVAL=$?

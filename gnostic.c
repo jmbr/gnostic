@@ -43,6 +43,7 @@
 static void usage(void) __attribute__ ((noreturn));
 
 static int gnostic_check_deps(struct gnostic *self);
+static void add_to_environ(int nvars, char *vars[]);
 
 
 
@@ -73,7 +74,9 @@ main(int argc, char *argv[])
 		if (!t)
 			fatal_error("gnostic: Unknown task `%s'.\n", argv[2]);
 
-		status = execute(t, &argv[3]);
+		add_to_environ(argc - 3, &argv[3]);
+
+		status = execute(t);
 	}
 
 	delete_gnostic(g);
@@ -143,4 +146,15 @@ gnostic_check_deps(struct gnostic *self)
 						(graph_errback_fn) errback);
 
 	return 0;
+}
+
+
+void
+add_to_environ(int nvars, char *vars[])
+{
+	int i;
+
+	for (i = 0; i < nvars; i++)
+		if (putenv(vars[i]) == -1)
+			fatal_error("gnostic: Unable to declare %s", vars[i]);
 }

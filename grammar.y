@@ -27,7 +27,9 @@
 #include "task.h"
 #include "ast.h"
 #include "scanner.h"
+
 #include "xalloc.h"
+#include "debug.h"
 
 
 struct task *tasks = NULL;
@@ -40,7 +42,7 @@ static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 %}
 
 %token AND OR NOT
-%token IDENTIFIER ACTION
+%token VAR_DECL IDENTIFIER ACTION
 
 %union {
 	char *s;
@@ -55,13 +57,22 @@ static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 
 %type <t> tasks task
 %type <n> dependencies expr 
-%type <s> IDENTIFIER ACTION action actions
+%type <s> IDENTIFIER VAR_DECL ACTION action actions
 
 %%
 
 conf		: tasks {
       			tasks = $1;
+		}
+      		| variables tasks {
+      			tasks = $2;
       		}
+		;
+
+variables	: VAR_DECL {
+			if (putenv($1) == -1)
+				fatal_error("gnostic: Unable to declare %s", $1);
+		}
 		;
 
 tasks           : task

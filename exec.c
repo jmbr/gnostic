@@ -1,8 +1,6 @@
 /*
  * exec.c -- Implements task execution.
- * $Id$
  */
-
 /*
  * "Within the armor is the butterfly and within the butterfly is the signal
  * from another star." --Philip K. Dick
@@ -63,56 +61,58 @@
 #endif /* HAVE_STRERROR */
 
 
-/** Execution context.
-* Packs together a set of structures needed throughout the execution stage.
-*/
-struct exec_ctx {
-	char **envp;
-	const struct task *t;
-};
+static int exec_deps(const struct task *t);
+static int exec_script(const struct task *t);
 
-
-static int exec_script(struct exec_ctx *ctx);
-static int eval_expression(struct exec_ctx *ctx, const astnode_t n);
+static int eval_expression(const astnode_t n);
 
 
 
 int
-execute(const struct task *t, char **envp)
+execute(const struct task *t)
 {
 	int status;
 	const char *name;
-	astnode_t expr;
-	struct exec_ctx ctx = { envp, t };
 
 	if (!t)
 		return -1;
 
 	name = task_get_name(t);
-	expr = task_get_expr(t);
+	assert(name);
 
-        if (expr) {
-		dprintf("gnostic: Trying to satisfy dependencies for `%s'.\n",
-			name);
-		if (!eval_expression(&ctx, expr)) {
-			dprintf("gnostic: Unable to satisfy dependencies "
-				"for `%s'.\n", name);
-			return -1;
-		}
-		dprintf("gnostic: Done with dependencies for `%s'.\n", name);
-        }
+	dprintf("gnostic: Trying to satisfy dependencies for `%s'.\n", name);
+	if (exec_deps(t) == -1) {
+		dprintf("gnostic: Unable to satisfy dependencies for `%s'.\n", name);
+		return -1;
+	}
+	dprintf("gnostic: Done with dependencies for `%s'.\n", name);
 
 	dprintf("gnostic: Executing `%s'.\n", name);
-	status = exec_script(&ctx);
+	status = exec_script(t);
 	dprintf("gnostic: Task `%s' exited with status %d.\n", name, status);
 
 	return status;
 }
 
+int
+exec_deps(const struct task *t)
+{
+	astnode_t expr;
+
+	assert(t);
+
+	expr = task_get_expr(t);
+
+        if (!expr)
+		return 0;
+
+	return (eval_expression(expr)) ? 0 : -1;
+}
+
 
 
 static void
-child(int fds[2], char **envp)
+child(int fds[2])
 {
 	char arg[_POSIX_PATH_MAX];
 	char *argv[] = { "/bin/sh", arg, NULL };
@@ -121,8 +121,8 @@ child(int fds[2], char **envp)
 
 	sprintf(arg, "/dev/fd/%u", fds[0]);
 
-	if (execve("/bin/sh", argv, envp) == -1)
-		die("execve");
+	if (execv("/bin/sh", argv) == -1)
+		die("execv");
 }
 
 static int
@@ -147,12 +147,12 @@ parent(int fds[2], pid_t pid, const char *src)
 }
 
 int
-exec_script(struct exec_ctx *ctx)
+exec_script(const struct task *t)
 {
 	pid_t pid;
 	int fds[2], status = -1;
 
-	assert(ctx);
+	assert(t);
 
 	if (pipe(fds) == -1)
 		die("pipe");
@@ -161,9 +161,9 @@ exec_script(struct exec_ctx *ctx)
 	case -1:
 		die("fork");
 	case 0:
-		child(fds, ctx->envp);
+		child(fds);
 	default:
-		status = parent(fds, pid, task_get_actions(ctx->t));
+		status = parent(fds, pid, task_get_actions(t));
 	}
 
 	return status;
@@ -175,27 +175,27 @@ exec_script(struct exec_ctx *ctx)
  * @return 1 on success, 0 on failure.
  */
 int
-eval_expression(struct exec_ctx *ctx, const astnode_t n)
+eval_expression(const astnode_t n)
 {
 	int status = 0;	
 
-	assert(ctx);
+	assert(n);
 
 	switch (astnode_get_type(n)) {
 	case N_ID:
-		status = (execute(astnode_get_item(n), ctx->envp) == 0)
+		status = (execute(astnode_get_item(n)) == 0)
 			? 1 : 0;
 		break;
 	case N_AND:
-		status = (eval_expression(ctx, astnode_get_lhs(n))
-			&& eval_expression(ctx, astnode_get_rhs(n)));
+		status = (eval_expression(astnode_get_lhs(n))
+			&& eval_expression(astnode_get_rhs(n)));
 		break;
 	case N_OR:
-		status = (eval_expression(ctx, astnode_get_lhs(n))
-			|| eval_expression(ctx, astnode_get_rhs(n)));
+		status = (eval_expression(astnode_get_lhs(n))
+			|| eval_expression(astnode_get_rhs(n)));
 		break;
 	case N_NOT:
-		status = (!eval_expression(ctx, astnode_get_rhs(n)));
+		status = (!eval_expression(astnode_get_rhs(n)));
 		break;
 	default:
 		assert(0);

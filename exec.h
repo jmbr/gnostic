@@ -9,7 +9,7 @@
 #include "task.h"
 
 
-extern int execute(const struct task *t, char **envp);
+extern int execute(const struct task *t);
 
 
 #endif /* !EXEC_H */

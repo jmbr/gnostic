@@ -83,9 +83,9 @@ OBJECTS := $(SOURCES:%.c=%.o) $(LIBOBJS)
 .PHONY:
 .PHONY: all
 
-all: gnostic-bin gnostic
+all: gnostic
 	
-gnostic-bin: $(OBJECTS)
+gnostic: $(OBJECTS)
 	$(LINK) $^ -o $@ $(LIBS)
 
 scanner.c: scanner.l grammar.c
@@ -101,11 +101,6 @@ grammar.c: grammar.y
 	  fi; \
 	fi
 
-gnostic: GNUmakefile $(srcdir)/gnostic.in
-	sed -e 's,@bindir\@,$(bindir),g' $(srcdir)/gnostic.in > gnostic.tmp
-	chmod a+x gnostic.tmp
-	mv -f gnostic.tmp $@
-
 
 ###############################################################################
 #
@@ -116,7 +111,7 @@ gnostic: GNUmakefile $(srcdir)/gnostic.in
 .PHONY: clean clobber rmbak
 
 clean:
-	$(RM) gnostic gnostic.tmp gnostic-bin
+	$(RM) gnostic
 	$(RM) $(OBJECTS)
 	$(MAKE) -C $(docdir) clean
 	$(MAKE) -C $(testsdir) clean
@@ -193,7 +188,6 @@ doxy.cfg: doxy.cfg.in
 install: all
 	$(SHTOOL) mkdir -f -p $(DESTDIR)$(bindir)
 	$(INSTALL_PROGRAM) gnostic $(DESTDIR)$(bindir)/
-	$(INSTALL_PROGRAM) gnostic-bin $(DESTDIR)$(bindir)/
 
 install-strip:; $(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' install
 

@@ -8,7 +8,7 @@
 #ifndef _VERSION_H_
 #define _VERSION_H_
 
-#define VERSION 0x002205
+#define VERSION 0x002206
 
 typedef struct {
     const int   v_hex;
@@ -32,14 +32,14 @@ extern version_t version;
 #undef  _VERSION_H_AS_HEADER_
 
 version_t version = {
-    0x002205,
-    "0.2.5",
-    "0.2.5 (23-Jul-2004)",
-    "This is gnostic, Version 0.2.5 (23-Jul-2004)",
-    "gnostic 0.2.5 (23-Jul-2004)",
-    "gnostic/0.2.5",
-    "@(#)gnostic 0.2.5 (23-Jul-2004)",
-    "$Id: gnostic 0.2.5 (23-Jul-2004) $"
+    0x002206,
+    "0.2.6",
+    "0.2.6 (24-Jul-2004)",
+    "This is gnostic, Version 0.2.6 (24-Jul-2004)",
+    "gnostic 0.2.6 (24-Jul-2004)",
+    "gnostic/0.2.6",
+    "@(#)gnostic 0.2.6 (24-Jul-2004)",
+    "$Id: gnostic 0.2.6 (24-Jul-2004) $"
 };
 
 #endif /* _VERSION_H_AS_HEADER_ */

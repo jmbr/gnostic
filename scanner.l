@@ -25,6 +25,9 @@
 
 
 #define YY_NO_UNPUT	1
+
+
+unsigned int nline = 1;
 %}
 
 %x ACTIONS
@@ -46,6 +49,12 @@ not {
         return NOT;
 }
 
+{IDENTIFIER}=.*$ {
+	++nline;
+        yylval.s = xstrdup(yytext);
+        return VAR_DECL;
+}
+
 {IDENTIFIER} {
         yylval.s = xstrdup(yytext);
         return IDENTIFIER;
@@ -56,6 +65,7 @@ not {
 }
 
 <ACTIONS>.*\n {
+	++nline;
         BEGIN(INITIAL);
         yylval.s = xstrdup(yytext);
         return ACTION;
@@ -65,8 +75,13 @@ not {
 	/* Ignore comments */
 }
 
-[\ \t\n] {
-	/* Ignore spaces and newlines */
+[\ \t] {
+	/* Ignore spaces */
+}
+
+\n {
+	/* Ignore newlines */
+	++nline;
 }
 
 . {
@@ -78,5 +93,5 @@ not {
 void
 yyerror(char *s)
 {
-	fatal_error("%s\n", s);
+	fatal_error("%s at line %d\n", s, nline);
 }

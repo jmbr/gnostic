@@ -2,6 +2,22 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-24 11:18:13 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-47
+
+    Summary:
+      Added support for user-specified environment variables declared in the configuration files. The whole mechanism for handling environment variables has been simplified dramatically.
+    Revision:
+      gnostic--mainline--0.1--patch-47
+
+
+    removed files:
+     .arch-ids/gnostic.in.id gnostic.in
+
+    modified files:
+     ChangeLog GNUmakefile.in exec.c exec.h gnostic.c grammar.y
+     scanner.l tests/test-gnostic.sh version.h
+
+
 2004-07-24 09:59:35 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-46
 
     Summary:
