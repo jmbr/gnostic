@@ -26,10 +26,6 @@
 #include "xmemory.h"
 
 
-struct tuple {
-	ast_t parent, next;
-};
-
 struct ast_itor_st {
 	ast_t root, next;
 	stack_t stack;
