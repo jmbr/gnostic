@@ -1,6 +1,6 @@
 /**
  * @file taskset-parser.c
- * @brief Read a configuration file and transform it into a taskset.
+ * @brief Reads a configuration file and transform it into a taskset.
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
@@ -47,7 +47,7 @@ extern int yyparse(void);
  * This function translates task names contained in the abstract syntax tree
  * into pointers to the appropriate task structures.
  */
-static void expr_resolve(struct task *t, hashtab_t symtab, astnode_t n);
+static void expr_resolve(hashtab_t symtab, struct task *t, astnode_t n);
 
 
 
@@ -85,7 +85,7 @@ taskset_parse(struct taskset *self, const char *filename)
 	tasklist_map2(self->tasks, self->symtab, (tasklist_fn2) fill_symtab);
 
 	for (t = self->tasks->head; t; t = t->next)
-		expr_resolve(t, self->symtab, t->expr);
+		expr_resolve(self->symtab, t, t->expr);
 
 	return fclose(yyin);
 }
@@ -98,7 +98,7 @@ taskset_parse(struct taskset *self, const char *filename)
  * appropriate task structure.
  */
 static void
-ident_resolve(struct task *t, hashtab_t symtab, astnode_t n)
+ident_resolve(hashtab_t symtab, struct task *t, astnode_t n)
 {
 	void *p, *item;
 
@@ -113,14 +113,14 @@ ident_resolve(struct task *t, hashtab_t symtab, astnode_t n)
 }
 
 void
-expr_resolve(struct task *t, hashtab_t symtab, astnode_t n)
+expr_resolve(hashtab_t symtab, struct task *t, astnode_t n)
 {
 	if (!n)
 		return;
 
 	if (astnode_get_type(n) == N_ID)
-		ident_resolve(t, symtab, n);
+		ident_resolve(symtab, t, n);
 
-	expr_resolve(t, symtab, astnode_get_lhs(n));
-	expr_resolve(t, symtab, astnode_get_rhs(n));
+	expr_resolve(symtab, t, astnode_get_lhs(n));
+	expr_resolve(symtab, t, astnode_get_rhs(n));
 }

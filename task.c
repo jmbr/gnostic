@@ -37,6 +37,10 @@
 #include "xmemory.h"
 
 
+static int check_deps(const struct task *cur, const struct task *prev,
+		      astnode_t n);
+
+
 struct task *
 new_task(char *name, astnode_t expr, char *actions)
 {
@@ -85,10 +89,26 @@ task_print(const struct task *self)
  * is to have a pointer in each astnode to its parent.
  */
 static int
+check_ident(const struct task *cur, const struct task *prev, astnode_t n)
+{
+	const struct task *u; 
+
+	assert(cur && n);
+
+	u = astnode_get_item(n);
+
+	if (cur == u)
+		fatal_error("gnostic: There are circular dependencies between "
+			    "`%s' and `%s'.\n", cur->name,
+			    (prev) ? prev->name : cur->name);
+
+	return check_deps(cur, u, u->expr);
+}
+
+int
 check_deps(const struct task *cur, const struct task *prev, astnode_t n)
 {
 	int status = 0;
-	const struct task *u;
 
 	assert(cur);
 
@@ -97,14 +117,7 @@ check_deps(const struct task *cur, const struct task *prev, astnode_t n)
 
 	switch (astnode_get_type(n)) {
 	case N_ID:
-		u = astnode_get_item(n);
-
-		if (cur != u)
-			status = check_deps(cur, u, u->expr);
-		else
-			fatal_error("gnostic: There are circular dependencies "
-				    "between " "`%s' and `%s'.\n", cur->name,
-				    (prev) ? prev->name : cur->name);
+		status = check_ident(cur, prev, n);
 		break;
 	case N_AND:
 	case N_OR:

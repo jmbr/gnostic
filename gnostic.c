@@ -1,6 +1,6 @@
 /**
  * @file gnostic.c
- * @brief Generic Network Scanning Tool.
+ * @brief Main module.
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
@@ -53,9 +53,8 @@ main(int argc, char *argv[])
 	if (!tasks)
 		fatal_error("gnostic: Invalid configuration file `%s'\n", argv[1]);
 
-	status = (argc == 2)
-			? taskset_print(tasks)
-			: exec(tasks, argc, argv);
+	status = (argc == 2) ? taskset_print(tasks)
+			     : exec(tasks, argc, argv);
 
 	delete_taskset(tasks);
 	exit((status == 0) ? EXIT_SUCCESS : EXIT_FAILURE);

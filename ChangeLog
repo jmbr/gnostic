@@ -2,6 +2,20 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-28 07:51:08 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-84
+
+    Summary:
+      Refactored. Improved readability of task_check_deps.
+    Revision:
+      gnostic--mainline--0.1--patch-84
+
+
+    modified files:
+     ChangeLog GNUmakefile.in deps.mk doxy.cfg.in gnostic.c
+     task-exec.c task.c task.h tasklist.h taskset-parser.c
+     taskset.h xmemory.c
+
+
 2004-07-27 23:46:28 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-83
 
     Summary:

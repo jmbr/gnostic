@@ -181,16 +181,15 @@ eval_expr(const astnode_t n)
 
 	switch (astnode_get_type(n)) {
 	case N_ID:
-		status = (task_exec(astnode_get_item(n)) == 0)
-				? true : false;
+		status = (task_exec(astnode_get_item(n)) == 0) ? true : false;
 		break;
 	case N_AND:
 		status = (eval_expr(astnode_get_lhs(n))
-				&& eval_expr(astnode_get_rhs(n)));
+			  && eval_expr(astnode_get_rhs(n)));
 		break;
 	case N_OR:
 		status = (eval_expr(astnode_get_lhs(n))
-				|| eval_expr(astnode_get_rhs(n)));
+			  || eval_expr(astnode_get_rhs(n)));
 		break;
 	case N_NOT:
 		status = (!eval_expr(astnode_get_rhs(n)));

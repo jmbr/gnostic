@@ -91,7 +91,7 @@ die(const char *f)
 	assert(f);
 	assert(errno != 0);
 
-	(void) fprintf(stderr, "%s failed (errno = %d)\n", f, errno);
+	(void) fprintf(stderr, "%s failed: %d)\n", f, errno);
 
 	exit(EXIT_FAILURE);
 }

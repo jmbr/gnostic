@@ -59,7 +59,7 @@ extern void tasklist_append(struct tasklist *self, struct task *t);
  */
 extern int tasklist_map(struct tasklist *self, tasklist_fn fn);
 extern int tasklist_map2(struct tasklist *self, void *arg, tasklist_fn2 fn);
-/*}@*/
+/*@}*/
 
 
 #endif /* !TASKLIST_H */

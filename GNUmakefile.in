@@ -135,10 +135,6 @@ distclean: mostlyclean
 	$(RM) -r $(srcdir)/autom4te.cache
 	$(RM) GNUmakefile $(docdir)/GNUmakefile $(testsdir)/GNUmakefile
 
-TAGS: tags;
-tags: $(wildcard *.[chly])
-	ctags $^
-
 
 ###############################################################################
 #
@@ -266,7 +262,13 @@ depend:
 
 .PHONY: loc-count
 
-loc-count: $(filter-out grammar.c grammar.h scanner.c, $(wildcard *.[chly]))
+ALL_SOURCES := $(filter-out grammar.c grammar.h scanner.c, $(wildcard *.[chly]))
+
+TAGS: tags;
+tags: $(ALL_SOURCES)
+	ctags $^
+
+loc-count: $(ALL_SOURCES)
 	@c_loc=$$(c_count $(filter %.c %.h, $^) | tail -1); \
 	lex_loc=$$(lex_count $(filter %.l %.y, $^) | tail -1); \
 	echo $$[$$c_loc + $$lex_loc] lines of code.
