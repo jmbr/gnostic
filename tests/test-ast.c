@@ -123,4 +123,10 @@ test_ast_itor(void)
 
 	status = delete_ast(root, NULL);
 	assert(status == 0);
+
+	/* TODO:
+	 * 1. Check if memory is properly deallocated if iteration is
+	 * interrupted.
+	 * 2. Check whether two iterations in a row work flawlessly or not.
+	 */
 }

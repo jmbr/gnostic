@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-17 12:24:57 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-151
+
+    Summary:
+      Commented on some pending items.
+    Revision:
+      gnostic--mainline--0.1--patch-151
+
+
+    modified files:
+     ChangeLog tests/test-ast.c
+
+
 2004-08-17 12:23:45 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-150
 
     Summary:
