@@ -58,7 +58,7 @@ delete_tasklist(struct tasklist *self)
 
 	for (node = self->head; node; node = next) {
 		next = node->next;
-		status = delete_task(node);
+		status = task_decref(node);
 		assert(status == 0);
 	}
 

@@ -133,12 +133,18 @@ dict_get(void)
 
 	map();
 
-	for (w = get_word(m); w; w = get_word(NULL)) {
+	for (w = get_word(m); w; w = get_word(NULL))
 		v = hashtab_strlookup(ht, w, 0, NULL);
-		xfree(v);
-	}
 
 	unmap();
+}
+
+int
+strfree(char *s)
+{
+	free(s);
+	
+	return 0;
 }
 
 void
@@ -146,7 +152,7 @@ test_hashtab_lookup(void)
 {
 	assert(!ht);
 
-	ht = new_hashtab(HASHTAB_DEFAULT_LEN, (hashtab_cmp) strcmp);
+	ht = new_hashtab(6421, (hashtab_cmp) strcmp, (hashtab_dtor) strfree);
 
 	dict_set();
 	dict_get();

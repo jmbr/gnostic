@@ -2,7 +2,7 @@
 #define HASHTAB_H		1
 /**
  * @file hashtab.h
- * @brief A simple hash table data structure.
+ * @brief A simple chained hash table data structure.
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
@@ -31,10 +31,15 @@
 typedef struct hashtab *hashtab_t;
 
 /** Comparison function.
- *
  * @returns 0 if the items pointed to by the parameters are equal.
  */
 typedef int (*hashtab_cmp)(const void *, const void *);
+
+/** Destructor function.
+ * This function is a callback responsible for freeing the resources associated
+ * to the item contained in the hash table.
+ */
+typedef int (*hashtab_dtor)(void *);
 
 
 /** hashtab constructor.
@@ -43,11 +48,12 @@ typedef int (*hashtab_cmp)(const void *, const void *);
  * @param len Length of the desired table. A value of 0 means the constructor
  * will create a table of HASHTAB_DEFAULT_LEN buckets.
  * @param cmp Pointer to a function to compare items.
+ * @param dtor Pointer to a function in charge of deallocation of values.
  * @return A pointer to the allocated structure.
  *
  * @see delete_hashtab
  */
-extern hashtab_t new_hashtab(size_t len, hashtab_cmp cmp);
+extern hashtab_t new_hashtab(size_t len, hashtab_cmp cmp, hashtab_dtor dtor);
 
 /** hashtab destructor.
  * Frees all the resources associated to the hashtab.
@@ -74,14 +80,14 @@ extern void delete_hashtab(hashtab_t self);
  * @see hashtab_strlookup
  */
 extern void *hashtab_lookup(hashtab_t self, const void *key, size_t len,
-			    int create, const void *value);
+			    int create, void *value);
 
 /** hashtab string lookup/creation.
  * Same as the previous function, but for strings. The caller doesn't need to
  * provide the function with the key's length.
  */
 static inline void *hashtab_strlookup(hashtab_t self, const char *key,
-				      int create, const void *value)
+				      int create, void *value)
 {
 	return hashtab_lookup(self, (void *) key, strlen(key), create, value);
 }

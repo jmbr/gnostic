@@ -25,7 +25,7 @@
 
 struct hashnode {
 	const void *key;
-	const void *value;
+	void *value;
 	struct hashnode *next;
 };
 
@@ -33,12 +33,13 @@ struct hashtab {
 	size_t len;
 	struct hashnode **tab;
 	hashtab_cmp cmp;
+	hashtab_dtor dtor;
 };
 
 
 static int hash(const void *key, size_t len);
 
-static struct hashnode *new_hashnode(const void *key, const void *value);
+static struct hashnode *new_hashnode(const void *key, void *value);
 #define delete_hashnode(hn)		free(hn);
 
 
@@ -60,7 +61,7 @@ hash(const void *key, size_t len)
 
 
 struct hashnode *
-new_hashnode(const void *key, const void *value)
+new_hashnode(const void *key, void *value)
 {
 	struct hashnode *hn;
 
@@ -79,7 +80,7 @@ new_hashnode(const void *key, const void *value)
 
 
 hashtab_t
-new_hashtab(size_t len, hashtab_cmp cmp)
+new_hashtab(size_t len, hashtab_cmp cmp, hashtab_dtor dtor)
 {
 	struct hashtab *ht;
 
@@ -97,6 +98,7 @@ new_hashtab(size_t len, hashtab_cmp cmp)
 		return NULL;
 	}
 	ht->cmp = cmp;
+	ht->dtor = dtor;
 
 	return ht;
 }
@@ -113,6 +115,12 @@ delete_hashtab(hashtab_t self)
 
 		for (n = self->tab[i]; n; n = next) {
 			next = n->next;
+			if (self->dtor) {
+				int status;
+
+				status = self->dtor(n->value);
+				assert(status == 0);
+			}
 			delete_hashnode(n);
 		}
 	}
@@ -123,7 +131,7 @@ delete_hashtab(hashtab_t self)
 
 void *
 hashtab_lookup(hashtab_t self, const void *key, size_t len,
-		int create, const void *value)
+	       int create, void *value)
 {
 	int h;
 	struct hashnode *n;

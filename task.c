@@ -37,6 +37,16 @@
 #include "xmemory.h"
 
 
+/** task destructor.
+ * Frees all the resources associated to the task.
+ *
+ * @param self A pointer to the structure.
+ * @return 0 on success, -1 on failure.
+ *
+ * @see new_task
+ */
+static int delete_task(struct task *self);
+
 static int check_deps(const struct task *cur, const struct task *prev,
 		      astnode_t n);
 
@@ -50,6 +60,7 @@ new_task(char *name, astnode_t expr, char *actions)
 
 	n = xmalloc(sizeof(struct task));
 
+	n->refs = 1;
 	n->next = NULL;
 	n->name = name;
 	n->expr = expr;
@@ -64,13 +75,46 @@ delete_task(struct task *self)
 	if (!self)
 		return -1;
 
+	assert(self->refs == 0);
+
 	xfree(self->name);
 	xfree(self->actions);
-	(void) delete_ast(self->expr);
+	(void) delete_ast(self->expr, (astnode_item_dtor) task_decref);
 	xfree(self);
 
 	return 0;
 }
+
+int
+task_incref(struct task *self)
+{
+	if (!self)
+		return -1;
+
+	assert(self->refs > 0);
+
+	++self->refs;
+
+	return 0;
+}
+
+int
+task_decref(struct task *self)
+{
+	if (!self)
+		return -1;
+
+	assert(self->refs > 0);
+
+	--self->refs;
+
+	if (self->refs == 0)
+		return delete_task(self);
+
+	return 0;
+}
+
+
 
 int
 task_print(const struct task *self)
@@ -84,7 +128,6 @@ task_print(const struct task *self)
 	return 0;
 }
 
-
 
 /*
  * We provide an extra parameter prev. This is useful because the alternative
@@ -124,7 +167,7 @@ check_deps(const struct task *cur, const struct task *prev, astnode_t n)
 	case N_AND:
 	case N_OR:
 		status = check_deps(cur, NULL, astnode_get_lhs(n))
-			+ check_deps(cur, NULL, astnode_get_rhs(n));
+			 + check_deps(cur, NULL, astnode_get_rhs(n));
 		break;
 	case N_NOT:
 		status = check_deps(cur, NULL, astnode_get_rhs(n));

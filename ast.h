@@ -19,6 +19,8 @@ enum astnode_types {
 
 typedef struct astnode *astnode_t;
 
+typedef int (*astnode_item_dtor)(void *);
+
 
 /** astnode constructor.
  * Allocates and initializes astnode structures.
@@ -98,9 +100,11 @@ extern void *astnode_get_item(const astnode_t self);
  * Frees all the resources associated to the AST.
  *
  * @param self A pointer to the structure.
+ * @param astnode_item_dtor Destructor callback. Frees the resources associated
+ * with an item.
  * @return 0 on success, -1 on failure.
  */
-extern int delete_ast(astnode_t self);
+extern int delete_ast(astnode_t self, astnode_item_dtor dtor);
 
 
 #endif /* !AST_H */

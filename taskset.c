@@ -55,7 +55,7 @@ new_taskset(const char *filename)
 	n = xmalloc(sizeof(struct taskset));
 
 	n->tasks = NULL;
-	n->symtab = new_hashtab(0, (hashtab_cmp) strcmp);
+	n->symtab = new_hashtab(0, (hashtab_cmp) strcmp, (hashtab_dtor) task_decref);
 
 	if (taskset_read(n, filename) == -1) {
 		delete_taskset(n);

@@ -47,19 +47,19 @@ main(int argc, char *argv[])
 void
 test_foo(void)
 {
-
+	assert(0);
 }
 
 
 void
 test_bar(void)
 {
-
+	assert(0);
 }
 
 
 void
 test_baz(void)
 {
-
+	assert(0);
 }

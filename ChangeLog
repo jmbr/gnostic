@@ -2,6 +2,20 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-09 23:21:32 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-123
+
+    Summary:
+      Added a reference counter to task structures.
+    Revision:
+      gnostic--mainline--0.1--patch-123
+
+
+    modified files:
+     ChangeLog ast.c ast.h deps.mk hashtab.c hashtab.h task.c
+     task.h tasklist.c taskset-parser.c taskset-priv.h taskset.c
+     tests/skel.c tests/test-hashtab.c version.h
+
+
 2004-08-08 23:42:37 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-122
 
     Summary:

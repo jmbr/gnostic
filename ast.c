@@ -124,17 +124,22 @@ astnode_get_item(const astnode_t self)
 
 
 int
-delete_ast(astnode_t self)
+delete_ast(astnode_t self, astnode_item_dtor dtor)
 {
 	if (!self)
 		return -1;
 
-	/* Remember: self->item should not be freed by this function. */
+	if (self->item && dtor) {
+		int status;
+
+		status = dtor(self->item);
+		assert(status == 0);
+	}
 
 	if (self->lhs)
-		delete_ast(self->lhs);
+		delete_ast(self->lhs, dtor);
 	if (self->rhs)
-		delete_ast(self->rhs);
+		delete_ast(self->rhs, dtor);
 
 	xfree(self);
 

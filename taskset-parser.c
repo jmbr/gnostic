@@ -63,8 +63,10 @@ fill_symtab(struct tasklist *tl, hashtab_t symtab)
 {
 	struct task *t;
 
-	for (t = tl->head; t; t = t->next)
+	for (t = tl->head; t; t = t->next) {
+		task_incref(t);
 		hashtab_strlookup(symtab, t->name, 1, t);
+	}
 }
 
 int
@@ -110,6 +112,7 @@ ident_resolve(hashtab_t symtab, struct task *t, astnode_t n)
 			    "defined.\n", (char *) item, t->name);
 
 	xfree(item);
+	task_incref(p);
 	astnode_set_item(n, p);
 }
 

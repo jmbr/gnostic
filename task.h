@@ -13,8 +13,14 @@
 
 /** Task.
  * Describes a job to be executed at some point by gnostic.
+ * Tasks are referenced at many different places and in order to avoid having
+ * to appoint one of the containers as the responsible for freeing tasks we
+ * have introduced a reference counting system for managing task structures.
+ * The reference counter must be increased only whenever a task is referenced
+ * from a container.
  */
 struct task {
+	unsigned int refs;	/**< Reference count */
 	char *name;		/**< Task name */
 	char *actions;		/**< Executable payload */
 	astnode_t expr;		/**< Dependency expression */
@@ -36,15 +42,8 @@ struct task {
  */
 extern struct task *new_task(char *name, astnode_t expr, char *actions);
 
-/** task destructor.
- * Frees all the resources associated to the task.
- *
- * @param self A pointer to the structure.
- * @return 0 on success, -1 on failure.
- *
- * @see new_task
- */
-extern int delete_task(struct task *self);
+extern int task_incref(struct task *self);
+extern int task_decref(struct task *self);
 
 /** task printer.
  * Prints the name of the specified task in stdout.
