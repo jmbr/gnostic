@@ -14,7 +14,7 @@ undefine([gnostic_version])
 
 AC_REVISION($Revision$)
 
-AC_CONFIG_SRCDIR([gnostic.h])
+AC_CONFIG_SRCDIR([gnostic.c])
 AC_CONFIG_HEADER([config.h])
 
 PACKAGE="gnostic"
