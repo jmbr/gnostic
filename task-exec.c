@@ -70,6 +70,7 @@ static int eval_expr(const astnode_t n);
 int
 task_exec(const struct task *self)
 {
+	int status = -1;
 	const char *name;
 
 	assert(self);
@@ -77,14 +78,13 @@ task_exec(const struct task *self)
 	name = task_get_name(self);
 	assert(name);
 
-	dprintf("gnostic: Trying to satisfy dependencies for `%s'.\n", name);
-	if (task_exec_deps(self) == -1) {
-		dprintf("gnostic: Unable to satisfy dependencies for `%s'.\n", name);
-		return -1;
-	}
-	dprintf("gnostic: Done with dependencies for `%s'.\n", name);
+	dprintf("gnostic: Executing `%s'.\n", name);
 
-	return task_exec_script(self);
+	if (task_exec_deps(self) == 0)
+		status = task_exec_script(self);
+
+	dprintf("gnostic: Task `%s' exited with status %d.\n", name, status);
+	return status;
 }
 
 int

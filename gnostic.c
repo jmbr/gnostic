@@ -98,16 +98,11 @@ setup_environ(int nvars, char *vars[], const struct task_collection *tasks)
 int
 exec(const struct task_collection *tasks, const char *name)
 {
-	int status;
 	const struct task *t;
 
 	t = task_collection_get_task(tasks, name);
 	if (!t)
 		fatal_error("gnostic: Unknown task `%s'.\n", name);
 
-	dprintf("gnostic: Executing `%s'.\n", name);
-	status = task_exec(t);
-	dprintf("gnostic: Task `%s' exited with status %d.\n", name, status);
-
-	return status;
+	return task_exec(t);
 }

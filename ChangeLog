@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-25 15:33:22 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-60
+
+    Summary:
+      Simplified task execution.
+    Revision:
+      gnostic--mainline--0.1--patch-60
+
+
+    modified files:
+     ChangeLog gnostic.c task-exec.c
+
+
 2004-07-25 10:23:51 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-59
 
     Summary:
