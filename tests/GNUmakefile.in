@@ -62,8 +62,6 @@ tests: $(TEST_BINARIES)
 
 test-hashtab: test-hashtab.o hashtab.o
 
-test-graph: test-graph.o graph.o task.o ast.o xalloc.o debug.o
-
 check: tests
 	@echo "===================="
 	@echo "Executing test suite"

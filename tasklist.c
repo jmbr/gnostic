@@ -27,7 +27,6 @@
 
 #include <assert.h>
 
-#include "task-priv.h"
 #include "tasklist.h"
 
 #include "xmemory.h"
@@ -94,6 +93,22 @@ tasklist_map(struct tasklist *self, tasklist_fn fn)
 
 	for (t = self->head, status = 0; (t && status == 0); t = t->next)
 		status = fn(t);
+
+	return status;
+}
+
+
+int
+tasklist_map2(struct tasklist *self, void *arg, tasklist_fn2 fn)
+{
+	int status;
+	struct task *t;
+
+	if (!self || !fn)
+		return -1;
+
+	for (t = self->head, status = 0; (t && status == 0); t = t->next)
+		status = fn(t, arg);
 
 	return status;
 }

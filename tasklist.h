@@ -16,7 +16,8 @@ struct tasklist {
 	struct task *tail;
 };
 
-typedef int (*tasklist_fn)(const struct task *);
+typedef int (*tasklist_fn)(struct task *);
+typedef int (*tasklist_fn2)(struct task *, void *);
 
 
 /** tasklist constructor.
@@ -41,6 +42,7 @@ extern int delete_tasklist(struct tasklist *self);
 extern void tasklist_append(struct tasklist *self, struct task *t);
 
 extern int tasklist_map(struct tasklist *self, tasklist_fn fn);
+extern int tasklist_map2(struct tasklist *self, void *arg, tasklist_fn2 fn);
 
 
 #endif /* !TASKLIST_H */

@@ -28,7 +28,7 @@
 
 
 void
-dprintf(const char *format, ...)
+info(const char *format, ...)
 {
 #ifndef NDEBUG
 	VFPRINTF(stdout, format);
@@ -36,7 +36,7 @@ dprintf(const char *format, ...)
 }
 
 void
-eprintf(const char *format, ...)
+error(const char *format, ...)
 {
 	VFPRINTF(stderr, format);
 }

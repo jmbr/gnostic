@@ -50,10 +50,8 @@ main(int argc, char *argv[])
 		usage();
 
 	tasks = new_taskset(argv[1]);
-	if (!tasks) {
-		eprintf("gnostic: Invalid configuration file `%s'\n", argv[1]);
-		exit(EXIT_FAILURE);
-	}
+	if (!tasks)
+		fatal_error("gnostic: Invalid configuration file `%s'\n", argv[1]);
 
 	status = (argc == 2)
 			? taskset_print(tasks)
@@ -67,8 +65,8 @@ main(int argc, char *argv[])
 void
 usage(void)
 {
-	eprintf("%s\n\n", version.v_gnu);
-	eprintf("Usage: %s <config file> [task] [name=value] ...\n", PROG_NAME);
+	error("%s\n\n", version.v_gnu);
+	error("Usage: %s <config file> [task] [name=value] ...\n", PROG_NAME);
 
 	exit(EXIT_FAILURE);
 }

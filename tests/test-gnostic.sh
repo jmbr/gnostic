@@ -2,7 +2,7 @@
 
 GNOSTIC=../gnostic
 
-TEST_FILES="doesnt-exist.gns circular.gns invalid-name.gns"
+TEST_FILES=`ls -1 *.gns`
 
 STATUS=0
 

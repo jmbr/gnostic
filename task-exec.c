@@ -78,34 +78,28 @@ int
 task_exec(const struct task *self)
 {
 	int status = -1;
-	const char *name;
 
-	assert(self);
+	assert(self && self->name);
 
-	name = task_get_name(self);
-	assert(name);
-
-	dprintf("gnostic: Executing `%s'.\n", name);
+	info("gnostic: Executing `%s'.\n", self->name);
 
 	if (task_exec_deps(self) == 0)
 		status = task_exec_script(self);
 
-	dprintf("gnostic: Task `%s' exited with status %d.\n", name, status);
+	info("gnostic: Task `%s' exited with status %d.\n", self->name, status);
+
 	return status;
 }
 
 int
 task_exec_deps(const struct task *self)
 {
-	astnode_t expr;
-
 	assert(self);
 
-	expr = task_get_expr(self);
-	if (!expr)
+	if (!self->expr)
 		return 0;	/* It's OK. There are no dependencies. */
 
-	return (eval_expr(expr) == true) ? 0 : -1;
+	return (eval_expr(self->expr) == true) ? 0 : -1;
 }
 
 
@@ -161,7 +155,7 @@ task_exec_script(const struct task *self)
 	case 0:
 		child(fds);
 	default:
-		status = parent(fds, pid, task_get_actions(self));
+		status = parent(fds, pid, self->actions);
 	}
 
 	return status;

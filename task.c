@@ -31,7 +31,7 @@
 
 #include <assert.h>
 
-#include "task-priv.h"
+#include "task.h"
 
 #include "err.h"
 #include "xmemory.h"
@@ -101,27 +101,6 @@ task_get_expr(const struct task *self)
 	return (const astnode_t) self->expr;
 }
 
-
-int
-task_set_next(struct task *self, struct task *t)
-{
-	if (!self)
-		return -1;
-
-	assert(!self->next);
-	self->next = t;
-
-	return 0;
-}
-
-struct task *
-task_get_next(const struct task *self)
-{
-	assert(self);
-
-	return self->next;
-}
-
 
 
 /*
@@ -143,7 +122,6 @@ check_deps(const struct task *cur, const struct task *prev, astnode_t n)
 	case N_ID:
 		u = astnode_get_item(n);
 
-		/* FIXME Improve readability. */
 		if (cur != u)
 			status = check_deps(cur, u, task_get_expr(u));
 		else

@@ -27,7 +27,6 @@
 
 #include <assert.h>
 
-#include "task-priv.h"
 #include "taskset-priv.h"
 
 #include "err.h"
@@ -93,7 +92,7 @@ taskset_verify(struct taskset *self)
 	if (!self)
 		return -1;
 
-	return tasklist_map(self->tasks, task_check_deps);
+	return tasklist_map(self->tasks, (tasklist_fn) task_check_deps);
 }
 
 static int
@@ -112,7 +111,10 @@ taskset_read(struct taskset *self, const char *name)
 int
 taskset_print(const struct taskset *self)
 {
-	return tasklist_map(self->tasks, task_print);
+	if (!self)
+		return -1;
+
+	return tasklist_map(self->tasks, (tasklist_fn) task_print);
 }
 
 

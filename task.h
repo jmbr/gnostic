@@ -10,7 +10,16 @@
 #include "ast.h"
 
 
-struct task;
+/** Task.
+ * Describes a job to be executed at some point by gnostic.
+ */
+struct task {
+	char *name;		/**< Task name */
+	char *actions;		/**< Executable payload */
+	astnode_t expr;		/**< Dependency expression */
+	struct task *prev;	/**< Pointer to the previous task in the list. */
+	struct task *next;	/**< Pointer to the next task in the list. */
+};
 
 
 /** task constructor.
@@ -43,16 +52,6 @@ extern int delete_task(struct task *self);
  * @return 0 on success, -1 on failure.
  */
 extern int task_exec(const struct task *self);
-
-/**
- * The following accessors are convenient for several reasons but if they ever
- * turn out to become a bottleneck then compile the program with the
- * -finline-functions option.
- */
-extern const char *task_get_name(const struct task *self);
-extern const char *task_get_actions(const struct task *self);
-
-extern const astnode_t task_get_expr(const struct task *self);
 
 extern int task_check_deps(const struct task *self);
 

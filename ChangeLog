@@ -2,6 +2,30 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-27 21:20:39 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-80
+
+    Summary:
+      Made task public and changed the function names from err.[ch]
+    Revision:
+      gnostic--mainline--0.1--patch-80
+
+
+    new files:
+     tests/.arch-ids/circular2.gns.id
+     tests/.arch-ids/memcheck.awk.id tests/circular2.gns
+     tests/memcheck.awk
+
+    removed files:
+     .arch-ids/graph-priv.h.id .arch-ids/task-priv.h.id
+     graph-priv.h task-priv.h
+
+    modified files:
+     ChangeLog deps.mk err.c err.h gnostic.c task-exec.c task.c
+     task.h tasklist.c tasklist.h taskset-parser.c taskset.c
+     tests/GNUmakefile.in tests/test-gnostic.sh
+     tests/test-gnostic.sh.exp
+
+
 2004-07-27 20:33:58 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-79
 
     Summary:

@@ -28,7 +28,6 @@
 #include <assert.h>
 
 #include "taskset-priv.h"
-#include "task-priv.h"
 #include "ast.h"
 #include "grammar.h"
 
@@ -48,7 +47,7 @@ extern int yyparse(void);
  * This function translates task names contained in the abstract syntax tree
  * into pointers to the appropriate task structures.
  */
-static void expr_resolve(struct taskset *ts, struct task *t, astnode_t n);
+static void expr_resolve(struct task *t, hashtab_t symtab, astnode_t n);
 
 
 
@@ -59,13 +58,12 @@ move_lists(struct taskset *ts)
 	ts->env_vars = env_vars, env_vars = NULL;
 }
 
-static void
-fill_symtab(struct taskset *ts)
+static int
+fill_symtab(struct task *t, hashtab_t symtab)
 {
-	struct task *t;
+	hashtab_strlookup(symtab, t->name, 1, t);
 
-	for (t = ts->tasks->head; t; t = t->next)
-		hashtab_strlookup(ts->symtab, task_get_name(t), 1, t);
+	return 0;
 }
 
 int
@@ -84,10 +82,10 @@ taskset_parse(struct taskset *self, const char *filename)
 
 	move_lists(self);
 
-	fill_symtab(self);
+	tasklist_map2(self->tasks, self->symtab, (tasklist_fn2) fill_symtab);
 
 	for (t = self->tasks->head; t; t = t->next)
-		expr_resolve(self, t, task_get_expr(t));
+		expr_resolve(t, self->symtab, t->expr);
 
 	return fclose(yyin);
 }
@@ -100,31 +98,29 @@ taskset_parse(struct taskset *self, const char *filename)
  * appropriate task structure.
  */
 static void
-ident_resolve(struct taskset *ts, struct task *t, astnode_t n)
+ident_resolve(struct task *t, hashtab_t symtab, astnode_t n)
 {
 	void *p, *item;
 
 	item = astnode_get_item(n);
-	p = hashtab_strlookup(ts->symtab, item, 0, NULL);
+	p = hashtab_strlookup(symtab, item, 0, NULL);
 	if (!p)
 		fatal_error("gnostic: Task `%s' needed by `%s' is not "
-				"defined.\n", (char *) item, task_get_name(t));
-
-	//graph_insert_edge(ts->depgraph, t, p);
+			    "defined.\n", (char *) item, t->name);
 
 	xfree(item);
 	astnode_set_item(n, p);
 }
 
 void
-expr_resolve(struct taskset *ts, struct task *t, astnode_t n)
+expr_resolve(struct task *t, hashtab_t symtab, astnode_t n)
 {
 	if (!n)
 		return;
 
 	if (astnode_get_type(n) == N_ID)
-		ident_resolve(ts, t, n);
+		ident_resolve(t, symtab, n);
 
-	expr_resolve(ts, t, astnode_get_lhs(n));
-	expr_resolve(ts, t, astnode_get_rhs(n));
+	expr_resolve(t, symtab, astnode_get_lhs(n));
+	expr_resolve(t, symtab, astnode_get_rhs(n));
 }

@@ -8,15 +8,15 @@
  */
 
 
-/** Debugging printf.
+/** Debugging information printf.
  * If the macro NDEBUG is not set it prints the message to stdout.
  */
-extern void dprintf(const char *format, ...);
+extern void info(const char *format, ...);
 
 /** Error printf.
  * Prints a message to stderr.
  */
-extern void eprintf(const char *format, ...);
+extern void error(const char *format, ...);
 
 /** Fatal error printf.
  * Prints a message to stderr and exits the program.
