@@ -29,8 +29,6 @@
 
 
 /** Node of an abstract syntax tree.
- * It is the user's responsibility to free any memory pointed to by the item
- * field.
  */
 struct astnode {
 	enum astnode_types type;	/**< Node type */

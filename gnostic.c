@@ -23,7 +23,7 @@
 #include <assert.h>
 
 #include "task.h"
-#include "task-collection.h"
+#include "taskset.h"
 
 #include "version.h"
 #include "debug.h"
@@ -34,10 +34,7 @@
 
 static void usage(void) __attribute__ ((noreturn));
 
-static void setup_environ(int nvars, char *vars[],
-				const struct task_collection *tasks);
-
-static int exec(const struct task_collection *tasks, const char *name);
+static int exec(const struct taskset *tasks, int argc, char *argv[]);
 
 
 
@@ -45,26 +42,22 @@ int
 main(int argc, char *argv[])
 {
 	int status;
-	struct task_collection *tasks;
+	struct taskset *tasks;
 
 	if (argc < 2)
 		usage();
 
-	tasks = new_task_collection();
-	if (task_collection_read(tasks, argv[1]) == -1) {
+	tasks = new_taskset(argv[1]);
+	if (!tasks) {
 		eprintf("gnostic: Invalid configuration file `%s'\n", argv[1]);
-		delete_task_collection(tasks);
 		exit(EXIT_FAILURE);
 	}
 
-	if (argc == 2)
-		status = task_collection_print(tasks, stdout);
-	else {
-		setup_environ(argc - 3, &argv[3], tasks);
-		status = exec(tasks, argv[2]);
-	}
+	status = (argc == 2)
+			? taskset_print(tasks, stdout)
+			: exec(tasks, argc, argv);
 
-	delete_task_collection(tasks);
+	delete_taskset(tasks);
 	exit((status == 0) ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
@@ -79,30 +72,37 @@ usage(void)
 }
 
 
-void
-setup_environ(int nvars, char *vars[], const struct task_collection *tasks)
+static void
+xputenv(char *string)
+{
+	if (putenv(string) == -1)
+		fatal_error("gnostic: Unable to declare %s", string);
+}
+
+static void
+setup_environ(const struct taskset *tasks, int argc, char *argv[])
 {
 	int i;
 	const struct env_var *var;
+	const int env_decl_start = 3;
 
-	for (var = task_collection_get_vars(tasks); var; var = var->next)
-		if (putenv(var->v) == -1)
-			fatal_error("gnostic: Unable to declare %s", var->v);
+	for (var = taskset_get_env_vars(tasks); var; var = var->next)
+		xputenv(var->v);
 
-	for (i = 0; i < nvars; i++)
-		if (putenv(vars[i]) == -1)
-			fatal_error("gnostic: Unable to declare %s", vars[i]);
+	for (i = env_decl_start; i < argc; i++)
+		xputenv(argv[i]);
 }
 
-
 int
-exec(const struct task_collection *tasks, const char *name)
+exec(const struct taskset *tasks, int argc, char *argv[])
 {
 	const struct task *t;
 
-	t = task_collection_get_task(tasks, name);
+	t = taskset_get_task(tasks, argv[2]);
 	if (!t)
-		fatal_error("gnostic: Unknown task `%s'.\n", name);
+		fatal_error("gnostic: Unknown task `%s'.\n", argv[2]);
+
+	setup_environ(tasks, argc, argv);
 
 	return task_exec(t);
 }

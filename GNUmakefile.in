@@ -77,7 +77,7 @@ SOURCES := gnostic.c \
 	xalloc.c debug.c \
 	scanner.c grammar.c ast.c \
 	task.c task-exec.c \
-	task-collection.c task-parser.c graph.c htab.c
+	taskset.c task-parser.c graph.c htab.c
 
 OBJECTS := $(SOURCES:%.c=%.o) $(LIBOBJS)
 

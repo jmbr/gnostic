@@ -1,6 +1,5 @@
 /*
  * xalloc.c -- Error-checking *alloc wrappers.
- * $Id: xalloc.c,v 1.1.1.1 2001/12/07 20:56:20 rwx Exp $
  */
 
 

@@ -2,6 +2,37 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-26 14:01:03 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-69
+
+    Summary:
+      Refactored heavily.
+    Revision:
+      gnostic--mainline--0.1--patch-69
+
+
+    removed files:
+     .arch-ids/scanner.h.id scanner.h
+
+    modified files:
+     ChangeLog GNUmakefile.in ast.c ast.h debug.h deps.mk gnostic.c
+     grammar.y scanner.l task-exec.c task-parser.c task.c
+     taskset-priv.h taskset.c taskset.h version.h xalloc.c xalloc.h
+
+    renamed files:
+     .arch-ids/task-collection-priv.h.id
+       ==> .arch-ids/taskset-priv.h.id
+     .arch-ids/task-collection.c.id
+       ==> .arch-ids/taskset.c.id
+     .arch-ids/task-collection.h.id
+       ==> .arch-ids/taskset.h.id
+     task-collection-priv.h
+       ==> taskset-priv.h
+     task-collection.c
+       ==> taskset.c
+     task-collection.h
+       ==> taskset.h
+
+
 2004-07-26 01:00:15 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-68
 
     Summary:

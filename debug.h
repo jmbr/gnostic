@@ -1,7 +1,8 @@
 #ifndef DEBUG_H
 #define DEBUG_H			1
-/*
- * debug.h -- Misc. debugging features.
+/*!
+ * \file debug.h
+ * \brief Miscellaneous debugging functions.
  */
 
 

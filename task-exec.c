@@ -60,12 +60,8 @@
 #include "debug.h"
 
 
-/* Here we want to be on the safe side with regard to strerror */
-#if (HAVE_STRERROR && !_REENTRANT)
+/* Beware of the evil strerror and its non-reentrancy! */
 #define die(s) fatal_error("gnostic: %s failed: %s\n", s, strerror(errno))
-#else /* !HAVE_STRERROR || _REENTRANT */
-#define die(s) fatal_error("gnostic: %s failed: %d\n", s, errno)
-#endif /* HAVE_STRERROR */
 
 
 static int task_exec_deps(const struct task *self);
@@ -129,9 +125,8 @@ static int
 parent(int fds[2], pid_t pid, const char *src)
 {
 	int status;
-	size_t srclen;
+	size_t srclen = strlen(src);
 
-	srclen = strlen(src);
 	if (write(fds[1], src, srclen) != srclen)
 		die("write");
 
@@ -176,7 +171,6 @@ task_exec_script(const struct task *self)
  * it is true or false.
  *
  * @param n The AST node we want to use as root for the evaluation.
- *
  * @returns true on success, false on failure.
  *
  * @see task_exec

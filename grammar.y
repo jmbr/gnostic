@@ -25,12 +25,15 @@
 #include <assert.h>
 
 #include "task.h"
-#include "task-collection.h"
+#include "taskset.h"
 #include "ast.h"
-#include "scanner.h"
 
 #include "xalloc.h"
 #include "debug.h"
+
+
+extern int yylex(void);
+extern void yyerror(const char *s);
 
 
 struct task *tasks = NULL;

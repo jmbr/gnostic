@@ -26,7 +26,7 @@
 #define YY_NO_UNPUT	1
 
 
-unsigned int nline = 1;
+unsigned int cur_line = 1;
 %}
 
 %x ACTIONS
@@ -49,13 +49,16 @@ not {
 }
 
 {IDENTIFIER}=.*$ {
-	++nline;
+	++cur_line;
+
         yylval.s = xstrdup(yytext);
+
         return VAR_DECL;
 }
 
 {IDENTIFIER} {
         yylval.s = xstrdup(yytext);
+
         return IDENTIFIER;
 }
 
@@ -64,9 +67,11 @@ not {
 }
 
 <ACTIONS>.*\n {
-	++nline;
+	++cur_line;
+
         BEGIN(INITIAL);
         yylval.s = xstrdup(yytext);
+
         return ACTION;
 }
 
@@ -80,7 +85,7 @@ not {
 
 \n {
 	/* Ignore newlines */
-	++nline;
+	++cur_line;
 }
 
 . {
@@ -92,5 +97,5 @@ not {
 void
 yyerror(char *s)
 {
-	fatal_error("gnostic: %s in line %d\n", s, nline);
+	fatal_error("gnostic: %s in line %d\n", s, cur_line);
 }

@@ -30,7 +30,6 @@
 #include "graph.h"
 #include "htab.h"
 #include "ast.h"
-#include "scanner.h"
 #include "grammar.h"
 
 #include "xalloc.h"
@@ -53,6 +52,7 @@ extern int yyparse(void);
 static void expr_parse(struct parser_ctx *ctx, astnode_t n);
 
 
+/* XXX It should be taskset_parse instead (and with a different prototype */
 struct task *
 tasklist_parse(const char *filename, htab_t symtab, graph_t depgraph)
 {
@@ -106,7 +106,7 @@ expr_parse(struct parser_ctx *ctx, astnode_t n)
 		 * This function is responsible from freeing the strings
 		 * allocated by the lexer.
 		 * Deletion of the new structure pointed to by item will be
-		 * performed by delete_tasks.
+		 * performed by delete_tasklist.
 		 */
 		xfree(item);
 		astnode_set_item(n, p);

@@ -9,10 +9,10 @@
 /** Node types.
  */
 enum astnode_types {
-	N_ID = 1,	/**< Identifier */
-	N_AND,
-	N_OR,
-	N_NOT,
+	N_ID,		/**< Identifier */
+	N_AND,		/**< Boolean and */
+	N_OR,		/**< Boolean or */
+	N_NOT,		/**< Boolean not */
 };
 
 /** Node of an abstract syntax tree.
@@ -72,12 +72,14 @@ extern enum astnode_types astnode_get_type(const astnode_t self);
 
 /** Item accessor.
  * Attaches an item to a given node.
+ * Note that delete_astnode won't free the memory associated to the item
+ * pointer. It is the caller's responsibility to do that.
  *
  * @param self A pointer to the node.
- * @param item A void pointer to the item going to be referenced.
+ * @param item A pointer to the item going to be referenced.
  * @return 0 on success, -1 on failure.
  *
- * @see ast_get_item
+ * @see ast_get_item, delete_astnode
  */
 extern int astnode_set_item(astnode_t self, void *item);
 

@@ -28,12 +28,14 @@ extern void *xrealloc(void *ptr, size_t size);
 
 extern char *xstrdup(const char *s);
 
-/* Be careful with the possible side-effects! */
+/*
+ * Be careful with the possible side-effects!
+ * Also, take into account xfree doesn't check for NULL pointers passed as
+ * parameters. You should use tools such as valgrind to check for those issues.
+ */
 #define xfree(ptr)	 do { \
-	if (ptr) { \
-		free(ptr); \
-		ptr = NULL; \
-	} \
+	free(ptr); \
+	ptr = NULL; \
 } while (0)
 
 

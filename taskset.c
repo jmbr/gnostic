@@ -1,5 +1,5 @@
 /*
- * task-collection.c -- An aggregate of tasks.
+ * taskset.c -- An aggregate of tasks.
  */
 
 
@@ -24,8 +24,8 @@
 
 #include <assert.h>
 
-#include "task-collection.h"
-#include "task-collection-priv.h"
+#include "taskset.h"
+#include "taskset-priv.h"
 
 #include "task.h"
 #include "task-priv.h"
@@ -36,9 +36,12 @@
 #include "debug.h"
 
 
-/* XXX Having this here is not very elegant. env_var needs a cleaner interface.
+/* XXX Having this here is not very elegant.
  */
 extern struct env_var *env_vars;
+
+extern struct task *tasklist_parse(const char *filename,
+					htab_t symtab, graph_t depgraph);
 
 
 static int delete_tasklist(struct task *self);
@@ -46,27 +49,42 @@ static int tasklist_print(const struct task *head, FILE *fp);
 
 static int delete_env_var_list(struct env_var *self);
 
-extern struct task *tasklist_parse(const char *filename, htab_t symtab, graph_t depgraph);
 
-static int task_collection_verify(struct task_collection *self);
+/** Builds a taskset from a file.
+ * Reads, aggregates and checks the validity of tasks coming from a file.
+ *
+ * @param self A pointer to the structure.
+ * @param name Name of the configuration file to parse.
+ *
+ * @return 0 on success, -1 on failure.
+ */
+static int taskset_read(struct taskset *self, const char *name);
 
 
-struct task_collection *
-new_task_collection(void)
+struct taskset *
+new_taskset(const char *filename)
 {
-	struct task_collection *n;
+	struct taskset *n;
 
-	n = xmalloc(sizeof(struct task_collection));
+	if (!filename)
+		return NULL;
+
+	n = xmalloc(sizeof(struct taskset));
 
 	n->tasks = NULL;
 	n->symtab = new_htab((htab_cmp) strcmp);
 	n->depgraph = new_graph();
 
+	if (taskset_read(n, filename) == -1) {
+		delete_taskset(n);
+		n = NULL;
+	}
+
 	return n;
 }
 
 int
-delete_task_collection(struct task_collection *self)
+delete_taskset(struct taskset *self)
 {
 	if (!self)
 		return -1;
@@ -82,7 +100,7 @@ delete_task_collection(struct task_collection *self)
 
 
 int
-task_collection_print(const struct task_collection *self, FILE *fp)
+taskset_print(const struct taskset *self, FILE *fp)
 {
 	return tasklist_print(self->tasks, fp);
 }
@@ -130,8 +148,8 @@ errback(struct task *a, struct task *b)
 		"`%s' and `%s'.\n", task_get_name(a), task_get_name(b));
 }
 
-int
-task_collection_verify(struct task_collection *self)
+static int
+taskset_verify(struct taskset *self)
 {
 	if (!self)
 		return -1;
@@ -142,9 +160,8 @@ task_collection_verify(struct task_collection *self)
 	return 0;
 }
 
-
-int
-task_collection_read(struct task_collection *self, const char *name)
+static int
+taskset_read(struct taskset *self, const char *name)
 {
 	if (!self || !name)
 		return -1;
@@ -155,19 +172,19 @@ task_collection_read(struct task_collection *self, const char *name)
 
 	self->env_vars = env_vars;
 
-	return task_collection_verify(self);
+	return taskset_verify(self);
 }
 
 
 const struct task *
-task_collection_get_task(const struct task_collection *self, const char *name)
+taskset_get_task(const struct taskset *self, const char *name)
 {
 	return htab_lookup_s(self->symtab, name, 0, NULL);
 }
 
 
 const struct env_var *
-task_collection_get_vars(const struct task_collection *self)
+taskset_get_env_vars(const struct taskset *self)
 {
 	assert(self);
 
