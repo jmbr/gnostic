@@ -2,6 +2,21 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-06 23:35:25 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-116
+
+    Summary:
+      Made several enhancements to makefiles. Now tests are compiled automatically with 'make check' just by placing test-*.c files in the tests subdirectory.
+    Revision:
+      gnostic--mainline--0.1--patch-116
+
+
+    removed files:
+     tests/.arch-ids/test-graph.exp.id tests/test-graph.exp
+
+    modified files:
+     ChangeLog GNUmakefile.in tests/GNUmakefile.in
+
+
 2004-08-06 23:09:23 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-115
 
     Summary:

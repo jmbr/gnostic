@@ -1,7 +1,6 @@
 ###############################################################################
 #
-# GNUmakefile -- @configure_input@
-# $Id: GNUmakefile.in,v 1.5 2002/06/04 01:08:25 rwx Exp $
+# @configure_input@
 #
 ###############################################################################
 
@@ -10,8 +9,9 @@
 SHELL := @SHELL@
 
 srcdir := .
+top_builddir := ..
 
-VPATH := $(srcdir):..
+VPATH := $(srcdir):$(top_builddir)
 
 CC := @CC@
 
@@ -20,7 +20,9 @@ DEFS := @DEFS@
 CFLAGS := @CFLAGS@
 LDFLAGS := @LDFLAGS@
 LIBS := @LIBS@
-INCLUDES := @INCLUDES@ -I..
+INCLUDES := @INCLUDES@ -I$(top_builddir)
+
+SHTOOL := $(top_builddir)/shtool
 
 COMPILE = $(CC) $(CPPFLAGS) $(CFLAGS) $(DEFS) $(INCLUDES)
 LINK = $(CC)  $(CFLAGS) $(LDFLAGS)
@@ -32,10 +34,15 @@ LINK = $(CC)  $(CFLAGS) $(LDFLAGS)
 #
 ###############################################################################
 
-.SUFFIXES: .c .o
+PROG_OBJECTS := $(filter-out $(top_builddir)/gnostic.o, \
+			     $(wildcard $(top_builddir)/*.o))
 
-%.o: %.c
-	$(COMPILE) -c $<
+.SUFFIXES: .c
+
+%: %.c
+	@echo "Building $@"
+	@$(COMPILE) -c $<
+	@$(LINK) $(patsubst %.c, %.o, $<) $(PROG_OBJECTS) -o $@
 
 
 ###############################################################################
@@ -49,13 +56,9 @@ TEST_BINARIES := $(patsubst %.o, %, $(OBJECTS))
 TEST_SCRIPTS := $(wildcard test-*.sh)
 TESTS := $(sort $(TEST_BINARIES) $(TEST_SCRIPTS))
 
-.PHONY: check tests
+.PHONY: tests check
 
 tests: $(TEST_BINARIES)
-
-test-hashtab: test-hashtab.o hashtab.o
-
-test-tasklist: test-tasklist.o tasklist.o task.o ast.o err.o xmemory.o
 
 check: tests
 	@echo "===================="
@@ -67,14 +70,14 @@ check: tests
 	  $(srcdir)/$$test 1>$$test.out 2>&1 ; \
 	  RETVAL=$$?; \
 	  if [ $$RETVAL -ne 0 ]; then \
-	    ../shtool echo -e "%BFAILED%b"; \
+	    $(SHTOOL) echo -e "%BFAILED%b"; \
             continue; \
 	  fi; \
 	  if [ -f $$test.exp ]; then \
 	    cmp -s $$test.exp $$test.out; \
 	    RETVAL=$$?; \
 	    if [ $$RETVAL -ne 0 ]; then \
-	      ../shtool echo -e "%BFAILED%b"; \
+	      $(SHTOOL) echo -e "%BFAILED%b"; \
 	      continue; \
 	    fi; \
 	  fi; \
@@ -112,4 +115,4 @@ clobber: mostlyclean
 ###############################################################################
 
 GNUmakefile: GNUmakefile.in config.status
-	$(SHELL) ../config.status GNUmakefile
+	$(SHELL) $(top_builddir)/config.status GNUmakefile
