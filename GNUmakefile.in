@@ -141,8 +141,8 @@ distclean: mostlyclean
 	$(RM) GNUmakefile $(docdir)/GNUmakefile $(testsdir)/GNUmakefile
 
 TAGS: tags;
-tags: $(wildcard *.[ch])
-	ctags -R
+tags: $(wildcard *.[chly])
+	ctags $^
 
 
 ###############################################################################
