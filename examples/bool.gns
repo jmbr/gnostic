@@ -1,0 +1,27 @@
+##############################################################################
+#
+# bool.gns -- Dependency expression example. 
+#
+##############################################################################
+
+
+a: (b and c) or not f
+	echo "a: I'm satisfied."
+
+b: d or e
+	exit 1
+
+c: not e
+	exit 0
+
+d:
+	exit 0
+
+e:
+	exit 1
+
+f:
+	exit 1
+
+
+# vim: ft=sh

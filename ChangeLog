@@ -2,6 +2,21 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-30 11:56:20 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-100
+
+    Summary:
+      Now identifiers in task files can be just letters. Added an example of dependency expressions in action.
+    Revision:
+      gnostic--mainline--0.1--patch-100
+
+
+    new files:
+     examples/.arch-ids/bool.gns.id examples/bool.gns
+
+    modified files:
+     ChangeLog scanner.l
+
+
 2004-07-30 11:55:28 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-99
 
     Summary:

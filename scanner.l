@@ -35,7 +35,7 @@ unsigned int cur_line = 1;
 %x ACTIONS
 %option noyywrap
 
-IDENTIFIER	[A-Za-z][A-Za-z0-9\-_]+
+IDENTIFIER	[A-Za-z]+[A-Za-z0-9\-_]*
 
 %%
 
