@@ -47,16 +47,18 @@ static int fd;
 static char *m;
 static size_t len;
 
-static struct hashtab *ht = NULL;
+static hashtab_t ht = NULL;
 
 
 static void test_hashtab_lookup(void);
+static void test_hashtab_itor(void);
 
 
 int
 main(int argc, char *argv[])
 {
 	test_hashtab_lookup();
+	test_hashtab_itor();
 
 	exit(EXIT_SUCCESS);
 }
@@ -161,4 +163,44 @@ test_hashtab_lookup(void)
 
 	status = delete_hashtab(ht);
 	assert(status == 0);
+	ht = NULL;
+}
+
+void
+test_hashtab_itor(void)
+{
+#if 0
+	char *s;
+	int status;
+	hashtab_itor_t hi;
+
+	assert(!ht);
+
+	ht = new_hashtab(0, (hashtab_cmp) strcmp, NULL);
+	assert(ht);
+
+	hi = new_hashtab_itor(ht);
+	assert(hi);
+
+	hashtab_strlookup(ht, "a", 1, xstrdup("aaa"));
+	/*
+	hashtab_strlookup(ht, "b", 1, xstrdup("bbb"));
+	hashtab_strlookup(ht, "c", 1, xstrdup("ccc"));
+	*/
+
+	for (s = hashtab_itor_first(hi); s; s = hashtab_itor_next(hi)) {
+		printf("%s\n", s);
+		xfree(s);
+	}
+
+	free(hi);
+	/*
+	status = delete_hashtab_itor(itor);
+	assert(status == 0);
+	*/
+
+	status = delete_hashtab(ht);
+	assert(status == 0);
+	ht = NULL;
+#endif
 }

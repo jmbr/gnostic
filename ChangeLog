@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-17 12:23:45 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-150
+
+    Summary:
+      Added some code for testing a hash table iterator.
+    Revision:
+      gnostic--mainline--0.1--patch-150
+
+
+    modified files:
+     ChangeLog tests/test-hashtab.c
+
+
 2004-08-17 12:22:59 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-149
 
     Summary:
