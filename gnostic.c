@@ -69,7 +69,7 @@ void
 usage(void)
 {
 	error("%s\n\n"
-	       "Usage: gnostic <TASKFILE> [TASK] [NAME=VALUE] [NAME=VALUE] [...]\n\n"
+	       "Usage: gnostic taskfile [task] [name=value] [name=value] [...]\n\n"
 	       "Examples:\n"
 	       "  gnostic foo.gns\t\tshow the list of tasks defined in foo\n"
 	       "  gnostic foo.gns bar\t\texecute task `bar' without parameters\n"

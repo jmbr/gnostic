@@ -194,9 +194,9 @@ dist: depend distclean
 	$(SHTOOL) fixperm $(srcdir)
 	$(SHTOOL) tarball -o $(NAME).tar.bz2 -c bzip2 \
 	  -e 'CVS,\{arch\},\.arch-ids,^\-i,\.swp,^tmp,^TODO' .
-	@echo ==============================================
+	@echo ===============================================
 	@echo $(NAME).tar.bz2 is ready for distribution
-	@echo ==============================================
+	@echo ===============================================
 
 #rpm: dist
 #	@cp $(NAME).tar.gz /usr/src/redhat/SOURCES

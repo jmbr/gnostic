@@ -16,7 +16,7 @@ Installation
 ------------
 
 Read the INSTALL file for detailed instructions. The most straight-forward way
-to install gnostic is by executing:
+to install gnostic is by executing::
 
 	./configure
 	make
@@ -34,7 +34,7 @@ with some defaults that the users/developers can change to suit their needs.
 An user's guide is present (currently as a work-in-progress) in the doc/
 subdirectory. There are also two manual pages which are installed by default.
 
-To generate all the documentation type:
+To generate all the documentation type::
 
 	make doc apidoc
 
@@ -45,14 +45,14 @@ The best way to get a feeling of how gnostic works is to try some of the sample
 taskfiles present in the examples/ subdirectory. It is very easy to start
 writing your own taskfiles specially if you're already familiar with make(1).
 
-One could start trying with:
+One could start trying with::
 
 	$ gnostic examples/environ.gns 
 	environ
 
 When gnostic is invoked this way it lists all the tasks present in the given
 task file. By convention, the main one will appear at the beginning. In this
-example we have only one task: environ. Let's ask gnostic to execute it:
+example we have only one task: environ. Let's ask gnostic to execute it::
 
 	$ gnostic examples/environ.gns environ
 	gnostic: Executing `environ'.
@@ -74,7 +74,7 @@ example we have only one task: environ. Let's ask gnostic to execute it:
 
 As you can see this is a fairly trivial task. It invokes BASH's builtin command
 set(1) to print out the task's environment. But we can use it demonstrate at
-least one feature of gnostic: passing parameters:
+least one feature of gnostic: passing parameters::
 
 	$ gnostic examples/environ.gns environ fnord=23 foo=bar
 	gnostic: Executing `environ'.
@@ -88,7 +88,7 @@ least one feature of gnostic: passing parameters:
 	$
 
 The parameters passed become part the environment of the executed task. The
-following is a more useful example of tasks and parameters at work:
+following is a more useful example of tasks and parameters at work::
 
 	$ gnostic examples/netmap.gns ping addr=127.0.0.1 scriptdir=examples 
 	gnostic: Executing `ping'.

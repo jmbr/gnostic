@@ -40,9 +40,17 @@ on each line. There should be at least one line of actions.
 echo "a: Done."
 
 .PP
-This example defines the task `a' and specifies that it depends in a certain
+This example declares the task `a' and specifies that it depends in a certain
 way on the results of tasks `b', `c' and `d' which must be defined in the same
-task file. During execution, if the dependencies are satisfied, the echo
+task file. During execution, if the dependencies are satisfied, the
+.B
+echo
 command will be executed by
 .I
 /bin/sh
+
+.SH AUTHOR
+Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+
+.SH SEE ALSO
+.BR gnostic (1)
