@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-23 15:41:05 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-32
+
+    Summary:
+      Updated the version file
+    Revision:
+      gnostic--mainline--0.1--patch-32
+
+
+    modified files:
+     ChangeLog version.h
+
+
 2004-07-23 08:49:56 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-31
 
     Summary:
