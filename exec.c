@@ -40,7 +40,7 @@
 # error gnostic is currently supported only in UNIX-like operating systems.
 #endif /* HAVE_FORK */
 
-#ifndef HAVE_LIMITS_H
+#ifdef HAVE_LIMITS_H
 # include <limits.h>
 #endif /* HAVE_LIMITS_H */
 
