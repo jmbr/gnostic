@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-23 16:15:19 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-35
+
+    Summary:
+      new_task wasn't using xmalloc, now it does use it.
+    Revision:
+      gnostic--mainline--0.1--patch-35
+
+
+    modified files:
+     ChangeLog task.c
+
+
 2004-07-23 16:14:50 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-34
 
     Summary:

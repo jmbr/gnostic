@@ -36,9 +36,7 @@ new_task(char *name, astnode_t expr, char *actions)
 {
 	struct task *n;
 
-	n = malloc(sizeof(struct task));
-	if (!n)
-		return NULL;
+	n = xmalloc(sizeof(struct task));
 
 	memset(n, 0, sizeof(struct task));
 
