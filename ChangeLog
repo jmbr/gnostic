@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-01 16:08:20 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-102
+
+    Summary:
+      Let users declare task names with preceding underscores.
+    Revision:
+      gnostic--mainline--0.1--patch-102
+
+
+    modified files:
+     ChangeLog gnostic.c scanner.l
+
+
 2004-07-30 12:05:09 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-101
 
     Summary:
