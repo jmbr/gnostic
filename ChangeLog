@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-30 00:55:41 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-97
+
+    Summary:
+      Removed EXTRA_CFLAGS from the regression tests makefile.
+    Revision:
+      gnostic--mainline--0.1--patch-97
+
+
+    modified files:
+     ChangeLog tests/GNUmakefile.in
+
+
 2004-07-29 23:17:01 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-96
 
     Summary:
