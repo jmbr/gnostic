@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-22 13:56:35 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-24
+
+    Summary:
+      Removed un-needed call to exit after execve.
+    Revision:
+      gnostic--mainline--0.1--patch-24
+
+
+    modified files:
+     ChangeLog exec.c
+
+
 2004-07-22 13:54:55 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-23
 
     Summary:

@@ -111,8 +111,6 @@ child(int fds[2], char **envp)
 
 	if (execve("/bin/sh", argv, envp) == -1)
 		fatal_error("gnostic: execve: %s\n", strerror(errno));
-
-	exit(EXIT_SUCCESS);
 }
 
 static int
