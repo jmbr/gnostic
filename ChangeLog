@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-29 22:54:19 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-93
+
+    Summary:
+      Added signal handling for SIGINT.
+    Revision:
+      gnostic--mainline--0.1--patch-93
+
+
+    modified files:
+     ChangeLog gnostic.c
+
+
 2004-07-29 22:33:15 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-92
 
     Summary:

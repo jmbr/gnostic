@@ -23,6 +23,10 @@
 # include <sys/types.h>
 #endif /* HAVE_SYS_TYPES_H */
 
+#ifdef HAVE_SIGNAL_H
+# include <signal.h>
+#endif /* HAVE_SIGNAL_H */
+
 #include <assert.h>
 
 #include "taskset.h"
@@ -32,6 +36,8 @@
 
 
 static void usage(void) __attribute__ ((noreturn));
+
+static RETSIGTYPE handler(int signum);
 
 static int exec(const struct taskset *tasks, int argc, char *argv[]);
 
@@ -44,6 +50,8 @@ main(int argc, char *argv[])
 
 	if (argc < 2)
 		usage();
+
+	(void) signal(SIGINT, handler);
 
 	tasks = new_taskset(argv[1]);
 	if (!tasks)
@@ -61,7 +69,7 @@ void
 usage(void)
 {
 	printf("%s\n\n"
-	       "Usage: gnostic <task file> [task] [name=value] [...]\n\n"
+	       "Usage: gnostic <task file> [task] [name=value] [name=value] [...]\n\n"
 	       "Examples:\n"
 	       "  gnostic foo.gns\t\tshow the list of tasks defined in foo\n"
 	       "  gnostic foo.gns bar\t\texecute task `bar' without parameters\n"
@@ -70,6 +78,13 @@ usage(void)
 	       "Email bug reports to %s\n", version.v_gnu, PACKAGE_BUGREPORT);
 
 	exit(EXIT_SUCCESS);
+}
+
+
+RETSIGTYPE
+handler(int signum)
+{
+	fatal_error("gnostic: Interrupted by the user.\n");
 }
 
 
