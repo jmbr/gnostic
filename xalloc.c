@@ -84,14 +84,6 @@ xstrdup(const char *s)
 
 
 void
-__xfree(void *ptr)
-{
-	if (ptr)
-		free(ptr);
-}
-
-
-void
 die(const char *f)
 {
 	assert(f);

@@ -28,11 +28,8 @@ extern void *xrealloc(void *ptr, size_t size);
 
 extern char *xstrdup(const char *s);
 
-extern void __xfree(void *ptr);
-
-/* Be very careful with the possible side effects that might occur when passing
- * the parameter. */
-#define xfree(ptr)	do { __xfree(ptr); ptr = NULL; } while (0)
+/* Be careful with the possible side-effects. */
+#define xfree(ptr)	 do { free(ptr); ptr = NULL; } while (0)
 
 
 #endif /* !XALLOC_H */
