@@ -2,6 +2,32 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-24 14:38:15 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-49
+
+    Summary:
+      Refactored the main, task execution and task parsing modules.
+    Revision:
+      gnostic--mainline--0.1--patch-49
+
+
+    removed files:
+     .arch-ids/exec.h.id .arch-ids/gnostic.h.id exec.h gnostic.h
+
+    modified files:
+     ChangeLog GNUmakefile.in deps.mk gnostic.c task-exec.c
+     task-parser.c task.h
+
+    renamed files:
+     .arch-ids/exec.c.id
+       ==> .arch-ids/task-exec.c.id
+     .arch-ids/parser.c.id
+       ==> .arch-ids/task-parser.c.id
+     exec.c
+       ==> task-exec.c
+     parser.c
+       ==> task-parser.c
+
+
 2004-07-24 12:04:00 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-48
 
     Summary:

@@ -25,8 +25,6 @@
 
 #include <assert.h>
 
-#include "gnostic.h"
-
 #include "task.h"
 #include "graph.h"
 #include "htab.h"
@@ -54,32 +52,34 @@ extern int yyparse(void);
 static void expr_parse(struct parser_ctx *ctx, astnode_t n);
 
 
-int
-gnostic_conf_parse(struct gnostic *self, const char *filename)
+struct task *
+tasklist_parse(const char *filename, htab_t symtab, graph_t depgraph)
 {
+	struct task *tasklist, *t;
 	struct parser_ctx ctx = { NULL, NULL, NULL };
 
-	if (!self)
-		return -1;
-
-	ctx.symtab = self->symtab;
-	ctx.depgraph = self->depgraph;
+	if (!symtab || !depgraph)
+		return NULL;
 
 	yyin = (filename) ? fopen(filename, "r") : stdin;
 	if (!yyin)
-		return -1;
+		return NULL;
 
 	yyparse();
-	self->tasks = tasks, tasks = NULL;
+	tasklist = tasks, tasks = NULL;
 
-	for (ctx.t = self->tasks; ctx.t; ctx.t = task_get_next(ctx.t))
-		htab_lookup_s(ctx.symtab, task_get_name(ctx.t), 1, ctx.t);
+	for (t = tasklist; t; t = task_get_next(t))
+		htab_lookup_s(symtab, task_get_name(t), 1, t);
 
-	for (ctx.t = self->tasks; ctx.t; ctx.t = task_get_next(ctx.t))
-		expr_parse(&ctx, task_get_expr(ctx.t));
+	ctx.symtab = symtab;
+	ctx.depgraph = depgraph;
+	for (t = tasklist; t; t = task_get_next(t)) {
+		ctx.t = t;
+		expr_parse(&ctx, task_get_expr(t));
+	}
 
 	fclose(yyin);
-	return 0;
+	return tasklist;
 }
 
 

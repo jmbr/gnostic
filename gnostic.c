@@ -1,6 +1,9 @@
 /*
  * gnostic.c -- Generic Network Scanning Tool.
- * $Id$
+ */
+/*
+ * gnostic: adjective 1 of knowledge. 2 having special mystic knowledge.
+ * noun (Gnostic) early Christian heretic claiming mystical knowledge.
  */
 
 
@@ -25,12 +28,9 @@
 
 #include <assert.h>
 
-#include "gnostic.h"
-
 #include "htab.h"
 #include "task.h"
 #include "graph.h"
-#include "exec.h"
 
 #include "version.h"
 #include "debug.h"
@@ -40,17 +40,28 @@
 #define PROG_NAME		"gnostic"
 
 
+struct gnostic {
+	htab_t symtab;  	/**< Symbol table */
+	graph_t depgraph;	/**< Dependency graph */
+	struct task *tasks;	/**< Task list */
+};
+
+
 static void usage(void) __attribute__ ((noreturn));
 
+static struct gnostic *new_gnostic(void);
+static int delete_gnostic(struct gnostic *self);
+
 static int gnostic_check_deps(struct gnostic *self);
-static void add_to_environ(int nvars, char *vars[]);
+
+static void update_environ(int nvars, char *vars[]);
+static int gnostic_exec(const struct gnostic *self, const char *name);
 
 
 
 int
 main(int argc, char *argv[])
 {
-	struct task *t;
 	struct gnostic *g;
 	int status = EXIT_SUCCESS;
 
@@ -59,7 +70,8 @@ main(int argc, char *argv[])
 
 	g = new_gnostic();
 
-	if (gnostic_conf_parse(g, argv[1]) == -1) {
+	g->tasks = tasklist_parse(argv[1], g->symtab, g->depgraph);
+	if (!g->tasks) {
 		eprintf("gnostic: Unable to parse %s\n", argv[1]);
 		delete_gnostic(g);
 		exit(EXIT_FAILURE);
@@ -68,17 +80,11 @@ main(int argc, char *argv[])
 	gnostic_check_deps(g);
 
 	if (argc == 2)
-		tasklist_print(g->tasks, stdout);
+		status = tasklist_print(g->tasks, stdout);
 	else {
-		t = htab_lookup_s(g->symtab, argv[2], 0, NULL);
-		if (!t)
-			fatal_error("gnostic: Unknown task `%s'.\n", argv[2]);
-
-		add_to_environ(argc - 3, &argv[3]);
-
-		status = execute(t);
+		update_environ(argc - 3, &argv[3]);
+		gnostic_exec(g, argv[2]);
 	}
-
 	delete_gnostic(g);
 	exit((status == 0) ? EXIT_SUCCESS : EXIT_FAILURE);
 }
@@ -150,11 +156,29 @@ gnostic_check_deps(struct gnostic *self)
 
 
 void
-add_to_environ(int nvars, char *vars[])
+update_environ(int nvars, char *vars[])
 {
 	int i;
 
 	for (i = 0; i < nvars; i++)
 		if (putenv(vars[i]) == -1)
 			fatal_error("gnostic: Unable to declare %s", vars[i]);
+}
+
+
+int
+gnostic_exec(const struct gnostic *self, const char *name)
+{
+	int status;
+	struct task *t;
+
+	t = htab_lookup_s(self->symtab, name, 0, NULL);
+	if (!t)
+		fatal_error("gnostic: Unknown task `%s'.\n", name);
+
+	dprintf("gnostic: Executing `%s'.\n", name);
+	status = task_exec(t);
+	dprintf("gnostic: Task `%s' exited with status %d.\n", name, status);
+
+	return status;
 }

@@ -1,7 +1,8 @@
 #ifndef TASK_H
 #define TASK_H    1
 /*
- * task.h -- Task management module.
+ * \file task.h
+ * \brief Task management module.
  */
 
 
@@ -14,6 +15,9 @@
 #endif /* STDC_HEADERS */
 
 #include "ast.h"
+
+#include "htab.h"
+#include "graph.h"
 
 
 struct task;
@@ -29,6 +33,18 @@ extern const astnode_t task_get_expr(const struct task *self);
 extern int task_set_next(struct task *self, struct task *t);
 extern struct task *task_get_next(const struct task *self);
 
+/** Task launcher.
+ * Executes the given task (but only if its depending tasks are successful).
+ *
+ * @param self A pointer to a task.
+ *
+ * @return 0 on success, -1 on failure.
+ */
+extern int task_exec(const struct task *self);
+
+
+extern struct task *tasklist_parse(const char *filename,
+					htab_t symtab, graph_t depgraph);
 extern int tasklist_print(const struct task *head, FILE *fp);
 extern int delete_tasklist(struct task *self);
 

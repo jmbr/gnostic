@@ -1,5 +1,5 @@
 /*
- * exec.c -- Implements task execution.
+ * task-exec.c -- Implements task execution.
  */
 /*
  * "Within the armor is the butterfly and within the butterfly is the signal
@@ -46,9 +46,8 @@
 
 #include <assert.h>
 
-#include "exec.h"
-#include "ast.h"
 #include "task.h"
+#include "ast.h"
 
 #include "debug.h"
 
@@ -61,52 +60,44 @@
 #endif /* HAVE_STRERROR */
 
 
-static int exec_deps(const struct task *t);
-static int exec_script(const struct task *t);
+static int task_exec_deps(const struct task *self);
+static int task_exec_script(const struct task *self);
 
-static int eval_expression(const astnode_t n);
+static int eval_expr(const astnode_t n);
 
 
 
 int
-execute(const struct task *t)
+task_exec(const struct task *self)
 {
-	int status;
 	const char *name;
 
-	if (!t)
-		return -1;
+	assert(self);
 
-	name = task_get_name(t);
+	name = task_get_name(self);
 	assert(name);
 
 	dprintf("gnostic: Trying to satisfy dependencies for `%s'.\n", name);
-	if (exec_deps(t) == -1) {
+	if (task_exec_deps(self) == -1) {
 		dprintf("gnostic: Unable to satisfy dependencies for `%s'.\n", name);
 		return -1;
 	}
 	dprintf("gnostic: Done with dependencies for `%s'.\n", name);
 
-	dprintf("gnostic: Executing `%s'.\n", name);
-	status = exec_script(t);
-	dprintf("gnostic: Task `%s' exited with status %d.\n", name, status);
-
-	return status;
+	return task_exec_script(self);
 }
 
 int
-exec_deps(const struct task *t)
+task_exec_deps(const struct task *self)
 {
 	astnode_t expr;
 
-	assert(t);
+	assert(self);
 
-	expr = task_get_expr(t);
-
-        if (!expr)
+	if (!(expr = task_get_expr(self)))
 		return 0;
 
-	return (eval_expression(expr)) ? 0 : -1;
+	return (eval_expr(expr)) ? 0 : -1;
 }
 
 
@@ -147,12 +138,12 @@ parent(int fds[2], pid_t pid, const char *src)
 }
 
 int
-exec_script(const struct task *t)
+task_exec_script(const struct task *self)
 {
 	pid_t pid;
 	int fds[2], status = -1;
 
-	assert(t);
+	assert(self);
 
 	if (pipe(fds) == -1)
 		die("pipe");
@@ -163,7 +154,7 @@ exec_script(const struct task *t)
 	case 0:
 		child(fds);
 	default:
-		status = parent(fds, pid, task_get_actions(t));
+		status = parent(fds, pid, task_get_actions(self));
 	}
 
 	return status;
@@ -171,11 +162,18 @@ exec_script(const struct task *t)
 
 
 
-/** Executes a dependency expression.
- * @return 1 on success, 0 on failure.
+/** Dependency expression evaluator.
+ * Traverses the abstract syntax tree of an expression and determines whether
+ * it is true or false.
+ *
+ * @param n The AST node we want to use as root for the evaluation.
+ *
+ * @returns 1 on success, 0 on failure.
+ *
+ * @see task_exec
  */
 int
-eval_expression(const astnode_t n)
+eval_expr(const astnode_t n)
 {
 	int status = 0;	
 
@@ -183,19 +181,19 @@ eval_expression(const astnode_t n)
 
 	switch (astnode_get_type(n)) {
 	case N_ID:
-		status = (execute(astnode_get_item(n)) == 0)
+		status = (task_exec(astnode_get_item(n)) == 0)
 			? 1 : 0;
 		break;
 	case N_AND:
-		status = (eval_expression(astnode_get_lhs(n))
-			&& eval_expression(astnode_get_rhs(n)));
+		status = (eval_expr(astnode_get_lhs(n))
+			&& eval_expr(astnode_get_rhs(n)));
 		break;
 	case N_OR:
-		status = (eval_expression(astnode_get_lhs(n))
-			|| eval_expression(astnode_get_rhs(n)));
+		status = (eval_expr(astnode_get_lhs(n))
+			|| eval_expr(astnode_get_rhs(n)));
 		break;
 	case N_NOT:
-		status = (!eval_expression(astnode_get_rhs(n)));
+		status = (!eval_expr(astnode_get_rhs(n)));
 		break;
 	default:
 		assert(0);
