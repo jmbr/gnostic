@@ -30,21 +30,21 @@
 
 /** Node of an abstract syntax tree.
  *
- * These are the nodes composing dependency expressions.
+ * These nodes compose dependency expressions.
  */
-struct ast {
+struct ast_st {
 	void *item;				/**< Payload */
 	enum ast_type type;			/**< Node type */
-	struct ast *children[AST_MAXCHILDREN];	/**< Children */
+	ast_t children[AST_MAXCHILDREN];	/**< Children */
 };
 
 
 ast_t
 new_ast(enum ast_type type, ast_t lhs, ast_t rhs)
 {
-	struct ast *n;
+	struct ast_st *n;
 
-	n = xmalloc(sizeof(struct ast));
+	n = xmalloc(sizeof(struct ast_st));
 
 	n->item = NULL;
 	n->type = type;

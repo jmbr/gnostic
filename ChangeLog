@@ -2,6 +2,19 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-15 10:53:50 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-137
+
+    Summary:
+      Did some preparation steps for introducing an AST iterator.
+    Revision:
+      gnostic--mainline--0.1--patch-137
+
+
+    modified files:
+     ChangeLog GNUmakefile.in ast.c ast.h grammar.y stack.c stack.h
+     tests/test-ast.c
+
+
 2004-08-15 05:46:56 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-136
 
     Summary:

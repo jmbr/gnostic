@@ -17,7 +17,8 @@ enum ast_type {
 	AST_NOT,	/**< Boolean not */
 };
 
-typedef struct ast *ast_t;
+typedef struct ast_st *ast_t;
+typedef struct ast_itor_st *ast_itor_t;
 
 /** AST item destructor callback */
 typedef int (*ast_item_dtor)(void *);
@@ -94,6 +95,13 @@ extern ast_t ast_get_lhs(const ast_t self);
  * @see ast_get_lhs, new_ast
  */
 extern ast_t ast_get_rhs(const ast_t self);
+
+
+extern ast_itor_t new_ast_itor(ast_t ast);
+extern int delete_ast_itor(ast_itor_t self);
+
+extern ast_t ast_itor_first(ast_itor_t self);
+extern ast_t ast_itor_next(ast_itor_t self);
 
 
 #endif /* !AST_H */

@@ -74,7 +74,7 @@ VERSION := @VERSION@
 
 SOURCES := gnostic.c \
 	xmemory.c err.c \
-	task.c task-exec.c stack.c ast.c vars.c \
+	task.c task-exec.c stack.c ast.c ast-itor.c vars.c \
 	tasklist.c hashtab.c taskset.c scanner.c grammar.c taskset-parser.c
 
 OBJECTS := $(SOURCES:%.c=%.o) $(LIBOBJS)

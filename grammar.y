@@ -59,7 +59,7 @@ static ast_t do_and(ast_t lhs, ast_t rhs);
 	char *s;
 	struct var *v;
 	struct task *t;
-	struct ast *n;
+	struct ast_st *n;
 }
 
 %left AND OR

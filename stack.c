@@ -30,22 +30,19 @@
 
 /** A stack (Last-In First-Out) structure.
  */
-struct stack {
+struct stack_st {
 	size_t len;		/**< Stack length (in number of elements) */
 	unsigned top;		/**< Index of the top of the stack */
 	void **stack;		/**< Array of items */
 };
 
 
-static void stack_grow(stack_t self);
-
-
 stack_t
 new_stack(void)
 {
-	struct stack *n;
+	struct stack_st *n;
 
-	n = xmalloc(sizeof(struct stack));
+	n = xmalloc(sizeof(struct stack_st));
 
 	n->top = 0;
 	n->len = STACK_DEFAULT_LEN;
@@ -66,7 +63,8 @@ delete_stack(stack_t self)
 	return 0;
 }
 
-void
+
+static void
 stack_grow(stack_t self)
 {
 	assert(self);
@@ -74,7 +72,6 @@ stack_grow(stack_t self)
 	self->len *= 2;
 	self->stack = xrealloc(self->stack, self->len * sizeof(void *));
 }
-
 
 void
 stack_push(stack_t self, void *item)
@@ -103,5 +100,8 @@ stack_peek(const stack_t self)
 {
 	assert(self);
 	
+	if (self->top == 0)
+		return NULL;
+
 	return self->stack[self->top - 1];
 }

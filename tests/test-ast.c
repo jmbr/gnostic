@@ -75,9 +75,25 @@ void
 test_ast_itor(void)
 {
 	int status;
-	ast_t root;
+	ast_t root, n;
+	ast_itor_t itor;
 
 	root = make_tree();
+
+	itor = new_ast_itor(root);
+	assert(itor);
+
+	n = ast_itor_first(itor);
+	assert(n == root);
+
+	n = ast_itor_next(itor);
+	assert(n == ast_get_lhs(root));
+
+	n = ast_itor_next(itor);
+	assert(n == ast_get_rhs(root));
+
+	status = delete_ast_itor(itor);
+	assert(status == 0);
 
 	status = delete_ast(root, NULL);
 	assert(status == 0);

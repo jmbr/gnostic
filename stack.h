@@ -8,7 +8,7 @@
  */
 
 
-typedef struct stack *stack_t;
+typedef struct stack_st *stack_t;
 
 
 extern stack_t new_stack(void);
