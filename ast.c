@@ -31,12 +31,8 @@
 #include "xmemory.h"
 
 
-/** Node position.
- */
-enum astnode_pos {
-	ASTNODE_LEFT,
-	ASTNODE_RIGHT
-};
+#define AST_MAXCHILDREN		2
+
 
 /** Node of an abstract syntax tree.
  *
@@ -44,12 +40,9 @@ enum astnode_pos {
  * of dependency expressions.
  */
 struct astnode {
-	void *item;			/**< Payload */
-	//enum astnode_pos pos: 2;	/**< Position */
-	enum astnode_types type: 3;	/**< Node type */
-	struct astnode *lhs;		/**< Left hand side */
-	struct astnode *rhs;		/**< Right hand side */
-	//struct astnode *a, *b;		/**< Children */
+	void *item;					/**< Payload */
+	enum astnode_types type;			/**< Node type */
+	struct astnode *children[AST_MAXCHILDREN];	/**< Children */
 };
 
 
@@ -60,10 +53,10 @@ new_astnode(enum astnode_types type, astnode_t lhs, astnode_t rhs)
 
 	n = xmalloc(sizeof(struct astnode));
 
-	n->type = type;
 	n->item = NULL;
-	n->lhs = lhs;
-	n->rhs = rhs;
+	n->type = type;
+	n->children[0] = lhs;
+	n->children[1] = rhs;
 
 	return n;
 }
@@ -97,7 +90,7 @@ astnode_get_lhs(const astnode_t self)
 	if (!self)
 		return NULL;
 
-	return self->lhs;
+	return self->children[0];
 }
 
 astnode_t
@@ -106,7 +99,7 @@ astnode_get_rhs(const astnode_t self)
 	if (!self)
 		return NULL;
 
-	return self->rhs;
+	return self->children[1];
 }
 
 
@@ -135,6 +128,8 @@ astnode_get_item(const astnode_t self)
 int
 delete_ast(astnode_t self, astnode_item_dtor dtor)
 {
+	int i;
+
 	if (!self)
 		return -1;
 
@@ -145,10 +140,10 @@ delete_ast(astnode_t self, astnode_item_dtor dtor)
 		assert(status == 0);
 	}
 
-	if (self->lhs)
-		delete_ast(self->lhs, dtor);
-	if (self->rhs)
-		delete_ast(self->rhs, dtor);
+	for (i = 0; i < AST_MAXCHILDREN; i++)
+		if (self->children[i])
+			if (delete_ast(self->children[i], dtor) == -1)
+				return -1;
 
 	xfree(self);
 
