@@ -37,7 +37,7 @@
 #endif /* HAVE_UNISTD_H */
 
 #ifndef HAVE_FORK
-# error gnostic is currently supported only in UNIX-like operating systems.
+# error Gnostic is currently supported only in UNIX-like operating systems.
 #endif /* HAVE_FORK */
 
 #ifdef HAVE_LIMITS_H
@@ -53,6 +53,14 @@
 #include "task.h"
 
 #include "debug.h"
+
+
+/* Here we want to be on the safe side with regard to strerror */
+#if (HAVE_STRERROR && !_REENTRANT)
+#define die(s) fatal_error("gnostic: %s failed: %s\n", s, strerror(errno))
+#else /* !HAVE_STRERROR || _REENTRANT */
+#define die(s) fatal_error("gnostic: %s failed: %d\n", s, errno)
+#endif /* HAVE_STRERROR */
 
 
 /** Execution context.
@@ -109,7 +117,7 @@ child(int fds[2], char **envp)
 	sprintf(arg, "/dev/fd/%u", fds[0]);
 
 	if (execve("/bin/sh", argv, envp) == -1)
-		fatal_error("gnostic: execve: %s\n", strerror(errno));
+		die("execve");
 }
 
 static int
@@ -120,12 +128,12 @@ parent(int fds[2], pid_t pid, const char *src)
 
 	srclen = strlen(src);
 	if (write(fds[1], src, srclen) != srclen)
-		fatal_error("gnostic: write: %s\n", strerror(errno));
+		die("write");
 
 	close(fds[0]), close(fds[1]);
 
 	if (waitpid(pid, &status, 0) == -1)
-		fatal_error("gnostic: waitpid: %s\n", strerror(errno));
+		die("waitpid");
 
 	if (!WIFEXITED(status))
 		return -1;
@@ -142,11 +150,11 @@ exec_script(struct exec_ctx *ctx)
 	assert(ctx && ctx->t->actions);
 
 	if (pipe(fds) == -1)
-		fatal_error("gnostic: Unable to create pipe.\n");
+		die("pipe");
 
 	switch ((pid = fork())) {
 	case -1:
-		fatal_error("gnostic: Unable to fork: %s\n", strerror(errno));
+		die("fork");
 	case 0:
 		child(fds, ctx->envp);
 	default:

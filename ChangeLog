@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-23 16:32:05 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-36
+
+    Summary:
+      Improved error reporting in the exec module. The function strerror_r is no longer needed in the project.
+    Revision:
+      gnostic--mainline--0.1--patch-36
+
+
+    modified files:
+     ChangeLog configure.ac exec.c
+
+
 2004-07-23 16:15:19 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-35
 
     Summary:
