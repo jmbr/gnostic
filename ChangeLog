@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-18 09:38:18 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-17
+
+    Summary:
+      Made some clarifications to the grammar.
+    Revision:
+      gnostic--mainline--0.1--patch-17
+
+
+    modified files:
+     ChangeLog grammar.y
+
+
 2004-07-17 22:23:30 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-16
 
     Summary:

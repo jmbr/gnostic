@@ -98,7 +98,7 @@ action		: ACTION {
 dependencies	: expr {
       			$$ = $1;
 		}
-		| {
+		| /* Empty */ {
 			$$ = NULL;
 		}
 		;
