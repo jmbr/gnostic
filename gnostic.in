@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# gnostic.in
+# Launches gnostic with some useful parameters.
+
+
+ROOT=/tmp/gnostic
+
+GNOSTIC="@bindir@/gnostic-bin"
+
+
+if [ ! -x $GNOSTIC ]; then
+	echo "gnostic: Unable to find executable."
+	exit 1
+fi
+
+if [ $# -lt 2 ]; then
+	$GNOSTIC $@
+	exit $?
+fi
+
+
+$GNOSTIC $@ \
+	PATH=$PATH LD_PRELOAD=$LD_PRELOAD LD_LIBRARY_PATH=$LD_LIBRARY_PATH \
+	root=$ROOT
+RETVAL=$?
+
+rm -rf $ROOT
+
+exit $RETVAL
+
+
+# vim: ts=4 sw=4 noet filetype=sh

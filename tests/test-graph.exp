@@ -1,0 +1,10 @@
+digraph G {
+	rankdir=LR;
+
+	"udp" -> "onc-rpc";
+	"tcp" -> "http";
+	"tcp" -> "postgres";
+	"tcp" -> "onc-rpc";
+	"http" -> "php";
+	"php" -> "phpnuke";
+}

@@ -1,0 +1,127 @@
+###############################################################################
+#
+# GNUmakefile -- @configure_input@
+# $Id: GNUmakefile.in,v 1.5 2002/06/04 01:08:25 rwx Exp $
+#
+###############################################################################
+
+@SET_MAKE@
+
+SHELL := @SHELL@
+
+srcdir := .
+
+VPATH := $(srcdir):..
+
+CC := @CC@
+
+CPPFLAGS := @CPPFLAGS@
+DEFS := @DEFS@
+CFLAGS := @CFLAGS@
+LDFLAGS := @LDFLAGS@
+LIBS := @LIBS@
+INCLUDES := @INCLUDES@ -I..
+
+EXTRA_CFLAGS := @EXTRA_CFLAGS@
+
+LIBOBJS := @LIBOBJS@
+ifdef LIBOBJS
+INCLUDES += -I$(srcdir)/missing
+endif
+
+COMPILE = $(CC) $(CPPFLAGS) $(CFLAGS) $(DEFS) $(INCLUDES)
+LINK = $(CC)  $(CFLAGS) $(LDFLAGS)
+
+
+###############################################################################
+#
+# Pattern rules.
+#
+###############################################################################
+
+.SUFFIXES: .c .o
+
+%.o: %.c
+	$(COMPILE) -c $<
+
+
+###############################################################################
+#
+# Build rules.
+#
+###############################################################################
+
+OBJECTS := $(patsubst %.c, %.o, $(wildcard test-*.c))
+TEST_BINARIES := $(patsubst %.o, %, $(OBJECTS))
+TEST_SCRIPTS := $(wildcard test-*.sh)
+TESTS := $(sort $(TEST_BINARIES) $(TEST_SCRIPTS))
+
+.PHONY: check tests
+
+tests: $(TEST_BINARIES)
+
+test-htab: test-htab.o htab.o
+	$(LINK) $^ -o $@ $(LIBS)
+
+test-deps: test-deps.o ast.o grammar.o scanner.o xalloc.o debug.o
+	$(LINK) $^ -o $@ $(LIBS)
+
+test-cleanup: test-cleanup.o cleanup.o xalloc.o debug.o
+	$(LINK) $^ -o $@ $(LIBS)
+
+test-graph: test-graph.o graph.o task.o ast.o xalloc.o debug.o
+
+check: tests
+	@echo "===================="
+	@echo "Executing test suite"
+	@echo "===================="
+	@echo ""
+	@for test in $(TESTS); do \
+	  echo -n "Checking $$test... "; \
+	  $(srcdir)/$$test 1>$$test.out 2>&1 ; \
+	  RETVAL=$$?; \
+	  if [ $$RETVAL -ne 0 ]; then \
+	    ../shtool echo -e "%BFAILED%b"; \
+            continue; \
+	  fi; \
+	  if [ -f $$test.exp ]; then \
+	    cmp -s $$test.exp $$test.out; \
+	    RETVAL=$$?; \
+	    if [ $$RETVAL -ne 0 ]; then \
+	      ../shtool echo -e "%BFAILED%b"; \
+	      continue; \
+	    fi; \
+	  fi; \
+	  echo "OK"; \
+	done
+
+
+###############################################################################
+#
+# Cleanup.
+#
+###############################################################################
+
+.PHONY: clean clobber rmbak
+
+clean:
+	$(RM) *.o
+	$(RM) *.out
+	$(RM) $(TEST_BINARIES)
+
+rmbak:
+	$(RM) *~ *.bak
+
+clobber: rmbak clean
+	$(RM) config.log
+	$(RM) *.core core.*
+
+
+###############################################################################
+#
+# Automagick remaking of configuration files.
+#
+###############################################################################
+
+GNUmakefile: GNUmakefile.in config.status
+	$(SHELL) ../config.status GNUmakefile

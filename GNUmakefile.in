@@ -1,0 +1,265 @@
+###############################################################################
+#
+# GNUmakefile -- @configure_input@
+#
+###############################################################################
+
+@SET_MAKE@
+
+SHELL := @SHELL@
+
+srcdir := @srcdir@
+prefix := @prefix@
+exec_prefix := @exec_prefix@
+
+bindir := @bindir@
+libdir := @libdir@
+mandir := @mandir@
+datadir := @datadir@
+top_builddir := .
+
+docdir := @srcdir@/doc
+testsdir := @srcdir@/tests
+
+
+VPATH := $(srcdir):$(srcdir)/missing
+
+SHTOOL := $(srcdir)/shtool
+
+INSTALL := $(SHTOOL) install -c
+INSTALL_PROGRAM := $(INSTALL)
+INSTALL_DATA := $(INSTALL) -m 644
+
+CC := @CC@
+LEX := @LEX@
+YACC := @YACC@
+RANLIB := @RANLIB@
+
+CPPFLAGS := @CPPFLAGS@
+DEFS := @DEFS@
+CFLAGS := @CFLAGS@
+LDFLAGS := @LDFLAGS@
+LIBS := @LIBS@
+INCLUDES := @INCLUDES@
+
+EXTRA_CFLAGS := @EXTRA_CFLAGS@
+
+LIBOBJS := @LIBOBJS@
+ifdef LIBOBJS
+INCLUDES += -I$(srcdir)/missing
+endif
+
+COMPILE = $(CC) $(CPPFLAGS) $(CFLAGS) $(DEFS) $(INCLUDES)
+LINK = $(CC)  $(CFLAGS) $(LDFLAGS)
+
+PACKAGE := @PACKAGE@
+VERSION := @VERSION@
+
+
+###############################################################################
+#
+# Pattern rules.
+#
+###############################################################################
+
+.SUFFIXES: .c .o
+
+%.o: %.c
+	$(COMPILE) -c $<
+
+
+###############################################################################
+#
+# Build rules.
+#
+###############################################################################
+
+SOURCES := gnostic.c \
+	task.c htab.c \
+	xalloc.c debug.c cleanup.c \
+	scanner.c grammar.c ast.c parser.c graph.c \
+	exec.c
+
+OBJECTS := $(SOURCES:%.c=%.o) $(LIBOBJS)
+
+.PHONY:
+.PHONY: all
+
+all: gnostic-bin gnostic
+	
+gnostic-bin: $(OBJECTS)
+	$(LINK) $^ -o $@ $(LIBS)
+
+scanner.c: scanner.l grammar.c
+
+grammar.c: grammar.y
+	$(YACC) -d $<
+	@mv y.tab.c $@
+	@if test -f y.tab.h; then \
+	  if cmp -s y.tab.h $*.h; then \
+	    rm -f y.tab.h; \
+	  else \
+	    mv y.tab.h $*.h; \
+	  fi; \
+	fi
+
+gnostic: GNUmakefile $(srcdir)/gnostic.in
+	sed -e 's,@bindir\@,$(bindir),g' $(srcdir)/gnostic.in > gnostic.tmp
+	chmod a+x gnostic.tmp
+	mv -f gnostic.tmp $@
+
+
+###############################################################################
+#
+# Cleanup.
+#
+###############################################################################
+
+.PHONY: clean clobber rmbak
+
+clean:
+	$(RM) gnostic gnostic.tmp gnostic-bin
+	$(RM) $(OBJECTS)
+	$(MAKE) -C $(docdir) clean
+	$(MAKE) -C $(testsdir) clean
+
+rmbak:
+	$(RM) *~ *.bak
+
+mostlyclean: clean rmbak
+	$(RM) *.core core.*
+	$(MAKE) -C $(testsdir) clobber
+
+clobber: rmbak clean mostlyclean
+	$(RM) -r $(docdir)/api
+	$(RM) grammar.[ch] scanner.c
+
+distclean: mostlyclean
+	$(RM) tags
+	$(RM) config.log config.cache config.status
+	$(RM) config.h stamp-h
+	$(RM) GNUmakefile $(testsdir)/GNUmakefile
+	$(RM) -r $(srcdir)/autom4te.cache
+
+TAGS: tags;
+tags: $(wildcard *.[ch])
+	ctags -R
+
+
+###############################################################################
+#
+# Test suite.
+#
+###############################################################################
+
+.PHONY: check
+
+check: all
+	$(MAKE) -C $(testsdir) $@
+
+
+###############################################################################
+#
+# Documentation.
+#
+###############################################################################
+
+.PHONY: doc userdoc apidoc
+
+DOXYGEN := @DOXYGEN@
+
+doc: userdoc apidoc
+
+userdoc:
+	$(MAKE) -C $(docdir)
+
+apidoc: doxy.cfg
+	$(DOXYGEN) $(srcdir)/doxy.cfg
+	@echo ======================================
+	@echo API documentation for $(PACKAGE) is ready
+	@echo ======================================
+
+doxy.cfg: doxy.cfg.in
+	$(SHELL) ./config.status doxy.cfg
+
+
+###############################################################################
+#
+# Installation, distribution and packaging.
+#
+###############################################################################
+
+.PHONY: install install-strip dist rpm
+
+install: all
+	$(SHTOOL) mkdir -f -p $(DESTDIR)$(bindir)
+	$(INSTALL_PROGRAM) gnostic $(DESTDIR)$(bindir)/
+	$(INSTALL_PROGRAM) gnostic-bin $(DESTDIR)$(bindir)/
+
+install-strip:; $(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' install
+
+NAME := $(PACKAGE)-$(VERSION)
+
+dist: depend apidoc distclean ChangeLog;
+	$(SHTOOL) fixperm $(srcdir)
+	$(SHTOOL) tarball -o $(NAME).tar.bz2 -c bzip2 \
+	  -e 'CVS,\{arch\},\.arch-ids,^\-i,\.swp,^tmp,^TODO' .
+	@echo ==============================================
+	@echo $(NAME).tar.bz2 is ready for distribution
+	@echo ==============================================
+
+ChangeLog:
+	-tla changelog > ChangeLog
+
+#rpm: dist
+#	@cp $(NAME).tar.gz /usr/src/redhat/SOURCES
+#	@rpm -ba gnostic.spec
+#	@cp /usr/src/redhat/RPMS/i386/$(NAME)*.rpm .
+
+
+###############################################################################
+#
+# Automagick remaking of configuration files.
+#
+###############################################################################
+
+configure: configure.ac aclocal.m4
+	cd $(srcdir) && autoconf && autoheader
+
+config.status: configure configure.ac aclocal.m4
+	$(SHELL) ./config.status --recheck
+
+config.h: stamp-h
+
+stamp-h: config.h.in config.status
+	$(SHELL) ./config.status config.h
+	@echo timestamp > stamp-h
+
+#gnostic.spec: gnostic.spec.in
+#	$(SHELL) ./config.status gnostic.spec
+
+GNUmakefile: GNUmakefile.in config.status
+	$(SHELL) ./config.status GNUmakefile
+
+shtool:
+	shtoolize -o shtool version fixperm tarball mkdir install echo
+
+version.h:
+	$(SHTOOL) version --language=c --name=$(PACKAGE) --set $(VERSION) $@
+
+
+###############################################################################
+#
+# Dependency tracking.
+#
+###############################################################################
+
+.PHONY: depend
+
+include deps.mk
+
+depend:
+	@echo =====================
+	@echo Tracking dependencies
+	@echo =====================
+	$(CC) -MM -I. $(CPPFLAGS) $(CFLAGS) $(DEFS) $(INCLUDES) *.c > deps.mk;
