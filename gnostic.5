@@ -11,10 +11,18 @@ For a quickstart see
 .BR gnostic (1)
 
 .SH DESCRIPTION
-Task files are a very flexible way of specifying how (and when) a given task should be
-executed.
+Task files are a very flexible way of specifying how (and when) a given task
+should be executed. They are composed by comments, variable declarations and
+task definitions.
 
-Comments must be preceded by a `#' character at the beginning of the line.
+Comments can be located anywhere in the task file and must be preceded by a `#'
+character at the beginning of the line.
+
+Variable declarations must appear before any task definition. These variables
+will become part of the environment of every task and are of the form
+NAME=VALUE. Everything written in the line will be part of the declaration so
+beware of trailing whitespaces, etc. (This syntax may change in future versions
+of the program to be more similar to shell variable declarations).
 
 Task definitions begin with the task name followed by a colon and optionally a
 dependency expression in the same line. Following this, there must be at least

@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-08 12:00:24 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-120
+
+    Summary:
+      Improved manuals pages.
+    Revision:
+      gnostic--mainline--0.1--patch-120
+
+
+    modified files:
+     ChangeLog gnostic.5
+
+
 2004-08-07 21:49:06 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-119
 
     Summary:
