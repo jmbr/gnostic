@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-04 01:46:18 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-109
+
+    Summary:
+      Cosmetic changes to the lexer and parser.
+    Revision:
+      gnostic--mainline--0.1--patch-109
+
+
+    modified files:
+     ChangeLog grammar.y scanner.l
+
+
 2004-08-03 13:19:33 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-108
 
     Summary:

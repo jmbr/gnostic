@@ -28,11 +28,15 @@
 
 #define YY_NO_UNPUT	1
 
-
-unsigned int cur_line = 1;
+/*
+ * lineno is prefered over %option yylineno because the latter sets some
+ * warnings during compilation.
+ */
+unsigned int lineno = 1;
 %}
 
 %x ACTIONS
+
 %option noyywrap
 
 IDENTIFIER	[A-Za-z_][A-Za-z1-9\-_]*
@@ -52,7 +56,7 @@ not {
 }
 
 {IDENTIFIER}=.*$ {
-	++cur_line;
+	++lineno;
 
         yylval.s = xstrdup(yytext);
 
@@ -70,7 +74,7 @@ not {
 }
 
 <ACTIONS>.*\n {
-	++cur_line;
+	++lineno;
 
         BEGIN(INITIAL);
         yylval.s = xstrdup(yytext);
@@ -88,7 +92,7 @@ not {
 
 \n {
 	/* Ignore newlines */
-	++cur_line;
+	++lineno;
 }
 
 . {
@@ -100,5 +104,5 @@ not {
 void
 yyerror(char *s)
 {
-	fatal_error("gnostic: %s in line %d\n", s, cur_line);
+	fatal_error("gnostic: %s in line %d\n", s, lineno);
 }

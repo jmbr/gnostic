@@ -50,6 +50,8 @@ static astnode_t do_or(astnode_t lhs, astnode_t rhs);
 static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 %}
 
+/*%error-verbose*/
+
 %token AND OR NOT
 %token VAR_DECL IDENTIFIER ACTION
 
