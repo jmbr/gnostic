@@ -2,6 +2,21 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-17 12:25:16 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-152
+
+    Summary:
+      Removed useless ast-itor header file.
+    Revision:
+      gnostic--mainline--0.1--patch-152
+
+
+    removed files:
+     .arch-ids/ast-itor.h.id ast-itor.h
+
+    modified files:
+     ChangeLog
+
+
 2004-08-17 12:24:57 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-151
 
     Summary:
