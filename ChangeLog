@@ -2,6 +2,21 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-15 10:54:08 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-138
+
+    Summary:
+      Completed unit test for the stack module.
+    Revision:
+      gnostic--mainline--0.1--patch-138
+
+
+    new files:
+     tests/.arch-ids/test-stack.exp.id tests/test-stack.exp
+
+    modified files:
+     ChangeLog
+
+
 2004-08-15 10:53:50 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-137
 
     Summary:
