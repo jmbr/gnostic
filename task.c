@@ -31,6 +31,14 @@
 #include "xalloc.h"
 
 
+struct task {
+	char *name;
+	char *actions;
+	astnode_t expr;
+	struct task *next;
+};
+
+
 struct task *
 new_task(char *name, astnode_t expr, char *actions)
 {
@@ -78,4 +86,56 @@ delete_tasklist(struct task *self)
 	}
 
 	return 0;
+}
+
+
+const char *
+task_get_name(const struct task *self)
+{
+	if (!self)
+		return NULL;
+
+	assert(self->name);
+
+	return (const char *) self->name;
+}
+
+const char *
+task_get_actions(const struct task *self)
+{
+	if (!self)
+		return NULL;
+
+	assert(self->actions);
+
+	return (const char *) self->actions;
+}
+
+const astnode_t
+task_get_expr(const struct task *self)
+{
+	if (!self)
+		return NULL;
+
+	return (const astnode_t) self->expr;
+}
+
+int
+task_set_next(struct task *self, struct task *t)
+{
+	if (!self)
+		return -1;
+
+	assert(!self->next);
+	self->next = t;
+
+	return 0;
+}
+
+struct task *
+task_get_next(const struct task *self)
+{
+	assert(self);
+
+	return self->next;
 }

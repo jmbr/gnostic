@@ -66,10 +66,12 @@ main(int argc, char *argv[])
 
 	gnostic_check_deps(g);
 
-	if (argc == 2) {
-		for (t = g->tasks; t; t = t->next)
-			printf("%s\n", t->name);
-	} else {
+	switch (argc) {
+	case 2:
+		for (t = g->tasks; t; t = task_get_next(t))
+			printf("%s\n", task_get_name(t));
+		break;
+	default:
 		t = htab_lookup_s(g->symtab, argv[2], 0, NULL);
 		if (!t)
 			fatal_error("gnostic: Unknown task `%s'.\n", argv[2]);
@@ -129,7 +131,7 @@ void
 errback(struct task *a, struct task *b)
 {
 	fatal_error("gnostic: There are circular dependencies between "
-			"`%s' and `%s'.\n", a->name, b->name);
+		"`%s' and `%s'.\n", task_get_name(a), task_get_name(b));
 }
 
 int

@@ -73,7 +73,7 @@ struct exec_ctx {
 
 
 static int exec_script(struct exec_ctx *ctx);
-static int eval_expression(struct exec_ctx *ctx, astnode_t n);
+static int eval_expression(struct exec_ctx *ctx, const astnode_t n);
 
 
 
@@ -81,25 +81,30 @@ int
 execute(const struct task *t, char **envp)
 {
 	int status;
+	const char *name;
+	astnode_t expr;
 	struct exec_ctx ctx = { envp, t };
 
 	if (!t)
 		return -1;
 
-        if (t->expr) {
+	name = task_get_name(t);
+	expr = task_get_expr(t);
+
+        if (expr) {
 		dprintf("gnostic: Trying to satisfy dependencies for `%s'.\n",
-			t->name);
-		if (!eval_expression(&ctx, t->expr)) {
+			name);
+		if (!eval_expression(&ctx, expr)) {
 			dprintf("gnostic: Unable to satisfy dependencies "
-				"for `%s'.\n", t->name);
+				"for `%s'.\n", name);
 			return -1;
 		}
-		dprintf("gnostic: Done with dependencies for `%s'.\n", t->name);
+		dprintf("gnostic: Done with dependencies for `%s'.\n", name);
         }
 
-	dprintf("gnostic: Executing `%s'.\n", t->name);
+	dprintf("gnostic: Executing `%s'.\n", name);
 	status = exec_script(&ctx);
-	dprintf("gnostic: Task `%s' exited with status %d.\n", t->name, status);
+	dprintf("gnostic: Task `%s' exited with status %d.\n", name, status);
 
 	return status;
 }
@@ -147,7 +152,7 @@ exec_script(struct exec_ctx *ctx)
 	pid_t pid;
 	int fds[2], status = -1;
 
-	assert(ctx && ctx->t->actions);
+	assert(ctx);
 
 	if (pipe(fds) == -1)
 		die("pipe");
@@ -158,7 +163,7 @@ exec_script(struct exec_ctx *ctx)
 	case 0:
 		child(fds, ctx->envp);
 	default:
-		status = parent(fds, pid, ctx->t->actions);
+		status = parent(fds, pid, task_get_actions(ctx->t));
 	}
 
 	return status;
@@ -170,7 +175,7 @@ exec_script(struct exec_ctx *ctx)
  * @return 1 on success, 0 on failure.
  */
 int
-eval_expression(struct exec_ctx *ctx, astnode_t n)
+eval_expression(struct exec_ctx *ctx, const astnode_t n)
 {
 	int status = 0;	
 

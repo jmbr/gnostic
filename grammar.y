@@ -66,7 +66,7 @@ conf		: tasks {
 
 tasks           : task
 		| tasks task {
-			$2->next = $1;
+			task_set_next($2, $1);
 			$$ = $2;
 		}
                 ;

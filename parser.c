@@ -72,11 +72,11 @@ gnostic_conf_parse(struct gnostic *self, const char *filename)
 	yyparse();
 	self->tasks = tasks, tasks = NULL;
 
-	for (ctx.t = self->tasks; ctx.t; ctx.t = ctx.t->next)
-		htab_lookup_s(ctx.symtab, ctx.t->name, 1, ctx.t);
+	for (ctx.t = self->tasks; ctx.t; ctx.t = task_get_next(ctx.t))
+		htab_lookup_s(ctx.symtab, task_get_name(ctx.t), 1, ctx.t);
 
-	for (ctx.t = self->tasks; ctx.t; ctx.t = ctx.t->next)
-		expr_parse(&ctx, ctx.t->expr);
+	for (ctx.t = self->tasks; ctx.t; ctx.t = task_get_next(ctx.t))
+		expr_parse(&ctx, task_get_expr(ctx.t));
 
 	fclose(yyin);
 	return 0;
@@ -96,7 +96,7 @@ expr_parse(struct parser_ctx *ctx, astnode_t n)
 		p = htab_lookup_s(ctx->symtab, item, 0, NULL);
 		if (!p) {
 			fatal_error("gnostic: Task `%s' needed by `%s' is not "
-				"defined.\n", (char *) item, ctx->t->name);
+			"defined.\n", (char *) item, task_get_name(ctx->t));
 		}
 
 		graph_insert_edge(ctx->depgraph, ctx->t, p);

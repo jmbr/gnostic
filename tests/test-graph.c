@@ -24,9 +24,6 @@
 #define make_task(name)		new_task(xstrdup(name), NULL, xstrdup("#"))
 
 
-static char *get_task_name(const struct task *t);
-
-
 int
 main(int argc, char *argv[])
 {
@@ -53,19 +50,10 @@ main(int argc, char *argv[])
 
 	deps = graph_topological_sort(deps, NULL);
 
-	graph_print_dot(deps, stdout, (graph_print_fn) get_task_name);
+	graph_print_dot(deps, stdout, (graph_print_fn) task_get_name);
 
 	for (int i = 0; list[i] != NULL; i++)
 		delete_task(*list[i]);
 	delete_graph(deps);
 	exit(EXIT_SUCCESS);
-}
-
-
-char *
-get_task_name(const struct task *t)
-{
-	assert(t);
-
-	return t->name;
 }
