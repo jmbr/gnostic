@@ -21,6 +21,9 @@
 #include "xalloc.h"
 
 
+#define make_task(name)		new_task(xstrdup(name), NULL, xstrdup("#"))
+
+
 static char *get_task_name(const struct task *t);
 
 
@@ -28,42 +31,18 @@ int
 main(int argc, char *argv[])
 {
 	graph *deps;
-	//struct graph_itor *itor;
 	struct task *p, *q, *r, *s, *t, *u, *v;
+	struct task **list[] = { &p, &q, &r, &s, &t, &u, &v, NULL };
 
-	/*
-	 * We strdup task names to keep memory checkers happy.
-	 */
-	p = new_task(NULL, NULL, NULL);
-	assert(p);
-	p->name = xstrdup("tcp");
+	assert(( p = make_task("tcp") ));
+	assert(( q = make_task("http") ));
+	assert(( r = make_task("postgres") ));
+	assert(( s = make_task("php") ));
+	assert(( t = make_task("udp") ));
+	assert(( u = make_task("onc-rpc") ));
+	assert(( v = make_task("phpnuke") ));
 
-	q = new_task(NULL, NULL, NULL);
-	assert(q);
-	q->name = xstrdup("http");
-
-	r = new_task(NULL, NULL, NULL);
-	assert(r);
-	r->name = xstrdup("postgres");
-
-	s = new_task(NULL, NULL, NULL);
-	assert(s);
-	s->name = xstrdup("php");
-
-	t = new_task(NULL, NULL, NULL);
-	assert(t);
-	t->name = xstrdup("udp");
-	
-	u = new_task(NULL, NULL, NULL);
-	assert(u);
-	u->name = xstrdup("onc-rpc");
-
-	v = new_task(NULL, NULL, NULL);
-	assert(v);
-	v->name = xstrdup("phpnuke");
-
-	deps = new_graph();
-	assert(deps);
+	assert(( deps = new_graph() ));
 
 	graph_insert_edge(deps, p, q);
 	graph_insert_edge(deps, p, r);
@@ -76,24 +55,8 @@ main(int argc, char *argv[])
 
 	graph_print_dot(deps, stdout, (graph_print_fn) get_task_name);
 
-	/*
-	itor = new_graph_itor(deps);
-
-	for (p = graph_itor_first(itor); p; p = graph_itor_next(itor)) {
-		assert(p);
-		task_print(p, stdout);
-		printf("\n");
-	}
-
-	delete_graph_itor(itor);
-	*/
-	delete_task(p);
-	delete_task(q);
-	delete_task(r);
-	delete_task(s);
-	delete_task(t);
-	delete_task(u);
-	delete_task(v);
+	for (int i = 0; list[i] != NULL; i++)
+		delete_task(*list[i]);
 	delete_graph(deps);
 	exit(EXIT_SUCCESS);
 }

@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-23 19:28:39 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-40
+
+    Summary:
+      Fixed an inconsistency between test-graph.c and task.c. Made some refactorings too.
+    Revision:
+      gnostic--mainline--0.1--patch-40
+
+
+    modified files:
+     ChangeLog tests/test-graph.c
+
+
 2004-07-23 18:25:01 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-39
 
     Summary:
