@@ -1,1 +1,3 @@
+gnostic: Invalid configuration file `doesnt-exist.gns'
 gnostic: There are circular dependencies between `bar' and `baz'.
+gnostic: Task `bar' needed by `foo' is not defined.

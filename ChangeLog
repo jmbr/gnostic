@@ -2,6 +2,21 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-26 15:31:16 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-71
+
+    Summary:
+      Made some enhancements to test-gnostic.sh to let it test more thoroughly.
+    Revision:
+      gnostic--mainline--0.1--patch-71
+
+
+    new files:
+     tests/.arch-ids/invalid-name.gns.id tests/invalid-name.gns
+
+    modified files:
+     ChangeLog tests/test-gnostic.sh tests/test-gnostic.sh.exp
+
+
 2004-07-26 15:04:25 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-70
 
     Summary:
