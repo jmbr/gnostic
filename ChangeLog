@@ -2,6 +2,22 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-15 05:46:56 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-136
+
+    Summary:
+      Added a new stack module.
+    Revision:
+      gnostic--mainline--0.1--patch-136
+
+
+    new files:
+     .arch-ids/stack.c.id .arch-ids/stack.h.id stack.c stack.h
+     tests/.arch-ids/test-stack.c.id tests/test-stack.c
+
+    modified files:
+     ChangeLog GNUmakefile.in
+
+
 2004-08-15 05:46:25 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-135
 
     Summary:
