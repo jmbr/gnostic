@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-28 23:31:30 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-90
+
+    Summary:
+      Changed the behaviour of usage.
+    Revision:
+      gnostic--mainline--0.1--patch-90
+
+
+    modified files:
+     ChangeLog gnostic.c
+
+
 2004-07-28 21:14:29 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-89
 
     Summary:

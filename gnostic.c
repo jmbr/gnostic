@@ -31,14 +31,10 @@
 #include "err.h"
 
 
-#define PROG_NAME		"gnostic"
-
-
 static void usage(void) __attribute__ ((noreturn));
 
 static int exec(const struct taskset *tasks, int argc, char *argv[]);
 
-
 
 int
 main(int argc, char *argv[])
@@ -64,10 +60,10 @@ main(int argc, char *argv[])
 void
 usage(void)
 {
-	error("%s\n\n", version.v_gnu);
-	error("Usage: %s <config file> [task] [name=value] ...\n", PROG_NAME);
+	printf("%s\n\n", version.v_gnu);
+	printf("Usage: gnostic <config file> [task] [name=value] ...\n");
 
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 
 
