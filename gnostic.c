@@ -55,7 +55,7 @@ main(int argc, char *argv[])
 
 	tasks = new_taskset(argv[1]);
 	if (!tasks)
-		fatal_error("gnostic: Invalid configuration file `%s'\n", argv[1]);
+		fatal_error("gnostic: Invalid task file `%s'.\n", argv[1]);
 
 	status = (argc == 2) ? taskset_print(tasks)
 			     : exec(tasks, argc, argv);
@@ -68,8 +68,8 @@ main(int argc, char *argv[])
 void
 usage(void)
 {
-	printf("%s\n\n"
-	       "Usage: gnostic <task file> [task] [name=value] [name=value] [...]\n\n"
+	error("%s\n\n"
+	       "Usage: gnostic <TASK FILE> [TASK] [NAME=VALUE] [NAME=VALUE] [...]\n\n"
 	       "Examples:\n"
 	       "  gnostic foo.gns\t\tshow the list of tasks defined in foo\n"
 	       "  gnostic foo.gns bar\t\texecute task `bar' without parameters\n"
@@ -77,7 +77,7 @@ usage(void)
 	       "\n"
 	       "Email bug reports to %s\n", version.v_gnu, PACKAGE_BUGREPORT);
 
-	exit(EXIT_SUCCESS);
+	exit(EXIT_FAILURE);
 }
 
 

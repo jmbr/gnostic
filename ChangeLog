@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-30 11:55:28 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-99
+
+    Summary:
+      Changed the behaviour of the usage function.
+    Revision:
+      gnostic--mainline--0.1--patch-99
+
+
+    modified files:
+     ChangeLog gnostic.c
+
+
 2004-07-30 01:04:37 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-98
 
     Summary:
