@@ -150,6 +150,8 @@ strfree(char *s)
 void
 test_hashtab_lookup(void)
 {
+	int status;
+	
 	assert(!ht);
 
 	ht = new_hashtab(6421, (hashtab_cmp) strcmp, (hashtab_dtor) strfree);
@@ -157,5 +159,6 @@ test_hashtab_lookup(void)
 	dict_set();
 	dict_get();
 
-	delete_hashtab(ht);
+	status = delete_hashtab(ht);
+	assert(status == 0);
 }

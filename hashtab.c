@@ -103,29 +103,28 @@ new_hashtab(size_t len, hashtab_cmp cmp, hashtab_dtor dtor)
 	return ht;
 }
 
-void
+int
 delete_hashtab(hashtab_t self)
 {
-	int i;
+	int i, status = 0;
 
-	assert(self);
+	if (!self)
+		return -1;
 
 	for (i = 0; i < self->len; i++) {
 		struct hashnode *n, *next;
 
 		for (n = self->tab[i]; n; n = next) {
 			next = n->next;
-			if (self->dtor) {
-				int status;
-
+			if (self->dtor)
 				status = self->dtor(n->value);
-				assert(status == 0);
-			}
 			delete_hashnode(n);
 		}
 	}
 	free(self->tab);
 	free(self);
+
+	return status;
 }
 
 

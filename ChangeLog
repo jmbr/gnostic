@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-10 07:19:51 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-126
+
+    Summary:
+      Changed the type of delete_hashtab.
+    Revision:
+      gnostic--mainline--0.1--patch-126
+
+
+    modified files:
+     ChangeLog hashtab.c hashtab.h tests/test-hashtab.c
+
+
 2004-08-09 23:59:07 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-125
 
     Summary:

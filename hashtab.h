@@ -63,7 +63,7 @@ extern hashtab_t new_hashtab(size_t len, hashtab_cmp cmp, hashtab_dtor dtor);
  *
  * @see new_hashtab
  */
-extern void delete_hashtab(hashtab_t self);
+extern int delete_hashtab(hashtab_t self);
 
 /** hashtab lookup/creation.
  * Searches an item by key or creates a new key-value pair.
