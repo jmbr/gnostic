@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-10 18:14:43 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-127
+
+    Summary:
+      Shrinked default hash table length
+    Revision:
+      gnostic--mainline--0.1--patch-127
+
+
+    modified files:
+     ChangeLog hashtab.h
+
+
 2004-08-10 07:19:51 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-126
 
     Summary:

@@ -22,8 +22,11 @@
 /**
  * Default hash table length.
  */
+#define HASHTAB_DEFAULT_LEN		223	/* Tuned for gnostic */
+/*
 #define HASHTAB_DEFAULT_LEN		797
-//#define HASHTAB_DEFAULT_LEN		6421
+#define HASHTAB_DEFAULT_LEN		6421
+*/
 
 
 /** Chained hash table.
