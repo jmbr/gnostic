@@ -2,6 +2,21 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-29 22:58:12 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-95
+
+    Summary:
+      Fixed a problem with the configure script.
+    Revision:
+      gnostic--mainline--0.1--patch-95
+
+
+    new files:
+     .arch-ids/configure.ac.id configure.ac
+
+    modified files:
+     ChangeLog
+
+
 2004-07-29 22:56:39 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-94
 
     Summary:
