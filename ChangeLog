@@ -2,6 +2,25 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-01 23:54:14 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-104
+
+    Summary:
+      Moved environment variable functionality to a module of its own.
+    Revision:
+      gnostic--mainline--0.1--patch-104
+
+
+    new files:
+     .arch-ids/vars.c.id .arch-ids/vars.h.id
+     doc/.arch-ids/version.texi.in.id doc/version.texi.in vars.c
+     vars.h
+
+    modified files:
+     ChangeLog GNUmakefile.in deps.mk gnostic.c grammar.y
+     tasklist.c tasklist.h taskset-parser.c taskset-priv.h
+     taskset.c taskset.h version.h
+
+
 2004-08-01 23:53:27 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-103
 
     Summary:

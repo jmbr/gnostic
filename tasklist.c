@@ -82,34 +82,17 @@ tasklist_append(struct tasklist *self, struct task *t)
 }
 
 
-#define LIST_MAP(stmt) \
-	struct task *t; \
-	\
-	if (!self || !fn) { \
-		return -1; \
-	} \
-	for (t = self->head, status = 0; (t && status == 0); t = t->next) { \
-		stmt; \
-	}
-
 int
 tasklist_map(struct tasklist *self, tasklist_fn fn)
 {
 	int status;
+	struct task *t;
 
-	LIST_MAP(status = fn(t));
+	if (!self || !fn)
+		return -1;
 
-	return status;
-}
-
-int
-tasklist_map2(struct tasklist *self, void *arg, tasklist_fn2 fn)
-{
-	int status;
-
-	LIST_MAP(status = fn(t, arg));
+	for (t = self->head, status = 0; (t && status == 0); t = t->next)
+		status = fn(t);
 
 	return status;
 }
-
-#undef LIST_MAP

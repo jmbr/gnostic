@@ -99,11 +99,11 @@ static void
 setup_environ(const struct taskset *tasks, int argc, char *argv[])
 {
 	int i;
-	const struct env_var *var;
+	const struct var *v;
 	const int env_decl_start = 3;
 
-	for (var = taskset_get_env_vars(tasks); var; var = var->next)
-		xputenv(var->v);
+	for (v = taskset_get_vars(tasks); v; v = v->next)
+		xputenv(v->nameval);
 
 	for (i = env_decl_start; i < argc; i++)
 		xputenv(argv[i]);

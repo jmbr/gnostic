@@ -34,12 +34,12 @@ extern version_t version;
 version_t version = {
     0x002208,
     "0.2.8",
-    "0.2.8 (30-Jul-2004)",
-    "This is gnostic, Version 0.2.8 (30-Jul-2004)",
-    "gnostic 0.2.8 (30-Jul-2004)",
+    "0.2.8 (01-Aug-2004)",
+    "This is gnostic, Version 0.2.8 (01-Aug-2004)",
+    "gnostic 0.2.8 (01-Aug-2004)",
     "gnostic/0.2.8",
-    "@(#)gnostic 0.2.8 (30-Jul-2004)",
-    "$Id: gnostic 0.2.8 (30-Jul-2004) $"
+    "@(#)gnostic 0.2.8 (01-Aug-2004)",
+    "$Id: gnostic 0.2.8 (01-Aug-2004) $"
 };
 
 #endif /* _VERSION_H_AS_HEADER_ */

@@ -17,7 +17,6 @@ struct tasklist {
 };
 
 typedef int (*tasklist_fn)(struct task *);
-typedef int (*tasklist_fn2)(struct task *, void *);
 
 
 /** tasklist constructor.
@@ -47,7 +46,6 @@ extern int delete_tasklist(struct tasklist *self);
  */
 extern void tasklist_append(struct tasklist *self, struct task *t);
 
-/*@{*/
 /** tasklist map function.
  * Applies the function specified by the last argument to each of the tasks
  * contained in the list. If a function returns -1 when it is applied to a
@@ -58,8 +56,6 @@ extern void tasklist_append(struct tasklist *self, struct task *t);
  * @return 0 on success, -1 on failure.
  */
 extern int tasklist_map(struct tasklist *self, tasklist_fn fn);
-extern int tasklist_map2(struct tasklist *self, void *arg, tasklist_fn2 fn);
-/*@}*/
 
 
 #endif /* !TASKLIST_H */

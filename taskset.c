@@ -33,9 +33,6 @@
 #include "xmemory.h"
 
 
-static int delete_env_var_list(struct env_var *self);
-
-
 /** Builds a taskset from a file.
  * Reads, aggregates and checks the validity of tasks coming from a file.
  *
@@ -74,7 +71,7 @@ delete_taskset(struct taskset *self)
 	if (!self)
 		return -1;
 
-	delete_env_var_list(self->env_vars);
+	delete_vars(self->vars);
 	delete_tasklist(self->tasks);
 	delete_hashtab(self->symtab);
 	xfree(self);
@@ -123,28 +120,10 @@ taskset_get_task(const struct taskset *self, const char *name)
 }
 
 
-const struct env_var *
-taskset_get_env_vars(const struct taskset *self)
+const struct var *
+taskset_get_vars(const struct taskset *self)
 {
 	assert(self);
 
-	return self->env_vars;
-}
-
-
-int
-delete_env_var_list(struct env_var *self)
-{
-	struct env_var *n, *next;
-
-	if (!self)
-		return -1;
-
-	for (n = self; n; n = next) {
-		next = n->next;
-		xfree(n->v);
-		xfree(n);
-	}
-
-	return 0;
+	return self->vars;
 }

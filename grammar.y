@@ -39,7 +39,7 @@ extern int yylex(void);
 extern void yyerror(const char *s);
 
 
-struct env_var *env_vars = NULL;
+struct var *vars = NULL;
 struct tasklist *tasks = NULL;
 
 static char *strconcat(char *s1, char *s2);
@@ -56,7 +56,7 @@ static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 %union {
 	char *s;
 	struct task *t;
-	struct env_var *v;
+	struct var *v;
 	struct astnode *n;
 }
 
@@ -74,7 +74,7 @@ static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 
 conf		: tasks
       		| variables tasks {
-			env_vars = $1;
+			vars = $1;
       		}
 		;
 
@@ -86,12 +86,7 @@ variables	: variable
 		;
 
 variable	: VAR_DECL {
-	 		struct env_var *var;
-
-	 		var = xmalloc(sizeof(struct env_var));
-			var->v = $1;
-
-			$$ = var;
+	 		$$ = new_var($1);
 		}
 		;
 

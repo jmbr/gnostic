@@ -17,16 +17,10 @@
 #endif /* STDC_HEADERS */
 
 #include "task.h"
+#include "vars.h"
 
 
 struct taskset;
-
-/** Environment variable declaration.
- */
-struct env_var {
-	struct env_var *next;	/**< Pointer to the next item in the list */
-	char *v;		/**< Declaration of the form name=value */
-};
 
 
 /** taskset constructor.
@@ -50,12 +44,33 @@ extern struct taskset *new_taskset(const char *filename);
  */
 extern int delete_taskset(struct taskset *self);
 
+/** taskset printer.
+ * Displays the list of available tasks on stdout.
+ *
+ * @param self A pointer to the taskset structure.
+ * @return 0 on success, -1 on failure.
+ */
 extern int taskset_print(const struct taskset *self);
 
+/** task accessor.
+ * 
+ * @param self A pointer to the taskset structure.
+ * @param name The name of the task.
+ * @return A pointer to the appropriate task structure on success, NULL
+ * otherwise.
+ *
+ * @see task_exec
+ */
 extern const struct task *taskset_get_task(const struct taskset *self,
 							const char *name);
 
-extern const struct env_var *taskset_get_env_vars(const struct taskset *self);
+/** environment variable accessor.
+ * Fetches the list of variables declared in a taskfile.
+ *
+ * @param self A pointer to the taskset structure.
+ * @return The head of the list on success, NULL otherwise.
+ */
+extern const struct var *taskset_get_vars(const struct taskset *self);
 
 
 #endif /* !TASKSET_H */

@@ -9,6 +9,7 @@
 
 
 #include "task.h"
+#include "vars.h"
 #include "taskset.h"
 #include "tasklist.h"
 #include "hashtab.h"
@@ -17,8 +18,8 @@
 /** An aggregate of tasks plus their environment.
  */
 struct taskset {
-	struct env_var *env_vars;	/**< Pointer to the head of a list of
-					  env vars */
+	struct var *vars;		/**< Pointer to the head of a list of
+					  environment variables */
 	struct tasklist *tasks;		/**< List of tasks. */
 	hashtab_t symtab;		/**< Symbol table mapping task names to
 					  task structure addresses */

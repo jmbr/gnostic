@@ -37,8 +37,8 @@
 
 extern FILE *yyin;
 
+extern struct var *vars;
 extern struct tasklist *tasks;
-extern struct env_var *env_vars;
 
 
 extern int yyparse(void);
@@ -54,16 +54,17 @@ static void expr_resolve(hashtab_t symtab, struct task *t, astnode_t n);
 static void
 move_lists(struct taskset *ts)
 {
+	ts->vars = vars, vars = NULL;
 	ts->tasks = tasks, tasks = NULL;
-	ts->env_vars = env_vars, env_vars = NULL;
 }
 
-static int
-fill_symtab(struct task *t, hashtab_t symtab)
+static void
+fill_symtab(struct tasklist *tl, hashtab_t symtab)
 {
-	hashtab_strlookup(symtab, t->name, 1, t);
+	struct task *t;
 
-	return 0;
+	for (t = tl->head; t; t = t->next)
+		hashtab_strlookup(symtab, t->name, 1, t);
 }
 
 int
@@ -82,7 +83,7 @@ taskset_parse(struct taskset *self, const char *filename)
 
 	move_lists(self);
 
-	tasklist_map2(self->tasks, self->symtab, (tasklist_fn2) fill_symtab);
+	fill_symtab(self->tasks, self->symtab);
 
 	for (t = self->tasks->head; t; t = t->next)
 		expr_resolve(self->symtab, t, t->expr);
