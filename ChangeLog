@@ -2,6 +2,22 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-27 20:33:58 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-79
+
+    Summary:
+      Forgot to add tasklist.[ch] to the archive.
+    Revision:
+      gnostic--mainline--0.1--patch-79
+
+
+    new files:
+     .arch-ids/tasklist.c.id .arch-ids/tasklist.h.id tasklist.c
+     tasklist.h
+
+    modified files:
+     ChangeLog
+
+
 2004-07-27 20:33:33 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-78
 
     Summary:
