@@ -107,12 +107,16 @@ task_exec_deps(const struct task *self)
 static void
 child(int fds[2])
 {
+	int status;
 	char arg[_POSIX_PATH_MAX];
 	char *argv[] = { "/bin/sh", arg, NULL };
 
-	close(fds[1]);
+	if (close(fds[1]) == -1)
+		die("close");
 
-	snprintf(arg, sizeof(arg), "/dev/fd/%u", fds[0]);
+	status = snprintf(arg, sizeof(arg), "/dev/fd/%u", fds[0]);
+	if ((status >= sizeof(arg)) || (status == -1))
+		die("snprintf");
 
 	if (execv("/bin/sh", argv) == -1)
 		die("execv");
@@ -127,7 +131,8 @@ parent(const char *name, int fds[2], pid_t pid, const char *src)
 	if (write(fds[1], src, srclen) != srclen)
 		die("write");
 
-	close(fds[0]), close(fds[1]);
+	if ((close(fds[0]) == -1) || (close(fds[1])))
+		die("close");
 
 	if (waitpid(pid, &status, 0) == -1)
 		die("waitpid");

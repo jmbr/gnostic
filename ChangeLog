@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-06 17:42:02 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-113
+
+    Summary:
+      Added some more error checking.
+    Revision:
+      gnostic--mainline--0.1--patch-113
+
+
+    modified files:
+     ChangeLog task-exec.c version.h
+
+
 2004-08-05 07:17:05 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-112
 
     Summary:
