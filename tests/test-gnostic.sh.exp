@@ -1,3 +1,3 @@
-gnostic: There are circular dependencies between `simple' and `simple'.
-gnostic: There are circular dependencies between `foo' and `baz'.
+gnostic: Circular dependency between `simple' and `simple'.
+gnostic: Circular dependency between `baz' and `foo'.
 gnostic: Task `bar' needed by `foo' is not defined.

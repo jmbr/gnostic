@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-16 15:38:05 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-141
+
+    Summary:
+      Refactored circular dependency detection code.
+    Revision:
+      gnostic--mainline--0.1--patch-141
+
+
+    modified files:
+     ChangeLog task.c tests/test-gnostic.sh.exp
+
+
 2004-08-16 15:37:23 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-140
 
     Summary:

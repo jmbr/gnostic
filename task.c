@@ -47,9 +47,6 @@
  */
 static int delete_task(struct task *self);
 
-static int check_deps(const struct task *cur, const struct task *prev,
-		      ast_t n);
-
 
 struct task *
 new_task(char *name, ast_t expr, char *actions)
@@ -129,58 +126,38 @@ task_print(const struct task *self)
 }
 
 
-/*
- * TODO Using an AST iterator would *greatly* clarify this piece of code
- */
-
-static int
-check_ident(const struct task *cur, const struct task *prev, ast_t n)
+static void
+check_deps(const struct task *orig, const struct task *prev, ast_t expr)
 {
-	const struct task *u; 
+	ast_t n;
+	struct task *current;
+	ast_itor_t itor = new_ast_itor(expr);
 
-	assert(cur && n);
+	for (n = ast_itor_first(itor); n; n = ast_itor_next(itor)) {
+		if (ast_get_type(n) != AST_ID)
+			continue;
 
-	u = ast_get_item(n);
+		current = ast_get_item(n);
 
-	if (cur == u)
-		fatal_error("gnostic: There are circular dependencies between "
-			    "`%s' and `%s'.\n", cur->name,
-			    (prev) ? prev->name : cur->name);
+		if (strcmp(orig->name, current->name) == 0)
+			fatal_error("gnostic: Circular dependency between `%s' and"
+				    " `%s'.\n", prev ? prev->name : orig->name,
+				    current->name);
 
-	return check_deps(cur, u, u->expr);
-}
-
-int
-check_deps(const struct task *cur, const struct task *prev, ast_t n)
-{
-	int status = 0;
-
-	assert(cur);
-
-	if (!n)
-	       return 0;
-
-	switch (ast_get_type(n)) {
-	case AST_ID:
-		status = check_ident(cur, prev, n);
-		break;
-	case AST_AND:
-	case AST_OR:
-		status = check_deps(cur, NULL, ast_get_lhs(n))
-			 + check_deps(cur, NULL, ast_get_rhs(n));
-		break;
-	case AST_NOT:
-		status = check_deps(cur, NULL, ast_get_rhs(n));
-		break;
-	default:
-		assert(0);
+		check_deps(orig, current, current->expr);
 	}
 
-	return status;
+	delete_ast_itor(itor);
 }
 
 int
 task_check_deps(const struct task *self)
 {
-	return (check_deps(self, NULL, self->expr) == 0) ? 0 : -1;
+
+	if (!self)
+		return -1;
+
+	check_deps(self, NULL, self->expr);
+
+	return 0;
 }
