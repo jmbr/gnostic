@@ -1,0 +1,48 @@
+.\" Process this file with:
+.\" groff -man -Tascii gnostic.5
+.\"
+.TH GNOSTIC 5 "AUGUST 2004" "Gnostic Distribution" Gnostic
+
+.SH NAME
+gnostic \- task file writer's guide
+
+.SH SYNOPSIS
+For a quickstart see
+.BR gnostic (1)
+
+.SH DESCRIPTION
+Task files are a very flexible way of specifying how (and when) a given task should be
+executed.
+
+Comments must be preceded by a `#' character at the beginning of the line.
+
+Task definitions begin with the task name followed by a colon and optionally a
+dependency expression in the same line. Following this, there must be at least
+one action.
+
+Task names can begin with either an uppercase or lowercase letter or an
+underscore and be followed by any alphanumeric character, underscore or dash.
+For example: `a', `_A-10', and `xyz23-' are all valid task names.
+
+Dependency expressions can be composed of the boolean operators
+.B
+and, or, not
+and be nested to arbitrary levels using parentheses.
+
+An action is a sequence of shell commands, all of which must be indented with a
+.I
+TAB
+on each line. There should be at least one line of actions.
+
+.SH EXAMPLES
+
+.IP "a: (b and c) or not d"
+echo "a: Done."
+
+.PP
+This example defines the task `a' and specifies that it depends in a certain
+way on the results of tasks `b', `c' and `d' which must be defined in the same
+task file. During execution, if the dependencies are satisfied, the echo
+command will be executed by
+.I
+/bin/sh

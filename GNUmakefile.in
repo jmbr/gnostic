@@ -175,11 +175,16 @@ doxy.cfg: doxy.cfg.in
 #
 ###############################################################################
 
-.PHONY: install install-strip dist rpm
+.PHONY: install installdirs install-strip dist rpm
 
-install: all
-	$(SHTOOL) mkdir -f -p $(DESTDIR)$(bindir)
+install: all installdirs
 	$(INSTALL_PROGRAM) gnostic $(DESTDIR)$(bindir)/
+	$(INSTALL_DATA) gnostic.1 $(DESTDIR)$(mandir)/man1/
+	$(INSTALL_DATA) gnostic.5 $(DESTDIR)$(mandir)/man5/
+
+installdirs: $(SHTOOL)
+	$(SHTOOL) mkdir -f -p $(DESTDIR)$(bindir)
+	$(SHTOOL) mkdir -f -p $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man5
 
 install-strip:; $(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' install
 

@@ -1,0 +1,68 @@
+.\" Process this file with:
+.\" groff -man -Tascii gnostic.1
+.\"
+.TH GNOSTIC 1 "AUGUST 2004" "Gnostic Distribution" Gnostic
+
+.SH NAME
+gnostic \- task execution system
+
+.SH SYNOPSIS
+.B
+gnostic
+.I
+taskfile
+.B
+[
+.I
+taskname
+.B
+]
+.B
+[
+.I
+name=value
+.B
+] ...
+
+.SH DESCRIPTION
+
+.B
+gnostic
+is a rule-based task execution system. It evaluates task dependencies and, if
+they are satisfied, executes the specified task (which is defined by a piece of
+POSIX shell script written in a Gnostic taskfile).
+
+.SH OPTIONS
+
+.IP taskfile
+Specifies the path to the appropriate task file we want to work with. If this
+is the program's only argument, it will print the list of tasks defined in the
+given task file.
+
+.IP taskname
+The task to be executed. As previously stated, its dependencies will be
+evaluated and, if they are satisfied,
+.I
+taskname
+will be executed.
+
+.IP name=value
+These are environment variables to be passed as parameters to
+.I
+taskname.
+Each of the name-value pairs will override any variables with the same name
+declared in the
+.I
+taskfile.
+
+.SH SECURITY
+It is not recommended to install
+.B
+gnostic
+as a set-uid file.
+
+.SH AUTHOR
+Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+
+.SH SEE ALSO
+.BR gnostic (5)

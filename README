@@ -32,11 +32,11 @@ Full API documentation can be generated with doxygen. There's a doxy.cfg file
 with some defaults that the users/developers can change to suit their needs.
 
 An user's guide is present (currently as a work-in-progress) in the doc/
-subdirectory.
+subdirectory. There are also two manual pages which are installed by default.
 
 To generate all the documentation type:
 
-	make doc
+	make doc apidoc
 
 Getting started
 ---------------
@@ -72,7 +72,7 @@ example we have only one task: environ. Let's ask gnostic to execute it:
 	gnostic: Task `environ' exited with status 0.
 	$
 
-As you can see this is a fairly trivial task. It invokes bash's builtin command
+As you can see this is a fairly trivial task. It invokes BASH's builtin command
 set(1) to print out the task's environment. But we can use it demonstrate at
 least one feature of gnostic: passing parameters:
 
@@ -108,5 +108,5 @@ following is a more useful example of tasks and parameters at work:
 	$
 
 After this step it is advisable to delete the left-over data (perhaps after
-taking a look at it) located in /tmp/gnostic and start reading the User's
-guide.
+taking a look at it) located in /tmp/gnostic and start reading the appropriate
+man pages and the rest of the examples.

@@ -2,6 +2,22 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-03 10:42:03 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-107
+
+    Summary:
+      Added two manual pages. Improved README.
+    Revision:
+      gnostic--mainline--0.1--patch-107
+
+
+    new files:
+     .arch-ids/gnostic.1.id .arch-ids/gnostic.5.id gnostic.1
+     gnostic.5
+
+    modified files:
+     ChangeLog GNUmakefile.in README
+
+
 2004-08-03 08:55:31 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-106
 
     Summary:
