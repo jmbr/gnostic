@@ -44,22 +44,18 @@ new_ast(enum ast_type type, ast_t lhs, ast_t rhs)
 int
 delete_ast(ast_t self, ast_item_dtor dtor)
 {
-	int i;
+	int i, status;
 
 	if (!self)
 		return -1;
 
 	if (self->item && dtor) {
-		int status;
-
 		status = dtor(self->item);
 		assert(status == 0);
 	}
 
 	for (i = 0; i < AST_MAX_CHILDREN; i++)
-		if (self->children[i])
-			if (delete_ast(self->children[i], dtor) == -1)
-				return -1;
+		delete_ast(self->children[i], dtor);
 
 	xfree(self);
 
