@@ -1,6 +1,5 @@
 /*
  * debug.c -- Miscellaneous debugging features.
- * $Id: debug.c,v 1.1.1.1 2001/12/07 20:56:20 rwx Exp $
  */
 
 
@@ -15,38 +14,35 @@
 #endif /* STDC_HEADERS */
 
 
+#define VFPRINTF(fp, format)	do { \
+	va_list ap; \
+	\
+	va_start(ap, format); \
+	vfprintf(fp, format, ap); \
+	va_end(ap); \
+} while (0)
+
+
+
 void
 dprintf(const char *format, ...)
 {
 #ifndef NDEBUG
-	va_list ap;
-
-	va_start(ap, format);
-	vfprintf(stderr, format, ap);
-	va_end(ap);
-#else /* NDEBUG */
-
+	VFPRINTF(stdout, format);
 #endif /* !NDEBUG */
 }
 
 void
 eprintf(const char *format, ...)
 {
-	va_list ap;
-
-	va_start(ap, format);
-	vfprintf(stderr, format, ap);
-	va_end(ap);
+	VFPRINTF(stderr, format);
 }
 
 
 void
 fatal_error(const char *format, ...)
 {
-	va_list ap;
+	VFPRINTF(stderr, format);
 
-	va_start(ap, format);
-	vfprintf(stderr, format, ap);
-	va_end(ap);
 	exit(EXIT_FAILURE);
 }

@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-23 22:48:25 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-43
+
+    Summary:
+      Simplified and documented the debugging functions.
+    Revision:
+      gnostic--mainline--0.1--patch-43
+
+
+    modified files:
+     ChangeLog debug.c debug.h
+
+
 2004-07-23 19:55:53 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-42
 
     Summary:

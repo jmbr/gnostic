@@ -2,12 +2,22 @@
 #define DEBUG_H			1
 /*
  * debug.h -- Misc. debugging features.
- * $Id: debug.h,v 1.1.1.1 2001/12/07 20:56:20 rwx Exp $
  */
 
 
+/** Debugging printf.
+ * If the macro NDEBUG is not set it prints the message to stdout.
+ */
 extern void dprintf(const char *format, ...);
+
+/** Error printf.
+ * Prints a message to stderr.
+ */
 extern void eprintf(const char *format, ...);
+
+/** Fatal error printf.
+ * Prints a message to stderr and exits the program.
+ */
 extern void fatal_error(const char *format, ...) __attribute__ ((noreturn));
 
 
