@@ -47,7 +47,7 @@ extern int yyparse(void);
  * This function translates task names contained in the abstract syntax tree
  * into pointers to the appropriate task structures.
  */
-static void expr_resolve(hashtab_t symtab, struct task *t, astnode_t n);
+static void expr_resolve(hashtab_t symtab, struct task *t, ast_t n);
 
 
 
@@ -96,16 +96,16 @@ taskset_parse(struct taskset *self, const char *filename)
 
 
 /** Resolve an ast node containing an identifier.
- * This function changes the content of the astnode, frees the identifier
+ * This function changes the content of the ast, frees the identifier
  * string allocated by the lexer and substitutes it with a pointer to the
  * appropriate task structure.
  */
 static void
-ident_resolve(hashtab_t symtab, struct task *t, astnode_t n)
+ident_resolve(hashtab_t symtab, struct task *t, ast_t n)
 {
 	void *p, *item;
 
-	item = astnode_get_item(n);
+	item = ast_get_item(n);
 	p = hashtab_strlookup(symtab, item, 0, NULL);
 	if (!p)
 		fatal_error("gnostic: Task `%s' needed by `%s' is not "
@@ -113,18 +113,18 @@ ident_resolve(hashtab_t symtab, struct task *t, astnode_t n)
 
 	xfree(item);
 	task_incref(p);
-	astnode_set_item(n, p);
+	ast_set_item(n, p);
 }
 
 void
-expr_resolve(hashtab_t symtab, struct task *t, astnode_t n)
+expr_resolve(hashtab_t symtab, struct task *t, ast_t n)
 {
 	if (!n)
 		return;
 
-	if (astnode_get_type(n) == AST_ID)
+	if (ast_get_type(n) == AST_ID)
 		ident_resolve(symtab, t, n);
 
-	expr_resolve(symtab, t, astnode_get_lhs(n));
-	expr_resolve(symtab, t, astnode_get_rhs(n));
+	expr_resolve(symtab, t, ast_get_lhs(n));
+	expr_resolve(symtab, t, ast_get_rhs(n));
 }

@@ -48,11 +48,11 @@
 static int delete_task(struct task *self);
 
 static int check_deps(const struct task *cur, const struct task *prev,
-		      astnode_t n);
+		      ast_t n);
 
 
 struct task *
-new_task(char *name, astnode_t expr, char *actions)
+new_task(char *name, ast_t expr, char *actions)
 {
 	struct task *n;
 
@@ -79,7 +79,7 @@ delete_task(struct task *self)
 
 	xfree(self->name);
 	xfree(self->actions);
-	(void) delete_ast(self->expr, (astnode_item_dtor) task_decref);
+	(void) delete_ast(self->expr, (ast_item_dtor) task_decref);
 	xfree(self);
 
 	return 0;
@@ -134,13 +134,13 @@ task_print(const struct task *self)
  */
 
 static int
-check_ident(const struct task *cur, const struct task *prev, astnode_t n)
+check_ident(const struct task *cur, const struct task *prev, ast_t n)
 {
 	const struct task *u; 
 
 	assert(cur && n);
 
-	u = astnode_get_item(n);
+	u = ast_get_item(n);
 
 	if (cur == u)
 		fatal_error("gnostic: There are circular dependencies between "
@@ -151,7 +151,7 @@ check_ident(const struct task *cur, const struct task *prev, astnode_t n)
 }
 
 int
-check_deps(const struct task *cur, const struct task *prev, astnode_t n)
+check_deps(const struct task *cur, const struct task *prev, ast_t n)
 {
 	int status = 0;
 
@@ -160,17 +160,17 @@ check_deps(const struct task *cur, const struct task *prev, astnode_t n)
 	if (!n)
 	       return 0;
 
-	switch (astnode_get_type(n)) {
+	switch (ast_get_type(n)) {
 	case AST_ID:
 		status = check_ident(cur, prev, n);
 		break;
 	case AST_AND:
 	case AST_OR:
-		status = check_deps(cur, NULL, astnode_get_lhs(n))
-			 + check_deps(cur, NULL, astnode_get_rhs(n));
+		status = check_deps(cur, NULL, ast_get_lhs(n))
+			 + check_deps(cur, NULL, ast_get_rhs(n));
 		break;
 	case AST_NOT:
-		status = check_deps(cur, NULL, astnode_get_rhs(n));
+		status = check_deps(cur, NULL, ast_get_rhs(n));
 		break;
 	default:
 		assert(0);

@@ -23,7 +23,7 @@ struct task {
 	unsigned int refs;	/**< Reference count */
 	char *name;		/**< Task name */
 	char *actions;		/**< Executable payload */
-	astnode_t expr;		/**< Dependency expression */
+	ast_t expr;		/**< Dependency expression */
 	struct task *prev;	/**< Pointer to the previous task in the list. */
 	struct task *next;	/**< Pointer to the next task in the list. */
 };
@@ -40,7 +40,7 @@ struct task {
  *
  * @see delete_task
  */
-extern struct task *new_task(char *name, astnode_t expr, char *actions);
+extern struct task *new_task(char *name, ast_t expr, char *actions);
 
 extern int task_incref(struct task *self);
 extern int task_decref(struct task *self);

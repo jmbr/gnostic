@@ -2,6 +2,19 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-15 04:31:41 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-134
+
+    Summary:
+      Made some further namespace changes to the AST module.
+    Revision:
+      gnostic--mainline--0.1--patch-134
+
+
+    modified files:
+     ChangeLog ast.c ast.h grammar.y task-exec.c task.c task.h
+     taskset-parser.c tests/test-ast.c tests/test-grammar.c
+
+
 2004-08-15 04:12:59 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-133
 
     Summary:

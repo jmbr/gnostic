@@ -61,28 +61,28 @@ indent(unsigned depth)
 }
 
 static void
-print_expr(const astnode_t n, unsigned depth)
+print_expr(const ast_t n, unsigned depth)
 {
 	if (!n)
 		return;
 
-	switch (astnode_get_type(n)) {
+	switch (ast_get_type(n)) {
 	case AST_ID:
-		indent(depth), printf("%s\n", (char *) astnode_get_item(n));
+		indent(depth), printf("%s\n", (char *) ast_get_item(n));
 		break;
 	case AST_AND:
 		indent(depth), printf("and\n");
-		print_expr(astnode_get_lhs(n), depth + 1);
-		print_expr(astnode_get_rhs(n), depth + 1);
+		print_expr(ast_get_lhs(n), depth + 1);
+		print_expr(ast_get_rhs(n), depth + 1);
 		break;
 	case AST_OR:
 		indent(depth), printf("or\n");
-		print_expr(astnode_get_lhs(n), depth + 1);
-		print_expr(astnode_get_rhs(n), depth + 1);
+		print_expr(ast_get_lhs(n), depth + 1);
+		print_expr(ast_get_rhs(n), depth + 1);
 		break;
 	case AST_NOT:
 		indent(depth), printf("not\n");
-		print_expr(astnode_get_rhs(n), depth + 1);
+		print_expr(ast_get_rhs(n), depth + 1);
 		break;
 	default:
 		assert(0);

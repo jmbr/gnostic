@@ -31,29 +31,54 @@
 
 
 static void test_ast(void);
+static void test_ast_itor(void);
 
 
 int
 main(int argc, char *argv[])
 {
 	test_ast();
+	test_ast_itor();
 
 	exit(EXIT_SUCCESS);
+}
+
+
+static ast_t
+make_tree(void)
+{
+	ast_t tree[3];
+
+	tree[2] = new_ast(AST_ID, NULL, NULL);
+	assert(tree[2]);
+	tree[1] = new_ast(AST_ID, NULL, NULL);
+	assert(tree[1]);
+	tree[0] = new_ast(AST_AND, tree[1], tree[2]);
+	assert(tree[0]);
+
+	return tree[0];
 }
 
 void
 test_ast(void)
 {
 	int status;
-	astnode_t tree[3];
+	ast_t root;
 
-	tree[2] = new_astnode(AST_ID, NULL, NULL);
-	assert(tree[2]);
-	tree[1] = new_astnode(AST_ID, NULL, NULL);
-	assert(tree[1]);
-	tree[0] = new_astnode(AST_AND, tree[1], tree[2]);
-	assert(tree[0]);
+	root = make_tree();
 
-	status = delete_ast(tree[0], NULL);
+	status = delete_ast(root, NULL);
+	assert(status == 0);
+}
+
+void
+test_ast_itor(void)
+{
+	int status;
+	ast_t root;
+
+	root = make_tree();
+
+	status = delete_ast(root, NULL);
 	assert(status == 0);
 }

@@ -39,19 +39,19 @@
  * These nodes conform the structure that will be traversed during evaluation
  * of dependency expressions.
  */
-struct astnode {
-	void *item;					/**< Payload */
-	enum astnode_types type;			/**< Node type */
-	struct astnode *children[AST_MAXCHILDREN];	/**< Children */
+struct ast {
+	void *item;				/**< Payload */
+	enum ast_types type;			/**< Node type */
+	struct ast *children[AST_MAXCHILDREN];	/**< Children */
 };
 
 
-astnode_t
-new_astnode(enum astnode_types type, astnode_t lhs, astnode_t rhs)
+ast_t
+new_ast(enum ast_types type, ast_t lhs, ast_t rhs)
 {
-	struct astnode *n;
+	struct ast *n;
 
-	n = xmalloc(sizeof(struct astnode));
+	n = xmalloc(sizeof(struct ast));
 
 	n->item = NULL;
 	n->type = type;
@@ -61,31 +61,20 @@ new_astnode(enum astnode_types type, astnode_t lhs, astnode_t rhs)
 	return n;
 }
 
-int
-delete_astnode(struct astnode *self)
-{
-	if (!self)
-		return -1;
-
-	xfree(self);
-
-	return 0;
-}
-
 
 
-enum astnode_types
-astnode_get_type(const astnode_t self)
+enum ast_types
+ast_get_type(const ast_t self)
 {
 	if (!self)
-		return (enum astnode_types) 0;
+		return (enum ast_types) 0;
 
 	return self->type;
 }
 
 
-astnode_t
-astnode_get_lhs(const astnode_t self)
+ast_t
+ast_get_lhs(const ast_t self)
 {
 	if (!self)
 		return NULL;
@@ -93,8 +82,8 @@ astnode_get_lhs(const astnode_t self)
 	return self->children[0];
 }
 
-astnode_t
-astnode_get_rhs(const astnode_t self)
+ast_t
+ast_get_rhs(const ast_t self)
 {
 	if (!self)
 		return NULL;
@@ -104,7 +93,7 @@ astnode_get_rhs(const astnode_t self)
 
 
 int
-astnode_set_item(astnode_t self, void *item)
+ast_set_item(ast_t self, void *item)
 {
 	if (!self)
 		return -1;
@@ -115,7 +104,7 @@ astnode_set_item(astnode_t self, void *item)
 }
 
 void *
-astnode_get_item(const astnode_t self)
+ast_get_item(const ast_t self)
 {
 	if (!self)
 		return NULL;
@@ -126,7 +115,7 @@ astnode_get_item(const astnode_t self)
 
 
 int
-delete_ast(astnode_t self, astnode_item_dtor dtor)
+delete_ast(ast_t self, ast_item_dtor dtor)
 {
 	int i;
 

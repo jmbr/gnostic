@@ -73,7 +73,7 @@ static char shell[] = "/bin/sh";
 static int task_exec_deps(const struct task *self);
 static int task_exec_script(const struct task *self);
 
-static bool eval_expr(const astnode_t n);
+static bool eval_expr(const ast_t n);
 
 
 
@@ -187,26 +187,24 @@ task_exec_script(const struct task *self)
  * @see task_exec, task_exec_script
  */
 bool
-eval_expr(const astnode_t n)
+eval_expr(const ast_t n)
 {
 	int status = false;	
 
 	assert(n);
 
-	switch (astnode_get_type(n)) {
+	switch (ast_get_type(n)) {
 	case AST_ID:
-		status = (task_exec(astnode_get_item(n)) == 0) ? true : false;
+		status = (task_exec(ast_get_item(n)) == 0) ? true : false;
 		break;
 	case AST_AND:
-		status = (eval_expr(astnode_get_lhs(n))
-			  && eval_expr(astnode_get_rhs(n)));
+		status = (eval_expr(ast_get_lhs(n)) && eval_expr(ast_get_rhs(n)));
 		break;
 	case AST_OR:
-		status = (eval_expr(astnode_get_lhs(n))
-			  || eval_expr(astnode_get_rhs(n)));
+		status = (eval_expr(ast_get_lhs(n)) || eval_expr(ast_get_rhs(n)));
 		break;
 	case AST_NOT:
-		status = (!eval_expr(astnode_get_rhs(n)));
+		status = (!eval_expr(ast_get_rhs(n)));
 		break;
 	default:
 		assert(0);

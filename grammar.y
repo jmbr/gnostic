@@ -44,10 +44,10 @@ struct tasklist *tasks = NULL;
 
 static char *strconcat(char *s1, char *s2);
 
-static astnode_t do_identifier(char *s);
-static astnode_t do_not(astnode_t rhs);
-static astnode_t do_or(astnode_t lhs, astnode_t rhs);
-static astnode_t do_and(astnode_t lhs, astnode_t rhs);
+static ast_t do_identifier(char *s);
+static ast_t do_not(ast_t rhs);
+static ast_t do_or(ast_t lhs, ast_t rhs);
+static ast_t do_and(ast_t lhs, ast_t rhs);
 %}
 
 /*%error-verbose*/
@@ -59,7 +59,7 @@ static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 	char *s;
 	struct var *v;
 	struct task *t;
-	struct astnode *n;
+	struct ast *n;
 }
 
 %left AND OR
@@ -154,33 +154,33 @@ strconcat(char *s1, char *s2)
 }
 
 
-astnode_t
+ast_t
 do_identifier(char *s)
 {
-	astnode_t n;
+	ast_t n;
 
 	assert(s);
 
-	n = new_astnode(AST_ID, NULL, NULL);
-	astnode_set_item(n, (void *) s);
+	n = new_ast(AST_ID, NULL, NULL);
+	ast_set_item(n, (void *) s);
 
 	return n;
 }
 
-astnode_t
-do_not(astnode_t rhs)
+ast_t
+do_not(ast_t rhs)
 {
-	return new_astnode(AST_NOT, NULL, rhs);
+	return new_ast(AST_NOT, NULL, rhs);
 }
 
-astnode_t
-do_and(astnode_t lhs, astnode_t rhs)
+ast_t
+do_and(ast_t lhs, ast_t rhs)
 {
-	return new_astnode(AST_AND, lhs, rhs);
+	return new_ast(AST_AND, lhs, rhs);
 }
 
-astnode_t
-do_or(astnode_t lhs, astnode_t rhs)
+ast_t
+do_or(ast_t lhs, ast_t rhs)
 {
-	return new_astnode(AST_OR, lhs, rhs);
+	return new_ast(AST_OR, lhs, rhs);
 }
