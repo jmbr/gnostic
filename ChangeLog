@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-25 23:29:53 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-64
+
+    Summary:
+      Rearranged astnode constructor to use xmalloc. Enhanced documentation. Removed RCS Id tags.
+    Revision:
+      gnostic--mainline--0.1--patch-64
+
+
+    modified files:
+     ChangeLog ast.c ast.h
+
+
 2004-07-25 16:47:08 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-63
 
     Summary:

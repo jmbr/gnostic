@@ -1,6 +1,5 @@
 /*
  * ast.c -- Abstract syntax tree for dependency expressions.
- * $Id$
  */
 
 
@@ -29,7 +28,7 @@
 #include "xalloc.h"
 
 
-/** Nodes from an abstract syntax tree.
+/** Node of an abstract syntax tree.
  * It is the user's responsibility to free any memory pointed to by the item
  * field.
  */
@@ -46,13 +45,10 @@ new_astnode(enum astnode_types type, astnode_t lhs, astnode_t rhs)
 {
 	struct astnode *n;
 
-	n = malloc(sizeof(struct astnode));
-	if (!n)
-		return NULL;
-
-	memset(n, 0, sizeof(struct astnode));
+	n = xmalloc(sizeof(struct astnode));
 
 	n->type = type;
+	n->item = NULL;
 	n->lhs = lhs;
 	n->rhs = rhs;
 

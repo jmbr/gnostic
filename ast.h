@@ -4,7 +4,6 @@
  * \file ast.h
  * \brief Abstract syntax tree for dependency expressions.
  */
-/* $Id$ */
 
 
 /** Node types.
@@ -16,6 +15,8 @@ enum astnode_types {
 	N_NOT,
 };
 
+/** Node of an abstract syntax tree.
+ */
 typedef struct astnode *astnode_t;
 
 
