@@ -189,7 +189,7 @@ install-strip:; $(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' install
 
 NAME := $(PACKAGE)-$(VERSION)
 
-dist: depend apidoc distclean ChangeLog;
+dist: depend distclean ChangeLog;
 	$(SHTOOL) fixperm $(srcdir)
 	$(SHTOOL) tarball -o $(NAME).tar.bz2 -c bzip2 \
 	  -e 'CVS,\{arch\},\.arch-ids,^\-i,\.swp,^tmp,^TODO' .
