@@ -5,19 +5,7 @@
  * \brief Task management module.
  */
 
-
-#ifdef HAVE_CONFIG_H
-# include "config.h"
-#endif /* HAVE_CONFIG_H */
-
-#ifdef STDC_HEADERS
-# include <stdio.h>
-#endif /* STDC_HEADERS */
-
 #include "ast.h"
-
-#include "htab.h"
-#include "graph.h"
 
 
 struct task;
@@ -41,12 +29,6 @@ extern struct task *task_get_next(const struct task *self);
  * @return 0 on success, -1 on failure.
  */
 extern int task_exec(const struct task *self);
-
-
-extern struct task *tasklist_parse(const char *filename,
-					htab_t symtab, graph_t depgraph);
-extern int tasklist_print(const struct task *head, FILE *fp);
-extern int delete_tasklist(struct task *self);
 
 
 #endif /* !TASK_H */

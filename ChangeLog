@@ -2,6 +2,23 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-24 16:18:43 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-52
+
+    Summary:
+      Moved a lot of code to the task-collection module to increase decoupling and orthogonality.
+    Revision:
+      gnostic--mainline--0.1--patch-52
+
+
+    new files:
+     .arch-ids/task-collection-priv.h.id
+     .arch-ids/task-collection.c.id .arch-ids/task-collection.h.id
+     task-collection-priv.h task-collection.c task-collection.h
+
+    modified files:
+     ChangeLog GNUmakefile.in gnostic.c task.c task.h
+
+
 2004-07-24 14:49:12 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-51
 
     Summary:

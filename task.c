@@ -70,25 +70,6 @@ delete_task(struct task *self)
 }
 
 
-int
-delete_tasklist(struct task *self)
-{
-	int status;
-	struct task *node, *next;
-
-	if (!self)
-		return -1;
-
-	for (node = self; node; node = next) {
-		next = node->next;
-		status = delete_task(node);
-		assert(status == 0);
-	}
-
-	return 0;
-}
-
-
 inline const char *
 task_get_name(const struct task *self)
 {
@@ -138,20 +119,4 @@ task_get_next(const struct task *self)
 	assert(self);
 
 	return self->next;
-}
-
-
-int
-tasklist_print(const struct task *head, FILE *fp)
-{
-	const struct task *t;
-
-	if (!head || !fp)
-		return -1;
-
-	for (t = head; t; t = task_get_next(t))
-		if (fprintf(fp, "%s\n", task_get_name(t)) < 0)
-			return -1;
-
-	return 0;
 }
