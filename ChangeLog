@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-16 22:43:47 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-144
+
+    Summary:
+      Removed stale variable declaration.
+    Revision:
+      gnostic--mainline--0.1--patch-144
+
+
+    modified files:
+     ChangeLog ast-itor.c
+
+
 2004-08-16 22:41:21 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-143
 
     Summary:

@@ -51,8 +51,6 @@ new_ast_itor(ast_t root)
 int
 delete_ast_itor(ast_itor_t self)
 {
-	ast_t n;
-
 	if (!self)
 		return -1;
 
