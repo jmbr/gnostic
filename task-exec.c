@@ -67,6 +67,9 @@
 #define die(s) fatal_error("gnostic: %s failed: %s\n", s, strerror(errno))
 
 
+static char shell[] = "/bin/sh";
+
+
 static int task_exec_deps(const struct task *self);
 static int task_exec_script(const struct task *self);
 
@@ -109,16 +112,16 @@ child(int fds[2])
 {
 	int status;
 	char arg[_POSIX_PATH_MAX];
-	char *argv[] = { "/bin/sh", arg, NULL };
-
-	if (close(fds[1]) == -1)
-		die("close");
+	char *argv[] = { shell, arg, NULL };
 
 	status = snprintf(arg, sizeof(arg), "/dev/fd/%u", fds[0]);
 	if ((status >= sizeof(arg)) || (status == -1))
 		die("snprintf");
 
-	if (execv("/bin/sh", argv) == -1)
+	if (close(fds[1]) == -1)
+		die("close");
+
+	if (execv(shell, argv) == -1)
 		die("execv");
 }
 
