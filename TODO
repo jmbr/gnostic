@@ -1,8 +1,6 @@
 Pending tasks in the development of gnostic
 ===========================================
 
-- Move the tests into the top_srcdir.
-
-- Write more unit tests.
+- Rearrange the hash table.
 
 - Write exhaustive documentation (info pages).

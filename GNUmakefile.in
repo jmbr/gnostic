@@ -19,7 +19,7 @@ datadir := @datadir@
 top_builddir := .
 
 docdir := @srcdir@/doc
-testsdir := @srcdir@/tests
+testdatadir := @srcdir@/testdata
 
 
 VPATH := $(srcdir):$(srcdir)/missing
@@ -65,6 +65,9 @@ VERSION := @VERSION@
 %.o: %.c
 	$(COMPILE) -c $<
 
+%: %.o
+	$(LINK) $^ -o $@ $(LIBS)
+
 
 ###############################################################################
 #
@@ -85,7 +88,6 @@ OBJECTS := $(SOURCES:%.c=%.o) $(LIBOBJS)
 all: gnostic
 	
 gnostic: $(OBJECTS)
-	$(LINK) $^ -o $@ $(LIBS)
 
 scanner.c: scanner.l grammar.c
 
@@ -103,6 +105,86 @@ grammar.c: grammar.y
 
 ###############################################################################
 #
+# Test suite.
+#
+###############################################################################
+
+TEST_BINARIES := $(patsubst %.c, %, $(wildcard test-*.c))
+TEST_SCRIPTS := $(wildcard test-*.sh)
+TESTS := $(sort $(TEST_BINARIES) $(TEST_SCRIPTS))
+
+.PHONY: tests check
+
+tests: $(TEST_BINARIES)
+
+test-ast: \
+	ast-itor.o \
+	ast.o \
+	stack.o \
+	test-ast.o \
+	xmemory.o
+
+test-grammar: \
+	ast-itor.o \
+	ast.o \
+	err.o \
+	grammar.o \
+	scanner.o \
+	stack.o \
+	tasklist.o \
+	task.o \
+	test-grammar.o \
+	vars.o \
+	xmemory.o
+
+test-hashtab: \
+	hashtab.o \
+	test-hashtab.o \
+	xmemory.o
+
+test-stack: \
+	stack.o \
+	test-stack.o \
+	xmemory.o
+
+test-tasklist: \
+	ast-itor.o \
+	ast.o \
+	err.o \
+	stack.o \
+	tasklist.o \
+	task.o \
+	test-tasklist.o \
+	xmemory.o
+
+
+check: gnostic tests
+	@echo "===================="
+	@echo "Executing test suite"
+	@echo "===================="
+	@echo ""
+	@for test in $(TESTS); do \
+	  echo -n "Checking $$test... "; \
+	  $(srcdir)/$$test 1>$(testdatadir)/$$test.out 2>&1 ; \
+	  RETVAL=$$?; \
+	  if [ $$RETVAL -ne 0 ]; then \
+	    $(SHTOOL) echo -e "%BFAILED%b"; \
+            continue; \
+	  fi; \
+	  if [ -f $(testdatadir)/$$test.exp ]; then \
+	    cmp -s $(testdatadir)/$$test.exp $(testdatadir)/$$test.out; \
+	    RETVAL=$$?; \
+	    if [ $$RETVAL -ne 0 ]; then \
+	      $(SHTOOL) echo -e "%BFAILED%b"; \
+	      continue; \
+	    fi; \
+	  fi; \
+	  echo "OK"; \
+	done
+
+
+###############################################################################
+#
 # Cleanup.
 #
 ###############################################################################
@@ -110,40 +192,24 @@ grammar.c: grammar.y
 .PHONY: clean clobber rmbak
 
 clean:
-	$(RM) gnostic
-	$(RM) $(OBJECTS)
+	$(RM) gnostic *.o
+	$(RM) *.core core.*
+	$(RM) $(TEST_BINARIES)
+	$(RM) $(testdatadir)/*.out
 	$(MAKE) -C $(docdir) clean
-	$(MAKE) -C $(testsdir) clean
 
 rmbak:
 	$(RM) *~ *.bak
 
-mostlyclean: clean rmbak
-	$(RM) *.core core.*
-	$(MAKE) -C $(testsdir) $@
-
-clobber: rmbak clean mostlyclean
+clobber: rmbak clean
 	$(RM) grammar.[ch] scanner.c
-	$(MAKE) -C $(testsdir) $@
 
-distclean: mostlyclean
+distclean: clobber
 	$(RM) tags
 	$(RM) config.log config.cache config.status
 	$(RM) config.h stamp-h
 	$(RM) -r $(srcdir)/autom4te.cache
-	$(RM) GNUmakefile $(docdir)/GNUmakefile $(testsdir)/GNUmakefile
-
-
-###############################################################################
-#
-# Test suite.
-#
-###############################################################################
-
-.PHONY: check
-
-check: all
-	$(MAKE) -C $(testsdir) $@
+	$(RM) GNUmakefile $(docdir)/GNUmakefile
 
 
 ###############################################################################

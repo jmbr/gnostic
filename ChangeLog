@@ -2,6 +2,97 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-17 13:36:35 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-153
+
+    Summary:
+      Moved the tests into the top_srcdir.
+    Revision:
+      gnostic--mainline--0.1--patch-153
+
+
+    new files:
+     testdata/.arch-ids/=id
+
+    removed files:
+     tests/.arch-ids/GNUmakefile.in.id tests/GNUmakefile.in
+
+    modified files:
+     ChangeLog GNUmakefile.in TODO test-gnostic.sh test-grammar.c
+
+    renamed files:
+     tests/.arch-ids/circular.gns.id
+       ==> testdata/.arch-ids/circular.gns.id
+     tests/.arch-ids/circular2.gns.id
+       ==> testdata/.arch-ids/circular2.gns.id
+     tests/.arch-ids/expressions.id
+       ==> testdata/.arch-ids/expressions.id
+     tests/.arch-ids/invalid-name.gns.id
+       ==> testdata/.arch-ids/invalid-name.gns.id
+     tests/.arch-ids/memcheck.awk.id
+       ==> .arch-ids/memcheck.awk.id
+     tests/.arch-ids/skel.c.id
+       ==> .arch-ids/testskeleton.c.id
+     tests/.arch-ids/test-ast.c.id
+       ==> .arch-ids/test-ast.c.id
+     tests/.arch-ids/test-ast.exp.id
+       ==> testdata/.arch-ids/test-ast.exp.id
+     tests/.arch-ids/test-gnostic.sh.exp.id
+       ==> testdata/.arch-ids/test-gnostic.sh.exp.id
+     tests/.arch-ids/test-gnostic.sh.id
+       ==> .arch-ids/test-gnostic.sh.id
+     tests/.arch-ids/test-grammar.c.id
+       ==> .arch-ids/test-grammar.c.id
+     tests/.arch-ids/test-grammar.exp.id
+       ==> testdata/.arch-ids/test-grammar.exp.id
+     tests/.arch-ids/test-hashtab.c.id
+       ==> .arch-ids/test-hashtab.c.id
+     tests/.arch-ids/test-stack.c.id
+       ==> .arch-ids/test-stack.c.id
+     tests/.arch-ids/test-stack.exp.id
+       ==> testdata/.arch-ids/test-stack.exp.id
+     tests/.arch-ids/test-tasklist.c.id
+       ==> .arch-ids/test-tasklist.c.id
+     tests/.arch-ids/test-tasklist.exp.id
+       ==> testdata/.arch-ids/test-tasklist.exp.id
+     tests/circular.gns
+       ==> testdata/circular.gns
+     tests/circular2.gns
+       ==> testdata/circular2.gns
+     tests/expressions
+       ==> testdata/expressions
+     tests/invalid-name.gns
+       ==> testdata/invalid-name.gns
+     tests/memcheck.awk
+       ==> memcheck.awk
+     tests/skel.c
+       ==> testskeleton.c
+     tests/test-ast.c
+       ==> test-ast.c
+     tests/test-ast.exp
+       ==> testdata/test-ast.exp
+     tests/test-gnostic.sh
+       ==> test-gnostic.sh
+     tests/test-gnostic.sh.exp
+       ==> testdata/test-gnostic.sh.exp
+     tests/test-grammar.c
+       ==> test-grammar.c
+     tests/test-grammar.exp
+       ==> testdata/test-grammar.exp
+     tests/test-hashtab.c
+       ==> test-hashtab.c
+     tests/test-stack.c
+       ==> test-stack.c
+     tests/test-stack.exp
+       ==> testdata/test-stack.exp
+     tests/test-tasklist.c
+       ==> test-tasklist.c
+     tests/test-tasklist.exp
+       ==> testdata/test-tasklist.exp
+
+    new directories:
+     testdata testdata/.arch-ids
+
+
 2004-08-17 12:25:16 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-152
 
     Summary:

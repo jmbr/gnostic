@@ -1,8 +1,8 @@
 #!/bin/sh
 
-GNOSTIC=../gnostic
+GNOSTIC=./gnostic
 
-TEST_FILES=`ls -1 *.gns`
+TEST_FILES=`ls -1 ./testdata/*.gns`
 
 STATUS=0
 

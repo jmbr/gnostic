@@ -92,7 +92,7 @@ print_expr(const ast_t n, unsigned depth)
 void
 test_grammar(void)
 {
-	yyin = fopen("expressions", "r");
+	yyin = fopen("testdata/expressions", "r");
 	assert(yyin);
 
 	yyparse();
