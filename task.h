@@ -20,7 +20,7 @@
  * from a container.
  */
 struct task {
-	unsigned int refs;	/**< Reference count */
+	unsigned refs;		/**< Reference count */
 	char *name;		/**< Task name */
 	char *actions;		/**< Executable payload */
 	ast_t expr;		/**< Dependency expression */

@@ -4,9 +4,9 @@
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
-/* TODO This chained hash table should be replaced by one with open (linear)
- * addressing. That would reduce the overhead due to allocating hashnodes and
- * would make iteration *much* simpler.
+/* TODO This chained hash table should be replaced by one with linear probing.
+ * That would reduce the overhead due to allocating hashnodes and would make
+ * iteration *much* simpler.
  */
 
 

@@ -33,7 +33,6 @@
 #include "ast.h"
 
 
-
 extern FILE *yyin;
 
 extern struct tasklist *tasks;

@@ -80,6 +80,10 @@ pop(ast_itor_t itor)
 	return stack_pop(itor->stack);
 }
 
+#define update(self, n) \
+	n = self->next; \
+	push(self, ast_get_rhs(n)); \
+	self->next = ast_get_lhs(n)
 
 ast_t
 ast_itor_first(ast_itor_t self)
@@ -88,9 +92,8 @@ ast_itor_first(ast_itor_t self)
 
 	assert(self);
 
-	n = self->next = self->root;
-	push(self, ast_get_rhs(n));
-	self->next = ast_get_lhs(n);
+	self->next = self->root;
+	update(self, n);
 
 	return n;
 }
@@ -108,9 +111,9 @@ ast_itor_next(ast_itor_t self)
 			return NULL;
 	}
 
-	n = self->next;
-	push(self, ast_get_rhs(n));
-	self->next = ast_get_lhs(n);
+	update(self, n);
 
 	return n;
 }
+
+#undef update

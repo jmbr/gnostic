@@ -2,6 +2,19 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-21 04:54:26 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-155
+
+    Summary:
+      Performed several minor simplifications and corrections.
+    Revision:
+      gnostic--mainline--0.1--patch-155
+
+
+    modified files:
+     ChangeLog GNUmakefile.in ast-itor.c doxy.cfg.in hashtab.c
+     task.h test-grammar.c
+
+
 2004-08-17 14:04:29 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-154
 
     Summary:

@@ -169,7 +169,6 @@ test-tasklist: \
 	test-tasklist.o \
 	xmemory.o
 
-
 check: gnostic tests
 	@echo "===================="
 	@echo "Executing test suite"
@@ -210,9 +209,6 @@ doc: userdoc
 
 apidoc: doxy.cfg
 	$(DOXYGEN) $(srcdir)/doxy.cfg
-	@echo =======================================
-	@echo API documentation for $(PACKAGE) is ready
-	@echo =======================================
 
 doxy.cfg: doxy.cfg.in
 	$(SHELL) ./config.status doxy.cfg
@@ -338,7 +334,7 @@ depend:
 
 .PHONY: loc-count
 
-ALL_SOURCES := $(filter-out test-% grammar.c grammar.h scanner.c, $(wildcard *.[chly]))
+ALL_SOURCES := $(filter-out grammar.c grammar.h scanner.c, $(wildcard *.[chly]))
 
 TAGS: tags;
 tags: $(ALL_SOURCES)
