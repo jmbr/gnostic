@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-26 00:59:18 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-67
+
+    Summary:
+      Removed stale inline check.
+    Revision:
+      gnostic--mainline--0.1--patch-67
+
+
+    modified files:
+     ChangeLog configure.ac
+
+
 2004-07-26 00:20:59 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-66
 
     Summary:
