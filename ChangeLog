@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-18 09:39:32 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-18
+
+    Summary:
+      Removed all the dependencies on cleanup.c from the make file.
+    Revision:
+      gnostic--mainline--0.1--patch-18
+
+
+    modified files:
+     ChangeLog GNUmakefile.in deps.mk
+
+
 2004-07-18 09:38:18 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-17
 
     Summary:
