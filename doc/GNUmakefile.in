@@ -7,6 +7,9 @@
 @SET_MAKE@
 
 SHELL := @SHELL@
+
+SHTOOL := ../shtool
+
 MAKEINFO := @MAKEINFO@
 TEXI2PDF := @TEXI2PDF@
 
@@ -31,6 +34,12 @@ TEXI2PDF := @TEXI2PDF@
 
 all: gnostic.info
 
+gnostic.texi: version.texi
+
+version.texi: ../version.h version.texi.in
+	@version=`$(SHTOOL) version -d short $<`; \
+	sed "s/@VERSION\@/$$version/g" < $@.in > $@
+
 html: gnostic.texi
 	$(MAKEINFO) --html $< -o $(basename $<)
 
@@ -51,6 +60,7 @@ gnostic.pdf: gnostic.texi
 clean:
 	$(RM) *.info
 	$(RM) *.log *.pdf
+	$(RM) version.texi
 	$(RM) -r gnostic
 
 rmbak:

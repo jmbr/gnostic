@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-01 23:53:27 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-103
+
+    Summary:
+      Improved documentation.
+    Revision:
+      gnostic--mainline--0.1--patch-103
+
+
+    modified files:
+     ChangeLog doc/GNUmakefile.in doc/gnostic.texi
+
+
 2004-08-01 16:08:20 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-102
 
     Summary:

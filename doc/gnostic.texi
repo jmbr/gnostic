@@ -2,19 +2,21 @@
 
 @c %**start of header
 @setfilename gnostic.info
-@settitle Gnostic. User's guide
+@settitle Gnostic
 @c %**end of header
 
+@include version.texi
+
 @copying
-This is the user's guide for Gnostic 0.2
+This is the user's guide for @code{gnostic} @value{VERSION}
 
 Copyright @copyright{} 2002, 2003, 2004 Juan M. Bello Rivas
 @end copying
 
 @titlepage
-@title Gnostic 0.2
-@subtitle User's guide
-@subtitle Tutorial and reference manual.
+@title Gnostic
+@subtitle A rule-based task execution system
+@subtitle @code{gnostic} version @value{VERSION}
 @author Juan M. Bello Rivas
 
 @page
@@ -26,14 +28,15 @@ Copyright @copyright{} 2002, 2003, 2004 Juan M. Bello Rivas
 
 @ifnottex
 @node Top
-@top Gnostic. User's guide
+@top Gnostic
 
 @insertcopying
 @end ifnottex
 
 @menu
-* Introduction::	Introduction to Gnostic.
-* Tutorial::		Step by step guide to Gnostic.
+* Introduction::	Introduction to @code{gnostic}.
+* Invoking gnostic::	How to invoke @code{make} on the command line.
+* Tutorial::		Step by step guide to @code{gnostic}.
 * Index::		Complete index.
 @end menu
 
@@ -42,7 +45,16 @@ Copyright @copyright{} 2002, 2003, 2004 Juan M. Bello Rivas
 
 @cindex introduction
 
-Gnostic is a versatile task launcher aimed at network and host security scanning.
+The @code{gnostic} utility is a rule-based task execution system.  It evaluates
+task dependencies and, if they are satisfied, executes the specified task.
+This manual describes @code{gnostic}, which was implemented by Juan M. Bello
+Rivas.
+
+@node Invoking gnostic
+@chapter Invoking gnostic
+@cindex gnostic, invoking
+
+foo
 
 @node Tutorial
 @chapter Tutorial
