@@ -1,7 +1,8 @@
 #ifndef HASHTAB_H
 #define HASHTAB_H		1
-/*
- * hashtab.h -- Hash table data structure.
+/*!
+ * \file hashtab.h
+ * \brief Hash table data structure.
  */
 
 

@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-26 23:07:42 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-74
+
+    Summary:
+      Enhanced module documentation.
+    Revision:
+      gnostic--mainline--0.1--patch-74
+
+
+    modified files:
+     ChangeLog hashtab.h
+
+
 2004-07-26 23:07:29 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-73
 
     Summary:
