@@ -2,6 +2,21 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-04 01:47:42 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-111
+
+    Summary:
+      Added TODO file to the source tree.
+    Revision:
+      gnostic--mainline--0.1--patch-111
+
+
+    new files:
+     .arch-ids/TODO.id TODO
+
+    modified files:
+     ChangeLog
+
+
 2004-08-04 01:46:47 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-110
 
     Summary:
