@@ -42,7 +42,6 @@ LDFLAGS := @LDFLAGS@
 LIBS := @LIBS@
 INCLUDES := @INCLUDES@
 
-EXTRA_CFLAGS := @EXTRA_CFLAGS@
 
 LIBOBJS := @LIBOBJS@
 ifdef LIBOBJS
@@ -127,11 +126,12 @@ rmbak:
 
 mostlyclean: clean rmbak
 	$(RM) *.core core.*
-	$(MAKE) -C $(docdir) mostlyclean
-	$(MAKE) -C $(testsdir) mostlyclean
+	$(MAKE) -C $(docdir) $@
+	$(MAKE) -C $(testsdir) $@
 
 clobber: rmbak clean mostlyclean
 	$(RM) grammar.[ch] scanner.c
+	$(MAKE) -C $(testsdir) $@
 
 distclean: mostlyclean
 	$(RM) tags

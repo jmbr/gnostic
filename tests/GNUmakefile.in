@@ -110,7 +110,7 @@ mostlyclean: rmbak clean ;
 
 clobber: mostlyclean
 	$(RM) config.log
-	$(RM) *.core core.*
+	$(RM) core core.*
 
 
 ###############################################################################
