@@ -31,11 +31,10 @@
 
 #include <assert.h>
 
-#include "task.h"
 #include "task-priv.h"
-#include "ast.h"
 
-#include "xalloc.h"
+#include "err.h"
+#include "xmemory.h"
 
 
 struct task *
@@ -121,4 +120,74 @@ task_get_next(const struct task *self)
 	assert(self);
 
 	return self->next;
+}
+
+
+
+/*
+ * We provide an extra parameter prev. This is useful because the alternative
+ * is to have a pointer in each astnode to its parent.
+ */
+static int
+check_deps(const struct task *cur, const struct task *prev, astnode_t n)
+{
+	int status = 0;
+	struct task *u;
+
+	assert(cur);
+
+	if (!n)
+	       return 0;
+
+	switch (astnode_get_type(n)) {
+	case N_ID:
+		u = astnode_get_item(n);
+
+		/* FIXME Improve readability. */
+		if (cur != u)
+			status = check_deps(cur, u, task_get_expr(u));
+		else
+			fatal_error("gnostic: There are circular dependencies "
+				    "between " "`%s' and `%s'.\n",
+				    task_get_name(cur),
+				    task_get_name((prev) ? prev : cur));
+		break;
+	case N_AND:
+	case N_OR:
+		status = check_deps(cur, NULL, astnode_get_lhs(n))
+			+ check_deps(cur, NULL, astnode_get_rhs(n));
+		break;
+	case N_NOT:
+		status = check_deps(cur, NULL, astnode_get_rhs(n));
+		break;
+	default:
+		assert(0);
+	}
+
+	return status;
+}
+
+int
+task_check_deps(const struct task *self)
+{
+	astnode_t n;
+
+	n = task_get_expr(self);
+	if (!n)
+		return 0;
+
+	return (check_deps(self, NULL, n) == 0) ? 0 : -1;
+}
+
+
+int
+task_print(const struct task *self)
+{
+	if (!self)
+		return -1;
+
+	if (fprintf(stdout, "%s\n", self->name) < 0)
+		return -1;
+
+	return 0;
 }

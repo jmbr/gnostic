@@ -25,11 +25,10 @@
 
 #include <assert.h>
 
-#include "task.h"
 #include "taskset.h"
 
 #include "version.h"
-#include "debug.h"
+#include "err.h"
 
 
 #define PROG_NAME		"gnostic"
@@ -57,7 +56,7 @@ main(int argc, char *argv[])
 	}
 
 	status = (argc == 2)
-			? taskset_print(tasks, stdout)
+			? taskset_print(tasks)
 			: exec(tasks, argc, argv);
 
 	delete_taskset(tasks);

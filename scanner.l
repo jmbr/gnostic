@@ -22,8 +22,8 @@
 
 #include "grammar.h"
 
-#include "xalloc.h"
-#include "debug.h"
+#include "err.h"
+#include "xmemory.h"
 
 
 #define YY_NO_UNPUT	1

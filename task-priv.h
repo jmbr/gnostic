@@ -19,6 +19,7 @@ struct task {
 	char *name;		/**< Task name */
 	char *actions;		/**< Executable payload */
 	astnode_t expr;		/**< Dependency expression */
+	struct task *prev;	/**< Pointer to the previous task in the list. */
 	struct task *next;	/**< Pointer to the next task in the list. */
 };
 

@@ -44,7 +44,6 @@ extern int delete_task(struct task *self);
  */
 extern int task_exec(const struct task *self);
 
-/*@{*/
 /**
  * The following accessors are convenient for several reasons but if they ever
  * turn out to become a bottleneck then compile the program with the
@@ -55,9 +54,9 @@ extern const char *task_get_actions(const struct task *self);
 
 extern const astnode_t task_get_expr(const struct task *self);
 
-extern struct task *task_get_next(const struct task *self);
-extern int task_set_next(struct task *self, struct task *t);
+extern int task_check_deps(const struct task *self);
 
-/*@}*/
+extern int task_print(const struct task *self);
+
 
 #endif /* !TASK_H */

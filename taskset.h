@@ -50,7 +50,7 @@ extern struct taskset *new_taskset(const char *filename);
  */
 extern int delete_taskset(struct taskset *self);
 
-extern int taskset_print(const struct taskset *self, FILE *fp);
+extern int taskset_print(const struct taskset *self);
 
 extern const struct task *taskset_get_task(const struct taskset *self,
 							const char *name);

@@ -27,20 +27,20 @@
 
 #include <assert.h>
 
-#include "task.h"
+#include "tasklist.h"
 #include "taskset.h"
 #include "ast.h"
 
-#include "xalloc.h"
-#include "debug.h"
+#include "err.h"
+#include "xmemory.h"
 
 
 extern int yylex(void);
 extern void yyerror(const char *s);
 
 
-struct task *tasks = NULL;
 struct env_var *env_vars = NULL;
+struct tasklist *tasks = NULL;
 
 static char *strconcat(char *s1, char *s2);
 
@@ -72,12 +72,9 @@ static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 
 %%
 
-conf		: tasks {
-      			tasks = $1;
-		}
+conf		: tasks
       		| variables tasks {
 			env_vars = $1;
-      			tasks = $2;
       		}
 		;
 
@@ -98,10 +95,12 @@ variable	: VAR_DECL {
 		}
 		;
 
-tasks           : task
+tasks           : task {
+			tasks = new_tasklist();
+			tasklist_append(tasks, $1);
+		}
 		| tasks task {
-			task_set_next($2, $1);
-			$$ = $2;
+			tasklist_append(tasks, $2);
 		}
                 ;
 

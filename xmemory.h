@@ -1,8 +1,8 @@
-#ifndef XALLOC_H
-#define XALLOC_H		1
+#ifndef XMEMORY_H
+#define XMEMORY_H		1
 /**
- * @file xalloc.h
- * @brief Error-checking *alloc wrappers.
+ * @file xmemory.h
+ * @brief Error-checking memory allocation wrappers.
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
@@ -42,4 +42,4 @@ extern char *xstrdup(const char *s);
 } while (0)
 
 
-#endif /* !XALLOC_H */
+#endif /* !XMEMORY_H */

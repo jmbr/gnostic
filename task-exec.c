@@ -60,7 +60,7 @@
 #include "task.h"
 #include "ast.h"
 
-#include "debug.h"
+#include "err.h"
 
 
 /* Beware of the evil strerror and its non-reentrancy! */

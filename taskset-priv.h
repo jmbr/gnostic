@@ -7,9 +7,10 @@
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
-#include "taskset.h"
+
 #include "task.h"
-#include "graph.h"
+#include "taskset.h"
+#include "tasklist.h"
 #include "hashtab.h"
 
 
@@ -18,12 +19,9 @@
 struct taskset {
 	struct env_var *env_vars;	/**< Pointer to the head of a list of
 					  env vars */
-	struct task *tasks;		/**< Pointer to the head of a list of
-					  tasks. */
+	struct tasklist *tasks;		/**< List of tasks. */
 	hashtab_t symtab;		/**< Symbol table mapping task names to
 					  task structure addresses */
-	graph_t depgraph;		/**< Describes the dependencies between
-					  task structures. */
 };
 
 

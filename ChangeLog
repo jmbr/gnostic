@@ -2,6 +2,43 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-27 20:33:33 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-78
+
+    Summary:
+      Refactored heavily. Introduced the tasklist structure. Removed the graph ADT in favor of an ad-hoc dependency checking routine.
+    Revision:
+      gnostic--mainline--0.1--patch-78
+
+
+    removed files:
+     .arch-ids/graph.c.id .arch-ids/graph.h.id graph.c graph.h
+     tests/.arch-ids/test-graph.c.id tests/test-graph.c
+
+    modified files:
+     ChangeLog GNUmakefile.in ast.c deps.mk gnostic.c grammar.y
+     scanner.l task-exec.c task-priv.h task.c task.h
+     taskset-parser.c taskset-priv.h taskset.c taskset.h version.h
+     xmemory.h
+
+    renamed files:
+     .arch-ids/debug.c.id
+       ==> .arch-ids/err.c.id
+     .arch-ids/debug.h.id
+       ==> .arch-ids/err.h.id
+     .arch-ids/xalloc.c.id
+       ==> .arch-ids/xmemory.c.id
+     .arch-ids/xalloc.h.id
+       ==> .arch-ids/xmemory.h.id
+     debug.c
+       ==> err.c
+     debug.h
+       ==> err.h
+     xalloc.c
+       ==> xmemory.c
+     xalloc.h
+       ==> xmemory.h
+
+
 2004-07-27 14:01:19 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-77
 
     Summary:

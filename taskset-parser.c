@@ -27,18 +27,18 @@
 
 #include <assert.h>
 
-#include "taskset.h"
 #include "taskset-priv.h"
+#include "task-priv.h"
 #include "ast.h"
 #include "grammar.h"
 
-#include "xalloc.h"
-#include "debug.h"
+#include "err.h"
+#include "xmemory.h"
 
 
 extern FILE *yyin;
 
-extern struct task *tasks;
+extern struct tasklist *tasks;
 extern struct env_var *env_vars;
 
 
@@ -64,7 +64,7 @@ fill_symtab(struct taskset *ts)
 {
 	struct task *t;
 
-	for (t = ts->tasks; t; t = task_get_next(t))
+	for (t = ts->tasks->head; t; t = t->next)
 		hashtab_strlookup(ts->symtab, task_get_name(t), 1, t);
 }
 
@@ -86,7 +86,7 @@ taskset_parse(struct taskset *self, const char *filename)
 
 	fill_symtab(self);
 
-	for (t = self->tasks; t; t = task_get_next(t))
+	for (t = self->tasks->head; t; t = t->next)
 		expr_resolve(self, t, task_get_expr(t));
 
 	return fclose(yyin);
@@ -110,7 +110,7 @@ ident_resolve(struct taskset *ts, struct task *t, astnode_t n)
 		fatal_error("gnostic: Task `%s' needed by `%s' is not "
 				"defined.\n", (char *) item, task_get_name(t));
 
-	graph_insert_edge(ts->depgraph, t, p);
+	//graph_insert_edge(ts->depgraph, t, p);
 
 	xfree(item);
 	astnode_set_item(n, p);

@@ -27,20 +27,12 @@
 
 #include <assert.h>
 
-#include "taskset.h"
+#include "task-priv.h"
 #include "taskset-priv.h"
 
-#include "task.h"
-#include "task-priv.h"
-#include "hashtab.h"
-#include "graph.h"
+#include "err.h"
+#include "xmemory.h"
 
-#include "xalloc.h"
-#include "debug.h"
-
-
-static int delete_tasklist(struct task *self);
-static int tasklist_print(const struct task *head, FILE *fp);
 
 static int delete_env_var_list(struct env_var *self);
 
@@ -68,7 +60,7 @@ new_taskset(const char *filename)
 
 	n->tasks = NULL;
 	n->symtab = new_hashtab(0, (hashtab_cmp) strcmp);
-	n->depgraph = new_graph();
+	//n->depgraph = new_graph();
 
 	if (taskset_read(n, filename) == -1) {
 		delete_taskset(n);
@@ -87,7 +79,7 @@ delete_taskset(struct taskset *self)
 	delete_env_var_list(self->env_vars);
 	delete_tasklist(self->tasks);
 	delete_hashtab(self->symtab);
-	delete_graph(self->depgraph);
+	//delete_graph(self->depgraph);
 	xfree(self);
 
 	return 0;
@@ -95,23 +87,13 @@ delete_taskset(struct taskset *self)
 
 
 
-static void
-errback(struct task *a, struct task *b)
-{
-	fatal_error("gnostic: There are circular dependencies between "
-		"`%s' and `%s'.\n", task_get_name(a), task_get_name(b));
-}
-
 static int
 taskset_verify(struct taskset *self)
 {
 	if (!self)
 		return -1;
 
-	self->depgraph = graph_topological_sort(self->depgraph,
-						(graph_errback_fn) errback);
-
-	return 0;
+	return tasklist_map(self->tasks, task_check_deps);
 }
 
 static int
@@ -128,9 +110,9 @@ taskset_read(struct taskset *self, const char *name)
 
 
 int
-taskset_print(const struct taskset *self, FILE *fp)
+taskset_print(const struct taskset *self)
 {
-	return tasklist_print(self->tasks, fp);
+	return tasklist_map(self->tasks, task_print);
 }
 
 
@@ -147,42 +129,6 @@ taskset_get_env_vars(const struct taskset *self)
 	assert(self);
 
 	return self->env_vars;
-}
-
-
-
-int
-tasklist_print(const struct task *head, FILE *fp)
-{
-	const struct task *t;
-
-	if (!head || !fp)
-		return -1;
-
-	for (t = head; t; t = task_get_next(t))
-		if (fprintf(fp, "%s\n", task_get_name(t)) < 0)
-			return -1;
-
-	return 0;
-}
-
-
-int
-delete_tasklist(struct task *self)
-{
-	int status;
-	struct task *node, *next;
-
-	if (!self)
-		return -1;
-
-	for (node = self; node; node = next) {
-		next = task_get_next(node);
-		status = delete_task(node);
-		assert(status == 0);
-	}
-
-	return 0;
 }
 
 

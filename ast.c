@@ -28,7 +28,7 @@
 
 #include "ast.h"
 
-#include "xalloc.h"
+#include "xmemory.h"
 
 
 /** Node of an abstract syntax tree.
