@@ -93,5 +93,5 @@ not {
 void
 yyerror(char *s)
 {
-	fatal_error("%s in line %d\n", s, nline);
+	fatal_error("gnostic: %s in line %d\n", s, nline);
 }
