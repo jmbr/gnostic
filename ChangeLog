@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-25 15:37:45 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-62
+
+    Summary:
+      Added a missing filetype to the inventory type checker.
+    Revision:
+      gnostic--mainline--0.1--patch-62
+
+
+    modified files:
+     ChangeLog {arch}/=tagging-method
+
+
 2004-07-25 15:34:01 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-61
 
     Summary:
