@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-13 10:55:52 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-130
+
+    Summary:
+      Clarified some data structures.
+    Revision:
+      gnostic--mainline--0.1--patch-130
+
+
+    modified files:
+     ChangeLog task.c taskset-priv.h
+
+
 2004-08-10 18:15:38 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-129
 
     Summary:

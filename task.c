@@ -130,9 +130,9 @@ task_print(const struct task *self)
 
 
 /*
- * We provide an extra parameter prev. This is useful because the alternative
- * is to have a pointer in each astnode to its parent.
+ * TODO Using an AST iterator would *greatly* clarify this piece of code
  */
+
 static int
 check_ident(const struct task *cur, const struct task *prev, astnode_t n)
 {

@@ -17,9 +17,11 @@
 
 /** An aggregate of tasks plus their environment.
  */
-/* XXX tasklist and symtab are redundant. If we had a good, enumerable,
+/* TODO tasklist and symtab are redundant. If we had a good, enumerable,
  * dictionary data-structure it would greatly simplify task handling (the
  * refcounter would no longer be necessary).
+ * UPDATE: By removing the listing functionality from the main program the
+ * tasklist would be even more useless.
  */
 struct taskset {
 	struct var *vars;		/**< Pointer to the head of a list of
