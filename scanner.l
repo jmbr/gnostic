@@ -35,8 +35,6 @@
 unsigned int lineno = 1;
 %}
 
-%x ACTIONS
-
 %option noyywrap
 
 IDENTIFIER	[A-Za-z_][A-Za-z1-9\-_]*
@@ -69,21 +67,22 @@ not {
         return IDENTIFIER;
 }
 
-^\t {
-        BEGIN(ACTIONS);
-}
-
-<ACTIONS>.*\n {
+^\t.*\n {
 	++lineno;
 
-        BEGIN(INITIAL);
-        yylval.s = xstrdup(yytext);
+	/*
+	 * We discard the initial '\t' but not the comments because losing them
+	 * would lead to confusing line numbers in error messages during task
+	 * execution.
+	 */
+        yylval.s = xstrdup(yytext + 1);
 
         return ACTION;
 }
 
 ^#.*$ {
 	/* Ignore comments */
+	++lineno;
 }
 
 [\ \t] {
