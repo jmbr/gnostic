@@ -2,6 +2,24 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-08-07 21:49:06 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-119
+
+    Summary:
+      Rewrote the hashtab unit test. Now it's faster and more correct.
+    Revision:
+      gnostic--mainline--0.1--patch-119
+
+
+    new files:
+     tests/.arch-ids/test-hashtab.c.id tests/test-hashtab.c
+
+    removed files:
+     tests/.arch-ids/test-hashtab.c.id tests/test-hashtab.c
+
+    modified files:
+     ChangeLog
+
+
 2004-08-07 02:11:08 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-118
 
     Summary:

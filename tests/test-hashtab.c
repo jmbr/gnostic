@@ -1,5 +1,8 @@
-/*
- * test-hashtab.c -- Unit test for hash tables.
+/**
+ * @file test-hashtab.c
+ * @brief Hash table unit test.
+ * 
+ * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
 
 
@@ -16,138 +19,137 @@
 # include <sys/types.h>
 #endif /* HAVE_SYS_TYPES_H */
 
-#ifndef __USE_GNU
-# define __USE_GNU
-#endif /* !__USE_GNU */
-
 #ifdef HAVE_STRING_H
 # include <string.h>
 #elif HAVE_STRINGS_H
 # include <strings.h>
 #endif /* !HAVE_STRING_H */
 
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif /* HAVE_UNISTD_H */
+
+#include <sys/stat.h>
+#include <fcntl.h>
+
+#include <signal.h>
+
+#include <sys/mman.h>
+
 #include <assert.h>
 
 #include "hashtab.h"
 
+#include "xmemory.h"
 
-static void test_hashtab_ctor_dtor(void);
-static void test_hashtab_basic(void);
-static void test_hashtab_heavy(void);
+
+static int fd;
+static char *m;
+static size_t len;
+
+static struct hashtab *ht = NULL;
+
+
+static void test_hashtab_lookup(void);
 
 
 int
 main(int argc, char *argv[])
 {
-	test_hashtab_ctor_dtor();
-	test_hashtab_basic();
-	test_hashtab_heavy();
+	test_hashtab_lookup();
 
 	exit(EXIT_SUCCESS);
 }
 
 
-void
-test_hashtab_ctor_dtor(void)
-{
-	struct hashtab *tab;
-
-	tab = new_hashtab(0, (hashtab_cmp) strcmp);
-	assert(tab);
-
-	delete_hashtab(tab);
-}
-
-void
-test_hashtab_basic(void)
+static void
+map(void)
 {
 	int status;
-	struct hashtab *tab;
-	const char *k = "tcp", *v = "root";
-	void *value;
+	struct stat st;
 
-	tab = new_hashtab(0, (hashtab_cmp) strcmp);
-	assert(tab);
+	fd = open("/usr/share/dict/words", O_RDONLY);
+	assert(fd != -1);
 
-	value = hashtab_lookup(tab, k, strlen(k), 1, v);
-	assert(value);
-
-	status = strcmp((char *) value, v);
+	status = fstat(fd, &st);
 	assert(status == 0);
 
-	delete_hashtab(tab);
+	len = (size_t) st.st_size + 1;
+
+	m = mmap(0, len, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, (off_t) 0);
+	assert(m != MAP_FAILED);
+
+	*(m + len - 1) = '\0'; /* Turn the mmapped file into a valid string */
+}
+
+static void
+unmap(void)
+{
+	int status;
+
+	status = munmap(m, len);
+	assert(status == 0);
+
+	status = close(fd);
+	assert(status == 0);
+}
+
+static inline char *
+get_word(char *text)
+{
+	char *start;
+	static char *p = NULL;
+
+	start = p = (p) ? p : text;
+
+	p = strchr(p, '\n');
+	if (!p)
+		return NULL;
+
+	*p++ = '\0';
+
+	return start;
+}
+
+static void
+dict_set(void)
+{
+	char *v, *w;
+
+	map();
+
+	for (w = get_word(m); w; w = get_word(NULL)) {
+		v = xstrdup(w);
+		hashtab_strlookup(ht, w, 1, v);
+	}
+
+	unmap();
+}
+
+static void
+dict_get(void)
+{
+	char *v, *w;
+
+	map();
+
+	for (w = get_word(m); w; w = get_word(NULL)) {
+		v = hashtab_strlookup(ht, w, 0, NULL);
+		xfree(v);
+	}
+
+	unmap();
 }
 
 void
-test_hashtab_heavy(void)
+test_hashtab_lookup(void)
 {
-	void *v;
-	FILE *fp;
-	int status, i;
-	char buf[256], *word = NULL, *frob;
-	struct hashtab *tab;
+	assert(!ht);
 
-	fp = fopen("/usr/share/dict/words", "r");
-	assert(fp);
+	ht = new_hashtab(HASHTAB_DEFAULT_LEN, (hashtab_cmp) strcmp);
 
-	tab = new_hashtab(6421, (hashtab_cmp) strcmp);
-	assert(tab);
+	dict_set();
+	dict_get();
 
-	for (i = 0; ; i++) {
-		memset(buf, '\0', sizeof(buf));
-		fgets(buf, sizeof(buf) - 1, fp);
-		if (feof(fp))
-			break;
-		assert(!ferror(fp));
-		buf[strlen(buf) - 1] = '\0';
-
-		word = strdup(buf);
-		assert(word);
-
-		frob = strdup(buf);
-		assert(frob);
-
-		memfrob(frob, strlen(frob));
-
-		v = hashtab_lookup(tab, word, strlen(word), 1, frob);
-		assert(v);
-
-		status = strcmp((char *) v, frob);
-		assert(status == 0);
-
-		//if (i % 1000 == 0) printf("%s --> %s\n", word, (char *) v);
-	}
-
-	for (rewind(fp); i; i--) {
-		memset(buf, '\0', sizeof(buf));
-		fgets(buf, sizeof(buf) - 1, fp);
-		if (feof(fp))
-			break;
-		assert(!ferror(fp));
-		buf[strlen(buf) - 1] = '\0';
-
-		word = strdup(buf);
-		assert(word);
-		frob = strdup(buf);
-		assert(frob);
-		memfrob(frob, strlen(frob));
-
-		v = hashtab_lookup(tab, word, strlen(word), 0, NULL);
-		assert(v);
-
-		status = strcmp((char *) v, frob);
-		//printf("%s --> %s | %s\n", word, (char *) v, frob);
-		assert(status == 0);
-
-		free(word);
-		free(frob);
-	}
-
-	/*
-	 * There's a huge memleak here because we lose references to each
-	 * hnode's key so we cannot free it. It isn't important for this test
-	 * anyway.
-	 */
-	delete_hashtab(tab);
-	fclose(fp);
+	delete_hashtab(ht);
 }
