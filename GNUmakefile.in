@@ -264,8 +264,9 @@ depend:
 #
 ###############################################################################
 
-.PHONY: loc
+.PHONY: loc-count
 
-loc: clobber $(wildcard *.[chly])
-	@echo -n "Total lines of code: "; \
-	echo $$[`c_count *.[ch] | tail -1` + `lex_count *.[ly] | tail -1`]
+loc-count: $(filter-out grammar.c grammar.h scanner.c, $(wildcard *.[chly]))
+	@c_loc=$$(c_count $(filter %.c %.h, $^) | tail -1); \
+	lex_loc=$$(lex_count $(filter %.l %.y, $^) | tail -1); \
+	echo $$[$$c_loc + $$lex_loc] lines of code.
