@@ -44,8 +44,8 @@ static int exec(const struct task_collection *tasks, const char *name);
 int
 main(int argc, char *argv[])
 {
+	int status;
 	struct task_collection *tasks;
-	int status = EXIT_SUCCESS;
 
 	if (argc < 2)
 		usage();
