@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-22 13:57:28 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-25
+
+    Summary:
+      Flagged fatal_error as a non-returning function for GCC.
+    Revision:
+      gnostic--mainline--0.1--patch-25
+
+
+    modified files:
+     ChangeLog debug.h
+
+
 2004-07-22 13:56:35 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-24
 
     Summary:
