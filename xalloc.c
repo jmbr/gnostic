@@ -13,12 +13,6 @@
 # include <stdlib.h>
 #endif /* STDC_HEADERS */
 
-#ifdef HAVE_STRING_H
-# include <string.h>
-#elif HAVE_STRINGS_H
-# include <strings.h>
-#endif /* !HAVE_STRING_H */
-
 #ifdef HAVE_MEMORY_H
 # include <memory.h>
 #endif /* HAVE_MEMORY_H */
@@ -32,15 +26,9 @@
 #include <errno.h>
 
 
-static void error(const char *f) __attribute__ ((noreturn));
+static void die(const char *f) __attribute__ ((noreturn));
 
 
-/*
- * This function fills with zeroes the allocated memory. This should be taken
- * into account if it is going to be replaced by the stock malloc or a
- * different allocator because some programs might rely on the memory being
- * initialized.
- */
 void *
 xmalloc(size_t size)
 {
@@ -48,7 +36,7 @@ xmalloc(size_t size)
 
 	ptr = malloc(size);
 	if (!ptr)
-		error("malloc");
+		die("malloc");
 
 	memset(ptr, 0, size);
 
@@ -63,7 +51,7 @@ xcalloc(size_t nmemb, size_t size)
 
 	ptr = calloc(nmemb, size);
 	if (!ptr)
-		error("calloc");
+		die("calloc");
 
 	return ptr;
 }
@@ -76,7 +64,7 @@ xrealloc(void *ptr, size_t size)
 
 	p = realloc(ptr, size);
 	if (!p)
-		error("realloc");
+		die("realloc");
 
 	return p;
 }
@@ -89,39 +77,27 @@ xstrdup(const char *s)
 
 	p = strdup(s);
 	if (!p)
-		error("strdup");
+		die("strdup");
 
 	return p;
 }
 
 
 void
-xfree(void *ptr)
+__xfree(void *ptr)
 {
-	if (ptr) {
+	if (ptr)
 		free(ptr);
-		ptr = NULL;
-	}
 }
 
 
 void
-error(const char *f)
+die(const char *f)
 {
-	size_t errbuflen = 128;
-	char errbuf[errbuflen];
-
 	assert(f);
+	assert(errno != 0);
 
-#ifdef HAVE_STRERROR_R
-	/*
-	 * We use the incompatible strerror_r provided by glibc.
-	 * XXX In the future this should not require glibc to work.
-	 */
-	fprintf(stderr, "%s: %s\n", f, strerror_r(errno, errbuf, errbuflen));
-#else /* !HAVE_STRERROR_R */
-	fprintf(stderr, "%s failed (errno = %d)\n", f, errno);
-#endif /* HAVE_STRERROR_R */
+	(void) fprintf(stderr, "%s failed (errno = %d)\n", f, errno);
 
 	exit(EXIT_FAILURE);
 }

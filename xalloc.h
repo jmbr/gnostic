@@ -1,8 +1,7 @@
-#ifndef GNOSTIC_XALLOC_H
-#define GNOSTIC_XALLOC_H		1
+#ifndef XALLOC_H
+#define XALLOC_H		1
 /*
  * xalloc.h -- Error-checking *alloc wrappers.
- * $Id: xalloc.h,v 1.1.1.1 2001/12/07 20:56:20 rwx Exp $
  */
 
 
@@ -15,11 +14,25 @@
 #endif /* HAVE_SYS_TYPES_H */
 
 
+/*
+ * This function fills with zeroes the allocated memory. This should be taken
+ * into account if it is going to be replaced by the stock malloc or a
+ * different allocator because some programs might rely on the memory being
+ * initialized.
+ */
 extern void *xmalloc(size_t size);
+
 extern void *xcalloc(size_t nmemb, size_t size);
+
 extern void *xrealloc(void *ptr, size_t size);
+
 extern char *xstrdup(const char *s);
-extern void xfree(void *ptr);
+
+extern void __xfree(void *ptr);
+
+/* Be very careful with the possible side effects that might occur when passing
+ * the parameter. */
+#define xfree(ptr)	do { __xfree(ptr); ptr = NULL; } while (0)
 
 
-#endif /* !GNOSTIC_XALLOC_H */
+#endif /* !XALLOC_H */

@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-23 16:03:04 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-33
+
+    Summary:
+      Fixed a bug with xfree, improved the documentation and removed the dependency on strerror_r.
+    Revision:
+      gnostic--mainline--0.1--patch-33
+
+
+    modified files:
+     ChangeLog xalloc.c xalloc.h
+
+
 2004-07-23 15:41:05 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-32
 
     Summary:
