@@ -2,6 +2,18 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-23 16:42:36 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-37
+
+    Summary:
+      Removed some clutter from the makefiles.
+    Revision:
+      gnostic--mainline--0.1--patch-37
+
+
+    modified files:
+     ChangeLog GNUmakefile.in tests/GNUmakefile.in
+
+
 2004-07-23 16:32:05 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-36
 
     Summary:

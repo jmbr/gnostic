@@ -63,12 +63,6 @@ tests: $(TEST_BINARIES)
 test-htab: test-htab.o htab.o
 	$(LINK) $^ -o $@ $(LIBS)
 
-test-deps: test-deps.o ast.o grammar.o scanner.o xalloc.o debug.o
-	$(LINK) $^ -o $@ $(LIBS)
-
-test-cleanup: test-cleanup.o cleanup.o xalloc.o debug.o
-	$(LINK) $^ -o $@ $(LIBS)
-
 test-graph: test-graph.o graph.o task.o ast.o xalloc.o debug.o
 
 check: tests
