@@ -1,0 +1,38 @@
+##############################################################################
+#
+# scan.gns -- General purpose scanning recipe.
+#
+##############################################################################
+
+
+root=/tmp/gnostic
+
+
+scan: scan-requisites or nmap-scan
+	# XXX Do something.
+
+scan-requisites:
+	# Check for needed environment variables.
+	if [[ -z $root ]] || [[ -z $addr ]]; then
+	  echo "*** The variables 'root' or 'addr' weren't set"
+	  exit 1
+	fi
+
+	source libgnst.sh
+	[[ -f $root/ipv4/`ip2dir $addr`/nmap-scan.xml ]] || exit 1
+
+nmap-scan: nmap-scan-requisites
+	# Nmap-scan a target with all the relevant options.
+
+	source libgnst.sh
+
+	dir=$root/ipv4/`ip2dir $addr`
+	mkdirhier $dir
+
+	nmap -sT $addr -oX $dir/nmap-scan.xml
+
+nmap-scan-requisites:
+	[[ -x /usr/bin/nmap ]] || exit 1
+
+
+# vim: ts=8 sw=8 noet filetype=sh

@@ -2,6 +2,29 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-25 00:43:11 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-58
+
+    Summary:
+      Fixed some naming conventions in the archive. Added some examples.
+    Revision:
+      gnostic--mainline--0.1--patch-58
+
+
+    new files:
+     .arch-ids/AUTHORS.id AUTHORS examples/.arch-ids/=id
+     examples/.arch-ids/environ.gns.id
+     examples/.arch-ids/libgnst.sh.id
+     examples/.arch-ids/netmap.gns.id
+     examples/.arch-ids/scan.gns.id examples/environ.gns
+     examples/libgnst.sh examples/netmap.gns examples/scan.gns
+
+    modified files:
+     ChangeLog {arch}/=tagging-method
+
+    new directories:
+     examples examples/.arch-ids
+
+
 2004-07-25 00:07:43 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-57
 
     Summary:
