@@ -2,6 +2,32 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-22 15:29:31 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-29
+
+    Summary:
+      Updated configure.ac checks.
+    Revision:
+      gnostic--mainline--0.1--patch-29
+
+
+    removed files:
+     .arch-ids/config.h.in.id config.h.in
+
+    modified files:
+     ChangeLog configure.ac grammar.y
+
+    modified directories:
+     .arch-ids doc/.arch-ids tests/.arch-ids {arch} {arch}/gnostic
+     {arch}/gnostic/gnostic--mainline
+     {arch}/gnostic/gnostic--mainline/gnostic--mainline--0.1
+     {arch}/gnostic/gnostic--mainline/gnostic--mainline--0.1/rwx@synnergy.net--2004-warez
+     {arch}/gnostic/gnostic--mainline/gnostic--mainline--0.1/rwx@synnergy.net--2004-warez/patch-log
+     {arch}/gnostic/gnostic--noxml
+     {arch}/gnostic/gnostic--noxml/gnostic--noxml--0.1
+     {arch}/gnostic/gnostic--noxml/gnostic--noxml--0.1/rwx@synnergy.net--2004-warez
+     {arch}/gnostic/gnostic--noxml/gnostic--noxml--0.1/rwx@synnergy.net--2004-warez/patch-log
+
+
 2004-07-22 14:14:28 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-28
 
     Summary:

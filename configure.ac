@@ -52,7 +52,7 @@ AC_SUBST(INCLUDES)
 AC_HEADER_STDC
 AC_HEADER_TIME
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS([memory.h stdlib.h stddef.h string.h sys/time.h unistd.h])
+AC_CHECK_HEADERS([limits.h memory.h stddef.h stdlib.h string.h strings.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -64,11 +64,11 @@ AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS([gettimeofday memset strdup strerror])
+AC_CHECK_FUNCS([memset strdup strerror])
 
 AC_CONFIG_FILES([GNUmakefile tests/GNUmakefile doc/GNUmakefile doxy.cfg])
 AC_CONFIG_COMMANDS([stamp-h], [echo timestamp > stamp-h])
 AC_OUTPUT
 
 echo ""
-echo "Configuration finished. Now run gmake."
+echo "Configuration finished. You can now run gmake."

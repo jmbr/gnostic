@@ -1,7 +1,6 @@
 %{
 /*
  * grammar.y -- Grammar for gnostic's dependency expressions.
- * arch-tag:
  */
 
 
