@@ -4,10 +4,6 @@
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
-/*
- * gnostic: adjective 1 of knowledge. 2 having special mystic knowledge.
- * noun (Gnostic) early Christian heretic claiming mystical knowledge.
- */
 
 
 #ifdef HAVE_CONFIG_H

@@ -82,6 +82,8 @@ delete_task(struct task *self)
 	return 0;
 }
 
+/* XXX task_*ref will be useless once tasklist is removed */
+
 int
 task_incref(struct task *self)
 {
@@ -131,7 +133,11 @@ check_deps(const struct task *orig, const struct task *prev, ast_t expr)
 {
 	ast_t n;
 	struct task *current;
-	ast_itor_t itor = new_ast_itor(expr);
+	ast_itor_t itor;
+
+	assert(orig);
+	
+	itor = new_ast_itor(expr);
 
 	for (n = ast_itor_first(itor); n; n = ast_itor_next(itor)) {
 		if (ast_get_type(n) != AST_ID)
@@ -144,7 +150,8 @@ check_deps(const struct task *orig, const struct task *prev, ast_t expr)
 				    " `%s'.\n", prev ? prev->name : orig->name,
 				    current->name);
 
-		check_deps(orig, current, current->expr);
+		if (current->expr)
+			check_deps(orig, current, current->expr);
 	}
 
 	delete_ast_itor(itor);
@@ -157,7 +164,8 @@ task_check_deps(const struct task *self)
 	if (!self)
 		return -1;
 
-	check_deps(self, NULL, self->expr);
+	if (self->expr)
+		check_deps(self, NULL, self->expr);
 
 	return 0;
 }
