@@ -19,7 +19,7 @@ extern void delete_htab(struct htab *self);
 extern void *htab_lookup(struct htab *self, const void *key, size_t len,
 			int create, const void *value);
 
-#define htab_lookup_s(s, k, c, v) htab_lookup((s), (k), strlen((k)), (c), (v))
+#define htab_strlookup(s, k, c, v) htab_lookup((s), (k), strlen((k)), (c), (v))
 
 
 #endif /* !HTAB_H */

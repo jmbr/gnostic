@@ -2,6 +2,25 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-26 15:04:25 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-70
+
+    Summary:
+      Refactored the taskset parser module.
+    Revision:
+      gnostic--mainline--0.1--patch-70
+
+
+    modified files:
+     ChangeLog GNUmakefile.in deps.mk htab.h taskset-parser.c
+     taskset-priv.h taskset.c taskset.h
+
+    renamed files:
+     .arch-ids/task-parser.c.id
+       ==> .arch-ids/taskset-parser.c.id
+     task-parser.c
+       ==> taskset-parser.c
+
+
 2004-07-26 14:01:03 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-69
 
     Summary:

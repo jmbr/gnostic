@@ -2,7 +2,7 @@
 #define TASKSET_H    1
 /*!
  * \file taskset.h
- * \brief This module defines a structure which holds a collection of tasks.
+ * \brief This module manages aggregates of tasks.
  */
 
 

@@ -1,7 +1,8 @@
 #ifndef TASKSET_PRIV_H
 #define TASKSET_PRIV_H		1
-/*
- * taskset-priv.h -- Private declarations for task collections.
+/*!
+ * \file taskset-priv.h
+ * \brief Private declarations for task collections.
  */
 
 #include "taskset.h"
@@ -22,6 +23,20 @@ struct taskset {
 	graph_t depgraph;		/**< Describes the dependencies between
 					  task structures. */
 };
+
+
+/** Configuration file parser.
+ * Fills a taskset structure with the contents specified in the given
+ * configuration file..
+ *
+ * @param self A pointer to the taskset structure.
+ * @param filename The name of the file to be parsed or NULL if the caller
+ * wants to read from stdin.
+ * @returns 0 on success, -1 on failure.
+ *
+ * @see new_taskset, taskset_read
+ */
+extern int taskset_parse(struct taskset *self, const char *filename);
 
 
 #endif /* !TASKSET_PRIV_H */

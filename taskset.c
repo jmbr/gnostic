@@ -1,5 +1,5 @@
 /*
- * taskset.c -- An aggregate of tasks.
+ * taskset.c -- Manages aggregates of tasks.
  */
 
 
@@ -34,14 +34,6 @@
 
 #include "xalloc.h"
 #include "debug.h"
-
-
-/* XXX Having this here is not very elegant.
- */
-extern struct env_var *env_vars;
-
-extern struct task *tasklist_parse(const char *filename,
-					htab_t symtab, graph_t depgraph);
 
 
 static int delete_tasklist(struct task *self);
@@ -98,48 +90,7 @@ delete_taskset(struct taskset *self)
 	return 0;
 }
 
-
-int
-taskset_print(const struct taskset *self, FILE *fp)
-{
-	return tasklist_print(self->tasks, fp);
-}
-
-
-int
-delete_tasklist(struct task *self)
-{
-	int status;
-	struct task *node, *next;
-
-	if (!self)
-		return -1;
-
-	for (node = self; node; node = next) {
-		next = task_get_next(node);
-		status = delete_task(node);
-		assert(status == 0);
-	}
-
-	return 0;
-}
-
-
-int
-tasklist_print(const struct task *head, FILE *fp)
-{
-	const struct task *t;
-
-	if (!head || !fp)
-		return -1;
-
-	for (t = head; t; t = task_get_next(t))
-		if (fprintf(fp, "%s\n", task_get_name(t)) < 0)
-			return -1;
-
-	return 0;
-}
-
+
 
 static void
 errback(struct task *a, struct task *b)
@@ -166,20 +117,24 @@ taskset_read(struct taskset *self, const char *name)
 	if (!self || !name)
 		return -1;
 
-	self->tasks = tasklist_parse(name, self->symtab, self->depgraph);
-	if (!self->tasks)
+	if (taskset_parse(self, name) == -1)
 		return -1;
 
-	self->env_vars = env_vars;
-
 	return taskset_verify(self);
+}
+
+
+int
+taskset_print(const struct taskset *self, FILE *fp)
+{
+	return tasklist_print(self->tasks, fp);
 }
 
 
 const struct task *
 taskset_get_task(const struct taskset *self, const char *name)
 {
-	return htab_lookup_s(self->symtab, name, 0, NULL);
+	return htab_strlookup(self->symtab, name, 0, NULL);
 }
 
 
@@ -189,6 +144,42 @@ taskset_get_env_vars(const struct taskset *self)
 	assert(self);
 
 	return self->env_vars;
+}
+
+
+
+int
+tasklist_print(const struct task *head, FILE *fp)
+{
+	const struct task *t;
+
+	if (!head || !fp)
+		return -1;
+
+	for (t = head; t; t = task_get_next(t))
+		if (fprintf(fp, "%s\n", task_get_name(t)) < 0)
+			return -1;
+
+	return 0;
+}
+
+
+int
+delete_tasklist(struct task *self)
+{
+	int status;
+	struct task *node, *next;
+
+	if (!self)
+		return -1;
+
+	for (node = self; node; node = next) {
+		next = task_get_next(node);
+		status = delete_task(node);
+		assert(status == 0);
+	}
+
+	return 0;
 }
 
 

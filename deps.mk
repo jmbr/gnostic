@@ -7,8 +7,8 @@ htab.o: htab.c config.h htab.h
 scanner.o: scanner.c config.h grammar.h xalloc.h debug.h
 task.o: task.c config.h task.h ast.h task-priv.h xalloc.h
 task-exec.o: task-exec.c config.h task.h ast.h debug.h
-task-parser.o: task-parser.c config.h task.h ast.h graph.h htab.h \
-  grammar.h xalloc.h debug.h
 taskset.o: taskset.c config.h taskset.h task.h ast.h taskset-priv.h \
   htab.h graph.h task-priv.h xalloc.h debug.h
+taskset-parser.o: taskset-parser.c config.h taskset.h task.h ast.h \
+  taskset-priv.h htab.h graph.h grammar.h xalloc.h debug.h
 xalloc.o: xalloc.c config.h
