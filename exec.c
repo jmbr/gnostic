@@ -40,8 +40,12 @@
 # error gnostic is currently supported only in UNIX-like operating systems.
 #endif /* HAVE_FORK */
 
-#include <limits.h>
+#ifndef HAVE_LIMITS_H
+# include <limits.h>
+#endif /* HAVE_LIMITS_H */
+
 #include <errno.h>
+
 #include <assert.h>
 
 #include "exec.h"
