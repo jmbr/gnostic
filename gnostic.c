@@ -34,7 +34,9 @@
 
 static void usage(void) __attribute__ ((noreturn));
 
-static void update_environ(int nvars, char *vars[]);
+static void setup_environ(int nvars, char *vars[],
+				const struct task_collection *tasks);
+
 static int exec(const struct task_collection *tasks, const char *name);
 
 
@@ -58,8 +60,8 @@ main(int argc, char *argv[])
 	if (argc == 2)
 		status = task_collection_print(tasks, stdout);
 	else {
-		update_environ(argc - 3, &argv[3]);
-		exec(tasks, argv[2]);
+		setup_environ(argc - 3, &argv[3], tasks);
+		status = exec(tasks, argv[2]);
 	}
 
 	delete_task_collection(tasks);
@@ -78,9 +80,13 @@ usage(void)
 
 
 void
-update_environ(int nvars, char *vars[])
+setup_environ(int nvars, char *vars[], const struct task_collection *tasks)
 {
 	int i;
+	const struct env_var *var;
+
+	for (var = task_collection_get_vars(tasks); var; var = var->next)
+		putenv(var->v);
 
 	for (i = 0; i < nvars; i++)
 		if (putenv(vars[i]) == -1)

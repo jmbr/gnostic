@@ -19,6 +19,13 @@
 
 struct task_collection;
 
+/** Environment variable declaration.
+ */
+struct env_var {
+	char *v;		/**< Declaration of the form name=value */
+	struct env_var *next;	/**< Pointer to the next item in the list */
+};
+
 
 /** task_collection constructor.
  * Allocates and initializes task_collection structures.
@@ -51,7 +58,11 @@ extern int task_collection_read(struct task_collection *self, const char *name);
 
 extern int task_collection_print(const struct task_collection *self, FILE *fp);
 
-extern const struct task *task_collection_get_task(const struct task_collection *self, const char *name);
+extern const struct task *
+task_collection_get_task(const struct task_collection *self, const char *name);
+
+extern const struct env_var *
+task_collection_get_vars(const struct task_collection *self);
 
 
 #endif /* !TASK_COLLECTION_H */

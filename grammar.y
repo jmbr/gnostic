@@ -25,6 +25,7 @@
 #include <assert.h>
 
 #include "task.h"
+#include "task-collection.h"
 #include "ast.h"
 #include "scanner.h"
 
@@ -33,6 +34,7 @@
 
 
 struct task *tasks = NULL;
+struct env_var *env_vars = NULL;
 
 
 static astnode_t do_identifier(char *s);
@@ -47,6 +49,7 @@ static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 %union {
 	char *s;
 	struct task *t;
+	struct env_var *v;
 	struct astnode *n;
 }
 
@@ -57,7 +60,8 @@ static astnode_t do_and(astnode_t lhs, astnode_t rhs);
 
 %type <t> tasks task
 %type <n> dependencies expr 
-%type <s> IDENTIFIER VAR_DECL ACTION action actions
+%type <s> IDENTIFIER ACTION action actions VAR_DECL
+%type <v> variable variables
 
 %%
 
@@ -65,18 +69,25 @@ conf		: tasks {
       			tasks = $1;
 		}
       		| variables tasks {
+			env_vars = $1;
       			tasks = $2;
       		}
 		;
 
 variables	: variable
-	  	| variables variable
+	  	| variables variable {
+			$2->next = $1;
+			$$ = $2;
+		}
 		;
 
 variable	: VAR_DECL {
-			if (putenv($1) == -1)
-				fatal_error("gnostic: Unable to declare %s", $1);
-			free($1);
+	 		struct env_var *var;
+
+	 		var = xmalloc(sizeof(struct env_var));
+			var->v = $1;
+
+			$$ = var;
 		}
 		;
 

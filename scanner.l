@@ -1,7 +1,6 @@
 %{
 /*
- * scanner.l -- Scanner for gnostic's dependency expressions.
- * $Id$
+ * scanner.l -- Scanner for gnostic's configuration files.
  */
 
 

@@ -35,8 +35,15 @@
 #include "debug.h"
 
 
+/* XXX Having this here is not very elegant. env_var needs a cleaner interface.
+ */
+extern struct env_var *env_vars;
+
+
 static int delete_tasklist(struct task *self);
 static int tasklist_print(const struct task *head, FILE *fp);
+
+static int delete_env_var_list(struct env_var *self);
 
 extern struct task *tasklist_parse(const char *filename, htab_t symtab, graph_t depgraph);
 
@@ -63,6 +70,7 @@ delete_task_collection(struct task_collection *self)
 	if (!self)
 		return -1;
 
+	delete_env_var_list(self->env_vars);
 	delete_tasklist(self->tasks);
 	delete_htab(self->symtab);
 	delete_graph(self->depgraph);
@@ -144,6 +152,8 @@ task_collection_read(struct task_collection *self, const char *name)
 	if (!self->tasks)
 		return -1;
 
+	self->env_vars = env_vars;
+
 	return task_collection_verify(self);
 }
 
@@ -152,4 +162,31 @@ const struct task *
 task_collection_get_task(const struct task_collection *self, const char *name)
 {
 	return htab_lookup_s(self->symtab, name, 0, NULL);
+}
+
+
+const struct env_var *
+task_collection_get_vars(const struct task_collection *self)
+{
+	assert(self);
+
+	return self->env_vars;
+}
+
+
+int
+delete_env_var_list(struct env_var *self)
+{
+	struct env_var *n, *next;
+
+	if (!self)
+		return -1;
+
+	for (n = self; n; n = next) {
+		next = n->next;
+		xfree(n->v);
+		xfree(n);
+	}
+
+	return 0;
 }

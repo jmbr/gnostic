@@ -2,6 +2,19 @@
 # arch-tag: automatic-ChangeLog--rwx@synnergy.net--2004-warez/gnostic--mainline--0.1
 #
 
+2004-07-24 23:52:12 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-56
+
+    Summary:
+      Introduced the structure env_var to fix a memory leak which happened when reading variable declarations from configuration files.
+    Revision:
+      gnostic--mainline--0.1--patch-56
+
+
+    modified files:
+     ChangeLog deps.mk gnostic.c grammar.y scanner.l
+     task-collection-priv.h task-collection.c task-collection.h
+
+
 2004-07-24 18:26:58 GMT	Juan M. Bello Rivas <rwx@synnergy.net>	patch-55
 
     Summary:
