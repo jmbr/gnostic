@@ -67,7 +67,7 @@ AC_FUNC_FORK
 AC_FUNC_MALLOC
 AC_FUNC_REALLOC
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS([memset strdup strerror putenv])
+AC_CHECK_FUNCS([memset strdup strerror setenv putenv])
 
 AC_CONFIG_FILES([GNUmakefile doc/GNUmakefile doxy.cfg])
 AC_CONFIG_COMMANDS([stamp-h], [echo timestamp > stamp-h])

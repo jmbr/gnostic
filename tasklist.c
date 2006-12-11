@@ -87,6 +87,10 @@ tasklist_append(struct tasklist *self, struct task *t)
 }
 
 
+/*
+ * XXX Should be a foldr-like function instead of map
+ * Perhaps its name should be changed to tasklist_apply instead?
+ */
 int
 tasklist_map(struct tasklist *self, tasklist_fn fn)
 {

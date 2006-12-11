@@ -1,62 +1,112 @@
+#!/usr/local/bin/gnostic -x
+
 ##############################################################################
 #
-# netmap.gns -- Network mapping application.
+# netmap.gns -- Network mapping task.
 #
 ##############################################################################
 
 
-root=/tmp/gnostic
-
+# Module description.
+description=Network mapping task.
+# Place where the auxiliar taskfiles and executables are located.
 scriptdir=.
+# Default root directory to store the database.
+root=/tmp/gnostic
+# Default network mask (class C).
+netmask=24
+# Default number of processes to run in parallel.
+parallelism=16
+
+NMAP=/usr/local/bin/nmap
+AWK=/bin/awk
+XMLTOPYX=/usr/local/gnostic/libexec/xmltopyx
 
 
-netmap: netmap-requisites and (netmap-cache or (ping and traceroute))
+netmap: netmap-usage and netmap-requisites and (netmap-scan-cache or netmap-scan)
 	# TODO - Correlate ping and traceroute data to produce a network graph.
 
-	# rm -rf $root
+	netscandir=$root/networks/$addr/$netmask
 
-netmap-requisites:
-	# Check for needed environment variables.
-	if [[ -z $root ]] || [[ -z $addr ]]; then
-	  echo ""
-	  echo "Usage: netmap addr=ADDRESS [root=DIRECTORY]"
-	  echo ""
+	numhosts=`wc -l $netscandir/hosts | cut -f 1 -d ' '`
+	if [ $numhosts -eq 0 ]; then
+	  echo "$GNOSTIC_CURRENT: No hosts available."
 	  exit 1
 	fi
 
-netmap-cache:
-	# Check whether the work was already done or not.
+	$scriptdir/mux $parallelism $netscandir/hosts $scriptdir/xgnostic traceroute
+
+	# rm -rf $root
+
+netmap-usage:
+	# Show usage information in case the task wasn't invoked appropriately.
+	if [[ -z $root ]] || [[ -z $addr ]] || [[ -z $netmask ]]; then
+	  echo "$GNOSTIC_MAIN -- $description"
+	  echo ""
+	  echo "Usage: $GNOSTIC_MAIN addr=ADDRESS [netmask=NETMASK] [root=DIRECTORY]"
+	  exit 1
+	fi
+
+netmap-requisites:
+	# Check for stuff we need.
 	source $scriptdir/gnostic.sh
 
-	dir=$root/ipv4/`ip2dir $addr`
-	[[ -f $dir/ping.out ]] || exit 1
-	[[ -f $dir/traceroute.out ]] || exit 1
+	netscandir=$root/networks/$addr/$netmask
+	[[ ! -d $netscandir ]] && mkdir -p $netscandir
 
-ping: ping-requisites
+	check_prog $NMAP
+	check_prog $XMLTOPYX
+	check_prog $AWK
+	check_prog $GNOSTIC
+
+netmap-scan-cache:
+	# Have we already scanned our target network?
+	netscandir=$root/networks/$addr/$netmask
+	[[ -f $netscandir/nmap-hosts.xml ]] || exit 1
+	[[ -f $netscandir/hosts ]] || exit 1
+	echo "$GNOSTIC_MAIN: Using cached results for $addr/$netmask"
+
+netmap-scan:
+	# Ping and traceroute available hosts.
 	source $scriptdir/gnostic.sh
 
-	dir=$root/ipv4/`ip2dir $addr`
-	mkdirhier $dir
+	netscandir=$root/networks/$addr/$netmask
 
-	ping -c 5 $addr | tee $dir/ping.out
+	function mass_ping
+	{
+	  results=$netscandir/nmap-hosts.xml
 
-	exit ${PIPESTATUS[0]}
+	  # TODO Merge with portscan.gns
+	  msg="$GNOSTIC_CURRENT: ping scanning $1/$2... "
+	  # We use -PA22 to try to avoid transparent HTTP proxies along our way.
+	  $NMAP -sP -PA22 -n -oX - $1/$2 -oX $results -vv | show_progress $msg
+	  RETVAL=${PIPESTATUS[0]}
+	  show_status $RETVAL $msg
 
-ping-requisites:
-	[[ -x /bin/ping ]] || exit 1
+	  $XMLTOPYX $results | $AWK -f $scriptdir/gethosts.awk > $3
 
-traceroute: traceroute-requisites
-	source $scriptdir/gnostic.sh
+	  return $RETVAL
+	}
 
-	dir=$root/ipv4/`ip2dir $addr`
-	mkdirhier $dir
+	function append_to_database
+	{
+	  source=$1
 
-	/usr/sbin/traceroute $addr | tee $dir/traceroute.out
+	  [[ -f $dest ]] && rm -f $dest
 
-	exit ${PIPESTATUS[0]}
+	  cat $source | while read addrtype addr; do
+	    mkdir -p $root/$addrtype/`ipv4_to_dir $addr`
+	    echo $addr >> $netscandir/hosts
+	  done
 
-traceroute-requisites:
-	[[ -x /usr/sbin/traceroute ]] || exit 1
+	  rm -f $source
+	}
+
+	mass_ping $addr $netmask $netscandir/alive-hosts
+	append_to_database $netscandir/alive-hosts
 
 
-# vim: ts=8 sw=8 noet filetype=sh
+include traceroute.gns
+
+
+# vim: ts=8 sw=2 noet filetype=sh

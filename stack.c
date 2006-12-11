@@ -1,6 +1,6 @@
 /**
  * @file stack.c
- * @brief A simple, fast stack data structure.
+ * @brief A fast stack abstract data type.
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */

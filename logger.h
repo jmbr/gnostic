@@ -1,15 +1,25 @@
-#ifndef ERR_H
-#define ERR_H			1
+#ifndef LOGGER_H
+#define LOGGER_H			1
 /**
- * @file err.h
- * @brief Miscellaneous error reporting functions.
+ * @file logger.h
+ * @brief Miscellaneous reporting functions.
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
  */
+/* TODO Evolve this into a better reporting/logging module. */
 
 
-/** Debugging information printf.
- * If the macro NDEBUG is not set it prints the message to stdout.
+extern enum log_levels {
+	LOG_DEBUG = 0,
+	LOG_INFO,
+	LOG_NOTICE,
+	LOG_WARNING,
+	LOG_ERROR,
+} log_level;
+
+
+/** Information printf.
+ * Prints an informational message to stdout.
  */
 extern void info(const char *format, ...);
 
@@ -24,4 +34,4 @@ extern void error(const char *format, ...);
 extern void fatal_error(const char *format, ...) __attribute__ ((noreturn));
 
 
-#endif /* !ERR_H */
+#endif /* !LOGGER_H */

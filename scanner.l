@@ -20,26 +20,75 @@
 # include <sys/types.h>
 #endif /* HAVE_SYS_TYPES_H */
 
+#include <errno.h>
+
 #include "grammar.h"
 
-#include "err.h"
+#include "stack.h"
+#include "logger.h"
 #include "xmemory.h"
 
 
 #define YY_NO_UNPUT	1
 
-/*
- * lineno is prefered over %option yylineno because the latter sets some
- * warnings during compilation.
+
+/* TODO lineno is not enough. When including files their name and current line
+ * number should be pushed to the stack for better error reporting.
  */
 unsigned int lineno = 1;
+
+stack_t buffers = NULL;
 %}
+
+%x INCLUDE
 
 %option noyywrap
 
 IDENTIFIER	[A-Za-z_][A-Za-z1-9\-_]*
 
 %%
+
+include {
+	BEGIN(INCLUDE);
+}
+
+<INCLUDE>[ \t]+	{
+	;
+}
+
+<INCLUDE>[^ \t\n]+ {
+	if (!buffers) buffers = new_stack();
+	stack_push(buffers, YY_CURRENT_BUFFER);
+
+	yyin = fopen(yytext, "r");
+	if (!yyin) {
+		if (errno == EMFILE) {
+			/* XXX This isn't the best way to report the error.
+			 * But it is a good enough workaround for the moment.
+			 */
+			fatal_error("Too many open files. This problem is " \
+				    "probably caused by circular include " \
+				    "directives.\n");
+		} else {
+			fatal_error("Unable to open included file `%s'\n", \
+				    yytext);
+		}
+	}
+
+	yy_switch_to_buffer(yy_create_buffer(yyin, YY_BUF_SIZE));
+
+	BEGIN(INITIAL);
+}
+
+<<EOF>> {
+	if (!buffers || stack_peek(buffers) == NULL) {
+		delete_stack(buffers);
+		yyterminate();
+	} else {
+		yy_delete_buffer(YY_CURRENT_BUFFER);
+		yy_switch_to_buffer(stack_pop(buffers));
+	}
+}
 
 and {
         return AND;
@@ -80,7 +129,7 @@ not {
         return ACTION;
 }
 
-^#.*$ {
+^[ \t]*#.*$ {
 	/* Ignore comments */
 	++lineno;
 }
@@ -103,5 +152,5 @@ not {
 void
 yyerror(char *s)
 {
-	fatal_error("gnostic: %s in line %d\n", s, lineno);
+	fatal_error("%s in line %d\n", s, lineno);
 }

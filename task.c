@@ -33,7 +33,7 @@
 
 #include "task.h"
 
-#include "err.h"
+#include "logger.h"
 #include "xmemory.h"
 
 
@@ -146,7 +146,7 @@ check_deps(const struct task *orig, const struct task *prev, ast_t expr)
 		current = ast_get_item(n);
 
 		if (strcmp(orig->name, current->name) == 0)
-			fatal_error("gnostic: Circular dependency between `%s' and"
+			fatal_error("Circular dependency between `%s' and"
 				    " `%s'.\n", prev ? prev->name : orig->name,
 				    current->name);
 

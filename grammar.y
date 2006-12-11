@@ -31,8 +31,13 @@
 #include "taskset.h"
 #include "ast.h"
 
-#include "err.h"
+#include "logger.h"
 #include "xmemory.h"
+
+
+#define variable_insert(var) \
+	var->next = vars; \
+	vars = var
 
 
 extern int yylex(void);
@@ -65,7 +70,7 @@ static ast_t do_and(ast_t lhs, ast_t rhs);
 %left AND OR
 %nonassoc NOT
 
-%start conf
+%start statements
 
 %type <n> expr 
 %type <t> tasks task
@@ -74,16 +79,19 @@ static ast_t do_and(ast_t lhs, ast_t rhs);
 
 %%
 
-conf		: tasks
-      		| variables tasks {
-			vars = $1;
-      		}
+statements	: statement
+	   	| statements statement
 		;
 
-variables	: variable
+statement	: tasks
+	  	| variables
+		;
+
+variables	: variable {
+			variable_insert($1);
+	  	}
 	  	| variables variable {
-			$2->next = $1;
-			$$ = $2;
+			variable_insert($2);
 		}
 		;
 
@@ -93,7 +101,8 @@ variable	: VAR_DECL {
 		;
 
 tasks           : task {
-			tasks = new_tasklist();
+			if (!tasks)
+				tasks = new_tasklist();
 			tasklist_append(tasks, $1);
 		}
 		| tasks task {

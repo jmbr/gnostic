@@ -9,6 +9,11 @@ gnostic \- task execution system
 .SH SYNOPSIS
 .B
 gnostic
+.B
+[
+.I -hv
+.B
+]
 .I
 taskfile
 .B
@@ -33,6 +38,17 @@ they are satisfied, executes the specified task (which is defined by a piece of
 POSIX shell script written in a Gnostic taskfile).
 
 .SH OPTIONS
+
+The
+.B
+-h
+option displays some help information.
+
+The
+.B
+-v
+option increases the amount of information the program outputs during
+execution.
 
 .IP taskfile
 Specifies the path to the appropriate task file we want to work with. If this

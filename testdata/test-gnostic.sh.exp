@@ -1,3 +1,5 @@
 gnostic: Circular dependency between `simple' and `simple'.
 gnostic: Circular dependency between `baz' and `foo'.
+gnostic: No tasks declared in ./testdata/empty.gns
 gnostic: Task `bar' needed by `foo' is not defined.
+gnostic: Task `a' is defined more than once.

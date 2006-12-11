@@ -31,7 +31,7 @@
 #include "grammar.h"
 #include "ast.h"
 
-#include "err.h"
+#include "logger.h"
 #include "xmemory.h"
 
 
@@ -42,12 +42,6 @@ extern struct tasklist *tasks;
 
 
 extern int yyparse(void);
-
-/*
- * This function translates task names contained in the abstract syntax tree
- * into pointers to the appropriate task structures.
- */
-static void expr_resolve(hashtab_t symtab, struct task *t, ast_t n);
 
 
 
@@ -61,12 +55,51 @@ move_lists(struct taskset *ts)
 static void
 fill_symtab(struct tasklist *tl, hashtab_t symtab)
 {
-	struct task *t;
+	struct task *t, *s;
 
 	for (t = tl->head; t; t = t->next) {
+		s = hashtab_strlookup(symtab, t->name, 0, NULL);
+		if (s)
+			fatal_error("Task `%s' is defined more than once.\n",
+				    t->name);
 		task_incref(t);
 		hashtab_strlookup(symtab, t->name, 1, t);
 	}
+}
+
+/*
+ * Translates task names found in the abstract syntax tree into pointers to the
+ * appropriate task structs.
+ */
+static void
+expr_resolve(hashtab_t symtab, struct task *t)
+{
+	ast_t i;
+	ast_itor_t itor;
+	struct task *s;
+	char *name;
+
+	assert(t->expr);
+
+	itor = new_ast_itor(t->expr);
+
+	for (i = ast_itor_first(itor); i; i = ast_itor_next(itor)) {
+		if (ast_get_type(i) != AST_ID)
+			continue;
+
+		name = ast_get_item(i);
+		assert(name != NULL);
+
+		s = hashtab_strlookup(symtab, name, 0, NULL);
+		if (!s)
+			fatal_error("Task `%s' needed by `%s' is not "
+				    "defined.\n", name, t->name);
+
+		xfree(name);
+		task_incref(s), ast_set_item(i, s);
+	}
+
+	delete_ast_itor(itor);
 }
 
 int
@@ -83,48 +116,16 @@ taskset_parse(struct taskset *self, const char *filename)
 
 	yyparse();
 
+	if (!tasks)
+		fatal_error("No tasks declared in %s\n", filename);
+
 	move_lists(self);
 
 	fill_symtab(self->tasks, self->symtab);
 
 	for (t = self->tasks->head; t; t = t->next)
-		expr_resolve(self->symtab, t, t->expr);
+		if (t->expr)
+			expr_resolve(self->symtab, t);
 
 	return fclose(yyin);
-}
-
-
-
-/** Resolve an ast node containing an identifier.
- * This function changes the content of the ast, frees the identifier
- * string allocated by the lexer and substitutes it with a pointer to the
- * appropriate task structure.
- */
-static void
-ident_resolve(hashtab_t symtab, struct task *t, ast_t n)
-{
-	void *p, *item;
-
-	item = ast_get_item(n);
-	p = hashtab_strlookup(symtab, item, 0, NULL);
-	if (!p)
-		fatal_error("gnostic: Task `%s' needed by `%s' is not "
-			    "defined.\n", (char *) item, t->name);
-
-	xfree(item);
-	task_incref(p);
-	ast_set_item(n, p);
-}
-
-void
-expr_resolve(hashtab_t symtab, struct task *t, ast_t n)
-{
-	if (!n)
-		return;
-
-	if (ast_get_type(n) == AST_ID)
-		ident_resolve(symtab, t, n);
-
-	expr_resolve(symtab, t, ast_get_lhs(n));
-	expr_resolve(symtab, t, ast_get_rhs(n));
 }

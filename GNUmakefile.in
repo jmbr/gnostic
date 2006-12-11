@@ -78,10 +78,11 @@ VERSION := @VERSION@
 SOURCES := \
 	ast.c \
 	ast-itor.c \
-	err.c \
+	env.c \
 	gnostic.c \
 	grammar.c \
 	hashtab.c \
+	logger.c \
 	scanner.c \
 	stack.c \
 	task.c \
@@ -139,8 +140,8 @@ test-ast: \
 test-grammar: \
 	ast-itor.o \
 	ast.o \
-	err.o \
 	grammar.o \
+	logger.o \
 	scanner.o \
 	stack.o \
 	tasklist.o \
@@ -162,7 +163,7 @@ test-stack: \
 test-tasklist: \
 	ast-itor.o \
 	ast.o \
-	err.o \
+	logger.o \
 	stack.o \
 	tasklist.o \
 	task.o \
@@ -180,6 +181,10 @@ check: gnostic tests
 	  RETVAL=$$?; \
 	  if [ $$RETVAL -ne 0 ]; then \
 	    $(SHTOOL) echo -e "%BFAILED%b"; \
+	    echo "This was the output from $$test:"; \
+	    echo "========================================================"; \
+	    cat $(testdatadir)/$$test.out; \
+	    echo "========================================================"; \
             continue; \
 	  fi; \
 	  if [ -f $(testdatadir)/$$test.exp ]; then \
@@ -187,12 +192,12 @@ check: gnostic tests
 	    RETVAL=$$?; \
 	    if [ $$RETVAL -ne 0 ]; then \
 	      $(SHTOOL) echo -e "%BFAILED%b"; \
+	      diff -u $(testdatadir)/$$test.exp $(testdatadir)/$$test.out; \
 	      continue; \
 	    fi; \
 	  fi; \
 	  echo "OK"; \
 	done
-
 
 ###############################################################################
 #
@@ -284,10 +289,10 @@ dist: depend distclean
 #
 ###############################################################################
 
-configure: configure.ac aclocal.m4
+configure: configure.ac
 	cd $(srcdir) && autoconf && autoheader
 
-config.status: configure configure.ac aclocal.m4
+config.status: configure configure.ac
 	$(SHELL) ./config.status --recheck
 
 config.h: stamp-h
@@ -343,4 +348,4 @@ tags: $(ALL_SOURCES)
 loc-count: $(ALL_SOURCES)
 	@c_loc=$$(c_count $(filter %.c %.h, $^) | tail -1); \
 	lex_loc=$$(lex_count $(filter %.l %.y, $^) | tail -1); \
-	echo $$[$$c_loc + $$lex_loc] lines of code.
+	echo `expr $$c_loc + $$lex_loc` lines of code.

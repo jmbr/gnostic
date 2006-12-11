@@ -1,5 +1,5 @@
 /**
- * @file err.c
+ * @file logger.c
  * @brief Miscellaneous error reporting functions.
  *
  * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
@@ -16,6 +16,14 @@
 # include <stdarg.h>
 #endif /* STDC_HEADERS */
 
+#include "logger.h"
+
+
+#define PREFIX		"gnostic: "
+
+
+enum log_levels log_level = LOG_NOTICE;
+
 
 #define VFPRINTF(fp, format)	do { \
 	va_list ap; \
@@ -26,18 +34,20 @@
 } while (0)
 
 
-
 void
 info(const char *format, ...)
 {
-#ifndef NDEBUG
-	VFPRINTF(stdout, format);
-#endif /* !NDEBUG */
+	if (log_level <= LOG_INFO) {
+		fprintf(stdout, PREFIX);
+		VFPRINTF(stdout, format);
+	}
 }
+
 
 void
 error(const char *format, ...)
 {
+	fprintf(stderr, PREFIX);
 	VFPRINTF(stderr, format);
 }
 
@@ -45,6 +55,7 @@ error(const char *format, ...)
 void
 fatal_error(const char *format, ...)
 {
+	fprintf(stderr, PREFIX);
 	VFPRINTF(stderr, format);
 
 	exit(EXIT_FAILURE);

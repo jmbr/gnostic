@@ -29,7 +29,7 @@
 
 #include "taskset-priv.h"
 
-#include "err.h"
+#include "logger.h"
 #include "xmemory.h"
 
 
@@ -116,6 +116,9 @@ taskset_print(const struct taskset *self)
 const struct task *
 taskset_get_task(const struct taskset *self, const char *name)
 {
+	if (!name)
+		return self->tasks->head;
+
 	return hashtab_strlookup(self->symtab, name, 0, NULL);
 }
 

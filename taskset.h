@@ -55,7 +55,8 @@ extern int taskset_print(const struct taskset *self);
 /** task accessor.
  * 
  * @param self A pointer to the taskset structure.
- * @param name The name of the task.
+ * @param name The name of the task.  If name is NULL then the first task in
+ * the set will be returned.
  * @return A pointer to the appropriate task structure on success, NULL
  * otherwise.
  *

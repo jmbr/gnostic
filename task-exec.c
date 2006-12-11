@@ -56,11 +56,12 @@
 #include "task.h"
 #include "ast.h"
 
-#include "err.h"
+#include "env.h"
+#include "logger.h"
 
 
 /* Beware of the evil strerror and its non-reentrancy! */
-#define die(s) fatal_error("gnostic: %s failed: %s\n", s, strerror(errno))
+#define die(s) fatal_error("%s failed: %s\n", s, strerror(errno))
 
 
 static char shell[] = "/bin/sh";
@@ -80,12 +81,12 @@ task_exec(const struct task *self)
 
 	assert(self && self->name);
 
-	info("gnostic: Executing `%s'.\n", self->name);
+	info("Executing `%s'.\n", self->name);
 
 	if (task_exec_deps(self) == 0)
 		status = task_exec_script(self);
 
-	info("gnostic: Task `%s' exited with status %d\n", self->name, status);
+	info("Task `%s' exited with status %d\n", self->name, status);
 
 	return status;
 }
@@ -137,11 +138,11 @@ parent(const char *name, int fds[2], pid_t pid, const char *src)
 		die("waitpid");
 
 	if (WIFSIGNALED(status)) {
-		error("gnostic: Task `%s' received signal number %d\n",
+		error("Task `%s' received signal number %d\n",
 			name, WTERMSIG(status));
 		return -1;
 	} else if (!WIFEXITED(status)) {
-		error("gnostic: Task `%s' terminated abnormally.\n", name);
+		error("Task `%s' terminated abnormally.\n", name);
 		return -1;
 	}
 	
@@ -155,6 +156,8 @@ task_exec_script(const struct task *self)
 	int fds[2], status = -1;
 
 	assert(self);
+
+	xsetenv("GNOSTIC_CURRENT", self->name, 1);
 
 	if (pipe(fds) == -1)
 		die("pipe");

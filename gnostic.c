@@ -19,16 +19,24 @@
 # include <sys/types.h>
 #endif /* HAVE_SYS_TYPES_H */
 
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>
+#endif /* HAVE_UNISTD_H */
+
 #ifdef HAVE_SIGNAL_H
 # include <signal.h>
 #endif /* HAVE_SIGNAL_H */
 
 #include <assert.h>
 
+#include "env.h"
+#include "logger.h"
 #include "taskset.h"
-
 #include "version.h"
-#include "err.h"
+
+
+/* FIXME: This is ugly. */
+static int exec_first = 0;
 
 
 static void usage(void) __attribute__ ((noreturn));
@@ -41,7 +49,8 @@ static int exec(const struct taskset *tasks, int argc, char *argv[]);
 int
 main(int argc, char *argv[])
 {
-	int status;
+	int c, status;
+	char *filename;
 	struct taskset *tasks;
 
 	if (argc < 2)
@@ -49,12 +58,40 @@ main(int argc, char *argv[])
 
 	(void) signal(SIGINT, handler);
 
-	tasks = new_taskset(argv[1]);
-	if (!tasks)
-		fatal_error("gnostic: Invalid task file `%s'.\n", argv[1]);
+	while ((c = getopt(argc, argv, "hvx")) != -1) {
+		switch (c) {
+		case 'v':
+			log_level = LOG_INFO;
+			break;
+		case 'x':
+			exec_first = 1;
+			break;
+		case 'h':
+		default:
+			usage();
+			break;
+		}
+	}
 
-	status = (argc == 2) ? taskset_print(tasks)
-			     : exec(tasks, argc, argv);
+	if (optind >= argc) {
+		error("A task file must be specified.\n");
+		usage();
+	}
+
+	filename = argv[optind++];
+
+	tasks = new_taskset(filename);
+	if (!tasks)
+		fatal_error("Invalid task file `%s'.\n", filename);
+
+	if ((optind < argc) || exec_first)
+		status = exec(tasks, argc, argv);
+	else
+		status = taskset_print(tasks);
+	/* XXX
+	status = (optind < argc) ? exec(tasks, argc, argv)
+				 : taskset_print(tasks);
+				 */
 
 	delete_taskset(tasks);
 	exit((status == 0) ? EXIT_SUCCESS : EXIT_FAILURE);
@@ -64,14 +101,19 @@ main(int argc, char *argv[])
 void
 usage(void)
 {
-	error("%s\n\n"
-	       "Usage: gnostic taskfile [task] [name=value] [name=value] [...]\n\n"
-	       "Examples:\n"
-	       "  gnostic foo.gns\t\tshow the list of tasks defined in foo\n"
-	       "  gnostic foo.gns bar\t\texecute task `bar' without parameters\n"
-	       "  gnostic foo.gns bar baz=23\texecute `bar' with baz=23 as a parameter\n"
-	       "\n"
-	       "Email bug reports to %s\n", version.v_gnu, PACKAGE_BUGREPORT);
+	fprintf(stderr, "%s\n\n"
+	"Usage: gnostic [option] taskfile [task] [name=value] [name=value] [...]\n"
+	"\n"
+	"Options:\n"
+	"  -h\tPrint this help page\n"
+	"  -v\tExplain what is being done\n"
+	"  -x\tExecute the first task found.\n"
+//	"  -p\tDump attack tree.\n"
+	"\n"
+	/* XXX Put back some of the examples.
+	"Examples:\n"
+	*/
+	"Email bug reports to %s\n", version.v_gnu, PACKAGE_BUGREPORT);
 
 	exit(EXIT_FAILURE);
 }
@@ -80,23 +122,16 @@ usage(void)
 RETSIGTYPE
 handler(int signum)
 {
-	fatal_error("gnostic: Interrupted by the user.\n");
+	fatal_error("Interrupted by the user.\n");
 }
 
-
-static void
-xputenv(char *string)
-{
-	if (putenv(string) == -1)
-		fatal_error("gnostic: Unable to declare %s\n", string);
-}
 
 static void
 setup_environ(const struct taskset *tasks, int argc, char *argv[])
 {
 	int i;
 	const struct var *v;
-	const int env_decl_start = 3;
+	const int env_decl_start = optind;
 
 	for (v = taskset_get_vars(tasks); v; v = v->next)
 		xputenv(v->nameval);
@@ -110,11 +145,13 @@ exec(const struct taskset *tasks, int argc, char *argv[])
 {
 	const struct task *t;
 
-	t = taskset_get_task(tasks, argv[2]);
+	t = taskset_get_task(tasks, exec_first ? NULL : argv[optind]);
 	if (!t)
-		fatal_error("gnostic: Unknown task `%s'.\n", argv[2]);
+		fatal_error("Unknown task `%s'.\n", argv[optind]);
 
 	setup_environ(tasks, argc, argv);
+
+	xsetenv("GNOSTIC_MAIN", t->name, 1);
 
 	return task_exec(t);
 }
