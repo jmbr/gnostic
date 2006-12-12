@@ -2,7 +2,7 @@
  * @file test-ast.c
  * @brief Abstract syntax tree unit test.
  * 
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 

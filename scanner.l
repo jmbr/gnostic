@@ -3,7 +3,7 @@
  * @file scanner.l
  * @brief Scanner for Gnostic's task files.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 

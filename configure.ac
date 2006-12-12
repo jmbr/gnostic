@@ -9,7 +9,7 @@
 
 AC_PREREQ(2.59)
 define([gnostic_version], [0.2.x])
-AC_INIT([gnostic],[gnostic_version],[rwx+gnostic@synnergy.net])
+AC_INIT([gnostic],[gnostic_version],[jmbr@superadditive.com])
 undefine([gnostic_version])
 
 AC_REVISION($Revision$)
@@ -24,7 +24,7 @@ VERSION_L=`$srcdir/shtool version -l c -d long version.h`
 B=`$srcdir/shtool echo -e %B`
 b=`$srcdir/shtool echo -e %b`
 echo "Configuring $B$PACKAGE$b version $B$VERSION_L$b"
-echo "Copyright (C) 2002, 2003, 2004 Juan M. Bello Rivas <rwx+gnostic@synnergy.net>"
+echo "Copyright (C) 2002, 2003, 2004, 2006 Juan M. Bello Rivas <jmbr@superadditive.com>"
 echo ""
 
 AC_SUBST(PACKAGE)

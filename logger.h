@@ -4,7 +4,7 @@
  * @file logger.h
  * @brief Miscellaneous reporting functions.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 /* TODO Evolve this into a better reporting/logging module. */
 

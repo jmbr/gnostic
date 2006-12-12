@@ -4,7 +4,7 @@
  * @file taskset-priv.h
  * @brief Private declaration of tasksets.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 

@@ -4,7 +4,7 @@
  * @file task.h
  * @brief Task management module.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 

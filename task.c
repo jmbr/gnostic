@@ -2,7 +2,7 @@
  * @file task.c
  * @brief Task management module.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  *
  * Tasks are at the heart of gnostic. They describe how something should be
  * done and when. Tasks are read from gnostic configuration files and stored in

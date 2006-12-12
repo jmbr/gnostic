@@ -4,7 +4,7 @@
  * @file tasklist.h
  * @brief List of task structures.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 

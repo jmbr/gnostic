@@ -2,7 +2,7 @@
  * @file vars.c
  * @brief Environment variable management.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 

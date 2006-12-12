@@ -2,7 +2,7 @@
  * @file ast.c
  * @brief Abstract syntax tree for dependency expressions.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 

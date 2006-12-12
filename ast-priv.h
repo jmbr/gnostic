@@ -4,7 +4,7 @@
  * @file ast-priv.h
  * @brief AST private declarations.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 

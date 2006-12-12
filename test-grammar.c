@@ -3,7 +3,7 @@
  * @brief Grammar unit test. Checks whether ASTs are well-formed after the task
  * file parsing stage.
  * 
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 

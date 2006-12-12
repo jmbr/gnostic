@@ -2,7 +2,7 @@
  * @file taskset-parser.c
  * @brief Reads a configuration file and transform it into a taskset.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 

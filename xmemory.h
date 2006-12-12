@@ -4,7 +4,7 @@
  * @file xmemory.h
  * @brief Error-checking memory allocation wrappers.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 

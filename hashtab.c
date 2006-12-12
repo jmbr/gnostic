@@ -2,7 +2,7 @@
  * @file hashtab.c
  * @brief A simple hash table implementation.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 /* TODO This chained hash table should be replaced by one with linear probing.
  * That would reduce the overhead due to allocating hashnodes and would make

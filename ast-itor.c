@@ -2,7 +2,7 @@
  * @file ast-itor.c
  * @brief Abstract syntax tree iterator.
  *
- * @author Juan M. Bello Rivas <rwx+gnostic@synnergy.net>
+ * @author Juan M. Bello Rivas <jmbr@superadditive.com>
  */
 
 
