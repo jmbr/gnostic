@@ -121,6 +121,8 @@ dict_set(void)
 	map();
 
 	for (w = get_word(m); w; w = get_word(NULL)) {
+		if (strlen(w) == 0)
+			continue;
 		v = xstrdup(w);
 		hashtab_strlookup(ht, w, 1, v);
 	}
@@ -135,8 +137,11 @@ dict_get(void)
 
 	map();
 
-	for (w = get_word(m); w; w = get_word(NULL))
+	for (w = get_word(m); w; w = get_word(NULL)) {
+		if (strlen(w) == 0)
+			continue;
 		v = hashtab_strlookup(ht, w, 0, NULL);
+	}
 
 	unmap();
 }
