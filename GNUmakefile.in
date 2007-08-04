@@ -53,6 +53,8 @@ LINK = $(CC)  $(CFLAGS) $(LDFLAGS)
 PACKAGE := @PACKAGE@
 VERSION := @VERSION@
 
+versionfile := $(srcdir)/version.h
+
 
 ###############################################################################
 #
@@ -307,8 +309,15 @@ stamp-h: config.h.in config.status
 GNUmakefile: GNUmakefile.in config.status
 	$(SHELL) ./config.status GNUmakefile
 
+setversion: shtool
+	@version=`$(SHTOOL) version -l python $(versionfile)`; \
+	$(SHTOOL) version -l c -n gnostic -s $$version $(versionfile)
+
+incversion: shtool
+	$(SHTOOL) version -l c -n gnostic -i l $(versionfile)
+
 shtool:
-	shtoolize -o shtool version fixperm tarball mkdir install echo
+	shtoolize -o $@ version fixperm tarball mkdir install echo
 
 version.h:
 	$(SHTOOL) version --language=c --name=$(PACKAGE) --set $(VERSION) $@
