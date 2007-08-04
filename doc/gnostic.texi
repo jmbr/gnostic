@@ -10,7 +10,7 @@
 @copying
 This is the user's guide for @code{gnostic} @value{VERSION}
 
-Copyright @copyright{} 2002, 2003, 2004 Juan M. Bello Rivas
+Copyright @copyright{} 2002-2007 Juan M. Bello Rivas
 @end copying
 
 @titlepage

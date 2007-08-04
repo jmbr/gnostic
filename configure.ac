@@ -24,7 +24,7 @@ VERSION_L=`$srcdir/shtool version -l c -d long version.h`
 B=`$srcdir/shtool echo -e %B`
 b=`$srcdir/shtool echo -e %b`
 echo "Configuring $B$PACKAGE$b version $B$VERSION_L$b"
-echo "Copyright (C) 2002, 2003, 2004, 2006 Juan M. Bello Rivas <jmbr@superadditive.com>"
+echo "Copyright (C) 2002-2007 Juan M. Bello Rivas <jmbr@superadditive.com>"
 echo ""
 
 AC_SUBST(PACKAGE)
