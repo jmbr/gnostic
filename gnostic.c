@@ -108,11 +108,7 @@ usage(void)
 	"  -h\tPrint this help page\n"
 	"  -v\tExplain what is being done\n"
 	"  -x\tExecute the first task found.\n"
-//	"  -p\tDump attack tree.\n"
 	"\n"
-	/* XXX Put back some of the examples.
-	"Examples:\n"
-	*/
 	"Email bug reports to %s\n", version.v_gnu, PACKAGE_BUGREPORT);
 
 	exit(EXIT_FAILURE);

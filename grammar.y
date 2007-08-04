@@ -96,7 +96,7 @@ variables	: variable {
 		;
 
 variable	: VAR_DECL {
-	 		$$ = new_var($1);
+			$$ = new_var($1);
 		}
 		;
 
