@@ -270,14 +270,15 @@ installdirs: $(SHTOOL)
 install-strip:; $(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' install
 
 NAME := $(PACKAGE)-$(VERSION)
+TARBALL := $(NAME).tar.gz
 
-dist: depend distclean
+dist: depend distclean shtool
 	$(SHTOOL) fixperm $(srcdir)
-	$(SHTOOL) tarball -o $(NAME).tar.bz2 -c bzip2 \
+	$(SHTOOL) tarball -o $(TARBALL) -c gzip \
 	  -e 'CVS,\{arch\},\.arch-ids,_darcs,^\-i,\.swp,^tmp,^TODO' .
-	@echo ===============================================
-	@echo $(NAME).tar.bz2 is ready for distribution
-	@echo ===============================================
+	@echo ==============================================
+	@echo $(TARBALL) is ready for distribution
+	@echo ==============================================
 
 #rpm: dist
 #	@cp $(NAME).tar.gz /usr/src/redhat/SOURCES

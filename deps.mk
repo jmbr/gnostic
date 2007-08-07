@@ -2,7 +2,7 @@ ast.o: ast.c config.h ast-priv.h ast.h xmemory.h
 ast-itor.o: ast-itor.c config.h ast-priv.h ast.h stack.h xmemory.h
 env.o: env.c config.h logger.h
 gnostic.o: gnostic.c config.h env.h logger.h taskset.h task.h ast.h \
-  vars.h version.h
+  vars.h version.h version.h
 grammar.o: grammar.c config.h tasklist.h task.h ast.h taskset.h vars.h \
   logger.h xmemory.h
 hashtab.o: hashtab.c config.h hashtab.h xmemory.h
